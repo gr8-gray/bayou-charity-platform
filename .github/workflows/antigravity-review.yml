@@ -1,0 +1,80 @@
+# Antigravity Review — Automated Gemini PR code review
+#
+# Triggers automatically on every PR opened, synchronized, or reopened.
+# Posts inline comments + a summary directly on the PR using the official
+# google-github-actions/run-gemini-cli action.
+#
+# SETUP REQUIRED (one-time):
+#   1. Go to https://aistudio.google.com/apikey and create an API key
+#   2. Add it to this repo: Settings → Secrets → Actions → New secret
+#      Name: GEMINI_API_KEY
+#      Value: <your key>
+#
+# MANUAL TRIGGER:
+#   Post a comment on any PR containing exactly:  /gemini review
+#   This re-runs the review on demand (e.g., after addressing feedback).
+
+name: Antigravity Review (Gemini)
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  gemini-review:
+    # Run on PR events OR on '/gemini review' comment in a PR
+    if: |
+      github.event_name == 'pull_request' ||
+      (github.event_name == 'issue_comment' &&
+       github.event.issue.pull_request &&
+       contains(github.event.comment.body, '/gemini review'))
+
+    runs-on: ubuntu-latest
+    name: Gemini Code Review
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Antigravity Review via Gemini CLI
+        uses: google-github-actions/run-gemini-cli@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          gemini-api-key: ${{ secrets.GEMINI_API_KEY }}
+          # Review prompt — tailored to Bayou Charity platform standards
+          prompt: |
+            You are Antigravity, the code auditor for the Bayou Charity Platform (v2).
+            This is a Next.js 16 App Router + Expo + TypeScript + Tailwind + Supabase monorepo.
+
+            Review this PR diff for:
+            1. **Security** — RLS bypass risks, service role key exposure, XSS vectors, unescaped innerHTML
+            2. **TypeScript** — any `any` types, missing types, strict mode violations
+            3. **Next.js** — App Router patterns, Server vs Client Component correctness, raw <img> instead of next/image
+            4. **Supabase** — double createClient() declarations, RLS respect, raw fetch instead of JS client
+            5. **Performance** — unnecessary Client Components, missing lazy loading, unoptimized images
+            6. **Tailwind** — hardcoded hex values instead of token classes, missing dark mode variants
+            7. **Mobile** — web-only packages imported in apps/mobile, Expo SDK compatibility issues
+
+            Design tokens to enforce:
+            - Colors: green-deep (#0d2b3e), green-water (#1a4a6b), amber (#e8923a), gold (#c9a84c), cream (#eef6fb)
+            - Never use near-black overlays (rgba values darker than #0d2b3e)
+            - Fonts: Lora (body), Playfair Display (headings), Caveat (accents)
+
+            Format your response as:
+            ## Antigravity Review
+
+            ### 🔴 Blockers (must fix before merge)
+            ### 🟡 Warnings (should fix)
+            ### 🟢 Looks good
+            ### 💡 Suggestions (optional improvements)
+
+            Be direct and specific. Reference file paths and line numbers where possible.

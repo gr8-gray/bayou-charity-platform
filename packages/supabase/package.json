@@ -1,0 +1,20 @@
+{
+  "name": "@bayou/supabase",
+  "version": "0.1.0",
+  "main": "./client.ts",
+  "types": "./client.ts",
+  "exports": {
+    ".": "./client.ts",
+    "./types": "./types.ts",
+    "./server": "./server.ts",
+    "./middleware": "./middleware.ts",
+    "./queries/*": "./queries/*.ts"
+  },
+  "peerDependencies": {
+    "next": ">=15.0.0"
+  },
+  "dependencies": {
+    "@supabase/ssr": "^0.10.0",
+    "@supabase/supabase-js": "^2.43.0"
+  }
+}

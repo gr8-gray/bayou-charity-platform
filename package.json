@@ -1,0 +1,23 @@
+{
+  "name": "bayou-charity-platform",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/web",
+    "apps/mobile",
+    "packages/supabase",
+    "packages/ui"
+  ],
+  "scripts": {
+    "dev:web": "npm run dev --workspace=apps/web",
+    "dev:mobile": "npm run start --workspace=apps/mobile",
+    "build:web": "npm run build --workspace=apps/web",
+    "type-check": "npm run type-check --workspace=apps/web && npm run type-check --workspace=apps/mobile",
+    "gen:types": "supabase gen types typescript --project-id osiramhnynhwmlfyuqcp > packages/supabase/types.ts",
+    "lint": "npm run lint --workspace=apps/web"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "next": "^16.2.1"
+  }
+}

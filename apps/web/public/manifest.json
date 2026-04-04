@@ -1,0 +1,36 @@
+{
+  "name": "Bayou Charity",
+  "short_name": "Bayou Charity",
+  "description": "Bayou Family Fishing — members portal, pins map, gallery, and more.",
+  "id": "/",
+  "scope": "/",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0d2b3e",
+  "theme_color": "#e8923a",
+  "icons": [
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [],
+  "categories": ["lifestyle", "social"],
+  "lang": "en-US",
+  "dir": "ltr"
+}

@@ -1,0 +1,59 @@
+{
+  "section": "volunteer",
+  "type": "server",
+  "route": "/volunteer",
+  "content": {
+    "heading": "Volunteer with Us",
+    "subheading": "Upcoming Events",
+    "paragraphs": [
+      "Lend a Hand",
+      "Sign up to participate and volunteer at our featured event — the Bayou Family Fishing Spring Rodeo on April 25, 2026.",
+      "Whether you can swing a hammer, captain a boat, or just show up with enthusiasm — there's a place for you at Bayou Family Fishing. Our community is built by the people in it.",
+      "🎣 Fishing Rodeo — April 25th, 2026",
+      "How You Can Help",
+      "Maintenance/Construction Something's always broken out here — boats, docks, camp buildings. If you can swing a hammer or turn a wrench, we need you.",
+      "Licensed Captains Licensed captain? We're building a network of guides willing to take our members out on short-notice trips. Good folks, good fishing, fair rates.",
+      "Fishing/Boating Instructors Teach the basics — casting, knots, catch-and-release — then help us turn BFF into a competitive team on the water.",
+      "Innisfree We're building a camp four miles out in the marsh, starting from nothing. Ask about becoming a plank owner.",
+      "Media &amp; Storytelling Photograph events, shoot video, write up the stories. Somebody's got to tell this right.",
+      "Camp Coordination Help us plan and run Bayou Charity and BFF events — cookouts, rodeos, community days."
+    ],
+    "images": [],
+    "videos": [],
+    "links": [
+      {
+        "href": "/fishing-rodeo.html",
+        "text": "Sign Up / Learn More →"
+      }
+    ],
+    "iframes": [
+      {
+        "src": "https://www.zeffy.com/embed/ticketing/bayou-charitys-voulnteers",
+        "title": "Volunteer signup powered by Zeffy",
+        "type": "zeffy"
+      }
+    ],
+    "cards": [
+      {
+        "title": "Upcoming Events",
+        "description": "🎣 Fishing Rodeo — April 25th, 2026"
+      }
+    ],
+    "lists": [],
+    "buttons": []
+  },
+  "metadata": {
+    "lineRange": [
+      3775,
+      3869
+    ],
+    "imageCount": 0,
+    "videoCount": 0,
+    "hasSupabase": false,
+    "isInteractive": false,
+    "zeffyUrls": [
+      "https://www.zeffy.com/embed/ticketing/bayou-charitys-voulnteers"
+    ],
+    "leafletMarkers": []
+  }
+}

@@ -1,0 +1,200 @@
+{
+  "section": "members",
+  "type": "client",
+  "route": "/members",
+  "content": {
+    "heading": "Member Portal",
+    "subheading": "Join Bayou Family Fishing",
+    "paragraphs": [
+      "Private Community",
+      "South Louisiana's waters are huge — tides, weather, spots, all changing every hour. If you're working long shifts, raising kids, or just trying to keep life together, there's no time to study charts or chase rumors. That's where we come in.",
+      "We're pooling everything we've got — tips, spots, stories — into one easy place. Log in, see where folks are headed, share what you're seeing, maybe even hop on someone else's boat. File a quick trip plan so we're all watching each other's backs.",
+      "We're not pros. We're just people who love the water, who want to give families — especially those who serve — a real shot at joy. Less stress, more time together, more fish and safer days out there.",
+      "Sign in with Google Sign in with Facebook Sign in with Apple Always sign in with the same method you used when you first joined.",
+      "New members are reviewed before gaining access. You'll receive an email once approved.",
+      "Your account is awaiting approval. Kyle will review your signup and you'll receive an email once you're in.",
+      "Click the map above to place your pin.",
+      "Loading catches…",
+      "Archive posts older than a set period across all content types. Archived posts are hidden from feeds but can be restored."
+    ],
+    "images": [
+      {
+        "src": "",
+        "alt": "",
+        "context": "members"
+      }
+    ],
+    "videos": [],
+    "links": [
+      {
+        "href": "#",
+        "text": "View Depth Chart on FisherMap ↗"
+      }
+    ],
+    "iframes": [
+      {
+        "src": "https://www.zeffy.com/embed/ticketing/bayou-family-fishing-memberships",
+        "title": "Membership and RSVP powered by Zeffy",
+        "type": "zeffy"
+      }
+    ],
+    "cards": [],
+    "lists": [],
+    "buttons": [
+      {
+        "text": "Sign in with Google",
+        "type": "button"
+      },
+      {
+        "text": "Sign in with Facebook",
+        "type": "button"
+      },
+      {
+        "text": "Sign in with Apple",
+        "type": "button"
+      },
+      {
+        "text": "Or sign in with email",
+        "type": "button"
+      },
+      {
+        "text": "Sign In",
+        "type": "button"
+      },
+      {
+        "text": "Create Account",
+        "type": "button"
+      },
+      {
+        "text": "Sign In",
+        "type": "button"
+      },
+      {
+        "text": "Create Account",
+        "type": "button"
+      },
+      {
+        "text": "Sign Out",
+        "type": "button"
+      },
+      {
+        "text": "📸 Feed",
+        "type": "button"
+      },
+      {
+        "text": "🌊 Community",
+        "type": "button"
+      },
+      {
+        "text": "🗺️ Map",
+        "type": "button"
+      },
+      {
+        "text": "⚙️ Admin",
+        "type": "button"
+      },
+      {
+        "text": "🎣 Trips",
+        "type": "button"
+      },
+      {
+        "text": "🧑‍✈️ Guides",
+        "type": "button"
+      },
+      {
+        "text": "🛒 Gear &amp; Classifieds",
+        "type": "button"
+      },
+      {
+        "text": "💬 Forum",
+        "type": "button"
+      },
+      {
+        "text": "🏆 Leaderboard",
+        "type": "button"
+      },
+      {
+        "text": "🍳 Recipes",
+        "type": "button"
+      },
+      {
+        "text": "&#9999;",
+        "type": "button"
+      },
+      {
+        "text": "Sign Out",
+        "type": "button"
+      },
+      {
+        "text": "All",
+        "type": "button"
+      },
+      {
+        "text": "Spring",
+        "type": "button"
+      },
+      {
+        "text": "Summer",
+        "type": "button"
+      },
+      {
+        "text": "Fall",
+        "type": "button"
+      },
+      {
+        "text": "Winter",
+        "type": "button"
+      },
+      {
+        "text": "+ Drop a Pin &amp; Post a Catch",
+        "type": "button"
+      },
+      {
+        "text": "Post Pin",
+        "type": "button"
+      },
+      {
+        "text": "Cancel",
+        "type": "button"
+      },
+      {
+        "text": "Post",
+        "type": "button"
+      },
+      {
+        "text": "Save",
+        "type": "button"
+      },
+      {
+        "text": "Cancel",
+        "type": "button"
+      },
+      {
+        "text": "Preview Count",
+        "type": "button"
+      },
+      {
+        "text": "Archive Now",
+        "type": "button"
+      },
+      {
+        "text": "×",
+        "type": "button"
+      }
+    ]
+  },
+  "metadata": {
+    "lineRange": [
+      4329,
+      4701
+    ],
+    "imageCount": 1,
+    "videoCount": 0,
+    "hasSupabase": true,
+    "isInteractive": true,
+    "zeffyUrls": [
+      "https://www.zeffy.com/embed/ticketing/bayou-family-fishing-memberships"
+    ],
+    "leafletMarkers": []
+  }
+}

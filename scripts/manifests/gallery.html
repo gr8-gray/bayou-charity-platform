@@ -1,0 +1,98 @@
+
+  <div class="container">
+    <p class="section-eyebrow">Our Photos</p>
+    <h2 class="section-title">Life on the <em>Bayou</em></h2>
+    <div class="divider"></div>
+    <p class="section-lead">Thank you for making memories with Bayou Charity. Select tabs below and upload pictures and videos. Click any photo to view full size.</p>
+
+    <!-- Gallery Tab Strip — built dynamically by loadGalleryTabs() -->
+    <div id="galleryTabStrip" class="gallery-tab-strip" data-scroll="fade-up">
+      <p class="gallery-tab-loading">Loading albums…</p>
+    </div>
+
+    <!-- Upload button (shown to logged-in members) -->
+    <div id="galleryUploadBar" class="gallery-upload-bar" style="display:none;">
+      <button class="btn btn-primary btn-sm" id="btnGalleryUpload" data-action="open-gallery-upload">
+        ↑ Upload Photo/Video
+      </button>
+    </div>
+    <div id="galleryUploadSignInHint" class="gallery-upload-hint" style="display:none;">
+      <em>Sign in via the Members tab to upload photos.</em>
+    </div>
+
+    <!-- Tab Panel: BFF 1st Event (static seed content) -->
+    <div id="galleryPanel-seed" class="gallery-panel active">
+      <div class="gallery-grid" id="galleryGrid">
+      <div class="gallery-thumb" data-category="cookout" data-action="lightbox" data-index="0"><img src="Photos/Gallery1.jpg" width="1000" height="667" alt="Club member tending a smoky charcoal grill at a BFF cookout event" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="cookout" data-action="lightbox" data-index="1"><img src="Photos/Gallery2.jpg" width="1000" height="667" alt="Close-up of chicken and vegetables being grilled with tongs at a club gathering" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="kids" data-action="lightbox" data-index="2"><img src="Photos/Gallery3.jpg" width="1000" height="667" alt="Kids gathered at a picnic table with snacks at a Bayou Family Fishing club event" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="fishing" data-action="lightbox" data-index="3"><img src="Photos/Gallery4.jpg" width="750" height="1125" alt="Club member in BFF shirt standing near stacked crab traps at the bayou dock" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="community" data-action="lightbox" data-index="4"><img src="Photos/Gallery5.jpg" width="1000" height="667" alt="Club leader addressing a group of families outdoors near bayou homes" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="kids" data-action="lightbox" data-index="5"><img src="Photos/Gallery6.jpg" width="1000" height="667" alt="Adult crouching down to show a young girl something small at the waterfront" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="kids" data-action="lightbox" data-index="6"><img src="Photos/Gallery7.jpg" width="1000" height="667" alt="Young girl learning to tie a fishing knot with help from an adult volunteer" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="community" data-action="lightbox" data-index="7"><img src="Photos/Gallery8.jpg" width="1000" height="667" alt="Club leader addressing a large group of families under Spanish moss trees at the bayou" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="fishing" data-action="lightbox" data-index="8"><img src="Photos/Gallery9.jpg" width="1000" height="667" alt="Three men posing at the dock, one holding a Humminbird fish finder" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="community" data-action="lightbox" data-index="9"><img src="Photos/Gallery10.jpg" width="1000" height="666" alt="Group of girls and women posing together on a raised porch at the club property" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="community" data-action="lightbox" data-index="10"><img src="Photos/Gallery11.jpg" width="1000" height="667" alt="Three club members reviewing something on a phone together near the water" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="fishing" data-action="lightbox" data-index="11"><img src="Photos/Gallery12.jpg" width="1000" height="667" alt="Families boarding a white center console boat at the bayou dock" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="kids" data-action="lightbox" data-index="12"><img src="Photos/Gallery13.jpg" width="1000" height="667" alt="Close-up of a child's hands tying a fishing knot using a crimping needle" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="kids" data-action="lightbox" data-index="13"><img src="Photos/Gallery14.jpg" width="1000" height="667" alt="Whiteboard reading Basic Training Safety with Fishing Knots at Kids Fishing Club" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="kids" data-action="lightbox" data-index="14"><img src="Photos/Gallery15.jpg" width="1000" height="667" alt="Instructor's hands demonstrating a fishing knot technique with green line" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="kids" data-action="lightbox" data-index="15"><img src="Photos/Gallery16.jpg" width="1000" height="667" alt="Instructor teaching two girls fishing knots at the Kids Fishing Club whiteboard session" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="kids" data-action="lightbox" data-index="16"><img src="Photos/Gallery17.jpg" width="1000" height="667" alt="Multiple participants practicing fishing knots with green line at a workbench" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="kids" data-action="lightbox" data-index="17"><img src="Photos/Gallery18.jpg" width="1000" height="667" alt="Adults and children working together on fishing knot skills at the club workshop" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="community" data-action="lightbox" data-index="18"><img src="Photos/Gallery19.jpg" width="1000" height="667" alt="Families and volunteers practicing fishing knots together at an outdoor workshop table" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="kids" data-action="lightbox" data-index="19"><img src="Photos/Gallery20.jpg" width="1000" height="667" alt="Child in HUK Performance Fishing shirt learning to tie a knot with a crimping tool" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="kids" data-action="lightbox" data-index="20"><img src="Photos/Gallery21.jpg" width="1000" height="667" alt="Teen practicing a fishing knot with green line and guidance from an adult volunteer" loading="lazy"></div>
+      <div class="gallery-video-thumb" data-category="fishing">
+        <video autoplay loop muted playsinline preload="none" data-lazy="true" aria-label="Club member casting on the Louisiana bayou">
+          <source data-src="Photos/club%20member%20casting%20video%20(gallery).mp4" type="video/mp4">
+        </video>
+        <span class="gallery-video-badge">&#9654; VIDEO</span>
+        <button class="gallery-video-fs-btn" data-action="video-fullscreen" aria-label="Fullscreen">&#x26F6; Fullscreen</button>
+      </div>
+      <div class="gallery-video-thumb" data-category="kids">
+        <video autoplay loop muted playsinline preload="none" data-lazy="true" aria-label="BFF fishing knots class instructional video">
+          <source data-src="Photos/fishing%20knots%20class%20video%20(gallery).mp4" type="video/mp4">
+        </video>
+        <span class="gallery-video-badge">&#9654; VIDEO</span>
+        <button class="gallery-video-fs-btn" data-action="video-fullscreen" aria-label="Fullscreen">&#x26F6; Fullscreen</button>
+      </div>
+      <div class="gallery-video-thumb" data-category="community">
+        <video autoplay loop muted playsinline preload="none" data-lazy="true" aria-label="Bayou Family Fishing community gathering video">
+          <source data-src="Photos/BFF%20club%20page%20header%20video.mp4" type="video/mp4">
+        </video>
+        <span class="gallery-video-badge">&#9654; VIDEO</span>
+        <button class="gallery-video-fs-btn" data-action="video-fullscreen" aria-label="Fullscreen">&#x26F6; Fullscreen</button>
+      </div>
+      <div class="gallery-thumb" data-category="fishing" data-action="lightbox" data-index="21"><img src="Photos/Gallery22.jpg" width="1920" height="1920" alt="Two young BFF members proudly holding up a fish they caught together, landing net in hand" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="kids" data-action="lightbox" data-index="22"><img src="Photos/Gallery23.jpg" width="739" height="1600" alt="Young BFF member in life jacket reacting with excitement after a surprise catch on the bayou" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="fishing" data-action="lightbox" data-index="23"><img src="Photos/Gallery24.jpg" width="1920" height="1440" alt="Two BFF members showing off their large redfish catches out on the water" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="kids" data-action="lightbox" data-index="24"><img src="Photos/Gallery25.jpg" width="1200" height="1600" alt="Kids and a BFF volunteer posing on the dock after a successful fishing outing" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="fishing" data-action="lightbox" data-index="25"><img src="Photos/Gallery26.jpg" width="1200" height="1600" alt="BFF member crouching on the shoreline, proudly showing off a large drum fish" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="kids" data-action="lightbox" data-index="26"><img src="Photos/Gallery27.jpg" width="481" height="640" alt="Three young BFF members grinning together out on the water for a club fishing day" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="boats" data-action="lightbox" data-index="27"><img src="Photos/Gallery28.jpg" width="887" height="1920" alt="BFF member bundled up on the boat during a cool-weather day out on the bayou" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="fishing" data-action="lightbox" data-index="28"><img src="Photos/Gallery29.jpg" width="1920" height="887" alt="Two BFF members on the boat holding up a trophy-sized redfish catch" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="fishing" data-action="lightbox" data-index="29"><img src="Photos/Gallery30.jpg" width="887" height="1920" alt="BFF member at the dock crouching next to a large black drum fish after a successful trip" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="cookouts" data-action="lightbox" data-index="30"><img src="Photos/Gallery31.jpg" width="1920" height="887" alt="A heaping tray of fresh Louisiana crawfish laid out for a BFF cookout gathering" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="fishing" data-action="lightbox" data-index="31"><img src="Photos/Gallery32.jpg" width="1920" height="887" alt="BFF member hauling a crab trap from the boat during a crabbing trip on the bayou" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="kids" data-action="lightbox" data-index="32"><img src="Photos/Gallery33.jpg" width="1920" height="887" alt="Two young BFF members proudly showing off a trophy redfish they caught together" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="boats" data-action="lightbox" data-index="33"><img src="Photos/Gallery34.jpg" width="1920" height="887" alt="BFF members out on the bayou together, lines in the water on a clear day" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="fishing" data-action="lightbox" data-index="34"><img src="Photos/Gallery35.jpg" width="1920" height="887" alt="The day's haul — a spread of speckled trout and redfish from a BFF fishing trip" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="community" data-action="lightbox" data-index="35"><img src="Photos/Gallery36.jpg" width="1920" height="1440" alt="Two BFF members catching up at the marina after a day out on the water" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="fishing" data-action="lightbox" data-index="36"><img src="Photos/Gallery37.jpg" width="1280" height="720" alt="Young BFF member holding up a beautiful speckled trout caught on the Louisiana bayou" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="community" data-action="lightbox" data-index="37"><img src="Photos/Skyline%20golden%202.jpg" width="1920" height="887" alt="Golden hour over the Louisiana bayou skyline" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="community" data-action="lightbox" data-index="38"><img src="Photos/Skyline%20golden%20hue.jpg" width="1920" height="887" alt="Warm golden hue over the Louisiana marsh at dusk" loading="lazy"></div>
+      <!-- Dynamic approved submissions flow inline after static thumbs -->
+      <div id="galleryDynamic-seed" class="gallery-dynamic"></div>
+      </div>
+    </div>
+
+    <!-- Tab Panel: Fish Pics (dynamic) -->
+    <div id="galleryPanel-fish" class="gallery-panel" style="display:none;">
+      <div id="galleryFishGrid" class="gallery-grid">
+        <p class="gallery-loading">Loading fish photos…</p>
+      </div>
+    </div>
+    <!-- Additional event panels are created dynamically by loadGalleryTabs() -->
+  </div>

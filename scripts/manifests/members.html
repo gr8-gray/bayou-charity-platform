@@ -1,0 +1,372 @@
+
+  <div class="container">
+    <p class="section-eyebrow">Community</p>
+    <h2 class="section-title">Member <em>Portal</em></h2>
+    <div class="divider"></div>
+
+    <!-- AUTH VIEW -->
+    <div id="membersAuth" class="members-auth-view">
+      <!-- Pitch block -->
+      <div class="members-pitch" data-scroll="fade-up">
+        <p class="section-eyebrow">Private Community</p>
+        <h3>Join Bayou Family Fishing</h3>
+        <p>South Louisiana's waters are huge — tides, weather, spots, all changing every hour. If you're working long shifts, raising kids, or just trying to keep life together, there's no time to study charts or chase rumors. That's where we come in.</p>
+        <p>We're pooling everything we've got — tips, spots, stories — into one easy place. Log in, see where folks are headed, share what you're seeing, maybe even hop on someone else's boat. File a quick trip plan so we're all watching each other's backs.</p>
+        <p>We're not pros. We're just people who love the water, who want to give families — especially those who serve — a real shot at joy. Less stress, more time together, more fish and safer days out there.</p>
+      </div>
+
+      <!-- Zeffy membership + event RSVP iframe -->
+      <div class="zeffy-members-wrap" data-scroll="fade-up">
+        <div style="position:relative;overflow:hidden;height:450px;width:100%;">
+          <iframe title='Membership and RSVP powered by Zeffy'
+            style='position:absolute;border:0;top:0;left:0;bottom:0;right:0;width:100%;height:100%'
+            src='https://www.zeffy.com/embed/ticketing/bayou-family-fishing-memberships'
+            allowpaymentrequest
+            allowTransparency="true">
+          </iframe>
+        </div>
+      </div>
+
+      <!-- Divider for returning members -->
+      <div class="members-auth-divider">Already a member? Sign in below</div>
+      <div class="auth-buttons">
+        <button class="btn btn-primary" id="btnGoogleSignIn" style="min-width:240px;">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style="margin-right:8px;vertical-align:middle;"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/><path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z" fill="#34A853"/><path d="M3.964 10.71A5.41 5.41 0 013.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 000 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 00.957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z" fill="#EA4335"/></svg>
+          Sign in with Google
+        </button>
+        <button class="btn btn-primary" id="btnFacebookSignIn" style="background:#1877f2;min-width:240px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="white" style="margin-right:8px;vertical-align:middle;"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+          Sign in with Facebook
+        </button>
+        <button class="auth-btn auth-btn--apple btn btn-primary" disabled title="Apple Sign In coming soon" style="background:#000;min-width:240px;opacity:0.5;cursor:not-allowed;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="margin-right:0.5rem;" aria-hidden="true"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701z"/></svg>
+          Sign in with Apple
+        </button>
+      </div>
+      <p style="font-size:0.82rem;color:rgba(238,246,251,0.75);margin:0.75rem auto 0;text-align:center;max-width:320px;font-family:'Lora',serif;">
+        Always sign in with the same method you used when you first joined.
+      </p>
+
+        <button type="button" id="btnToggleEmailForm" style="background:none;border:none;color:var(--gold);font-size:0.9rem;cursor:pointer;margin-top:0.5rem;text-decoration:underline;font-family:'Lora',serif;letter-spacing:0.02em;">Or sign in with email</button>
+
+        <!-- EMAIL / PASSWORD FORM -->
+        <div id="emailAuthForm" style="display:none;width:100%;max-width:360px;margin:0.75rem auto 0;">
+          <!-- Sign In / Sign Up tab strip -->
+          <div style="display:flex;border-radius:8px;overflow:hidden;border:1px solid rgba(201,168,76,0.3);margin-bottom:1.1rem;">
+            <button id="emailTabSignIn" type="button" data-action="switch-email-tab" data-tab="signin" style="flex:1;padding:0.55rem;background:var(--amber);color:#fff;border:none;font-family:'Lora',serif;font-size:0.82rem;font-weight:600;cursor:pointer;">Sign In</button>
+            <button id="emailTabSignUp" type="button" data-action="switch-email-tab" data-tab="signup" style="flex:1;padding:0.55rem;background:transparent;color:rgba(238,246,251,0.55);border:none;font-family:'Lora',serif;font-size:0.82rem;cursor:pointer;">Create Account</button>
+          </div>
+
+          <!-- Sign In fields -->
+          <div id="emailSignInFields">
+            <div class="form-group">
+              <label for="authEmail" style="font-size:0.78rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(238,246,251,0.55);">Email</label>
+              <input type="email" id="authEmail" class="form-input" placeholder="you@example.com" autocomplete="email">
+            </div>
+            <div class="form-group">
+              <label for="authPassword" style="font-size:0.78rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(238,246,251,0.55);">Password</label>
+              <input type="password" id="authPassword" class="form-input" placeholder="Password" autocomplete="current-password">
+            </div>
+            <button type="button" class="btn btn-primary" id="btnEmailSignIn" style="width:100%;">Sign In</button>
+          </div>
+
+          <!-- Sign Up fields -->
+          <div id="emailSignUpFields" style="display:none;">
+            <div class="form-group">
+              <label for="authSignUpName" style="font-size:0.78rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(238,246,251,0.55);">Display Name</label>
+              <input type="text" id="authSignUpName" class="form-input" placeholder="Your name" autocomplete="name">
+            </div>
+            <div class="form-group">
+              <label for="authSignUpEmail" style="font-size:0.78rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(238,246,251,0.55);">Email</label>
+              <input type="email" id="authSignUpEmail" class="form-input" placeholder="you@example.com" autocomplete="email">
+            </div>
+            <div class="form-group">
+              <label for="authSignUpPassword" style="font-size:0.78rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(238,246,251,0.55);">Password <span style="font-weight:400;opacity:0.6;">(8+ characters)</span></label>
+              <input type="password" id="authSignUpPassword" class="form-input" placeholder="Choose a password" autocomplete="new-password">
+            </div>
+            <button type="button" class="btn btn-primary" id="btnEmailSignUp" style="width:100%;">Create Account</button>
+          </div>
+
+          <p id="emailAuthMsg" style="font-size:0.8rem;color:var(--amber);margin-top:0.6rem;text-align:center;min-height:1.1em;"></p>
+        </div>
+
+      <p class="auth-note">New members are reviewed before gaining access. You'll receive an email once approved.</p>
+    </div>
+
+    <!-- PENDING VIEW -->
+    <div id="membersPending" class="members-pending-view" style="display:none;">
+      <div class="pending-card">
+        <div class="pending-icon">🎣</div>
+        <h3 style="font-family:'Playfair Display',serif;margin-bottom:1rem;">You're on the list!</h3>
+        <p style="color:var(--text-mid);margin-bottom:1.5rem;">Your account is awaiting approval. Kyle will review your signup and you'll receive an email once you're in.</p>
+        <button class="btn btn-outline" id="btnSignOut">Sign Out</button>
+      </div>
+    </div>
+
+    <!-- MAIN MEMBER VIEW -->
+    <div id="membersMain" class="members-main-view" style="display:none;">
+      <div class="members-nav">
+        <nav class="member-primary-nav" role="tablist" aria-label="Member portal navigation">
+          <button class="member-primary-tab active" id="mptFeed" role="tab" aria-selected="true" aria-controls="memberTabFeed" data-action="switch-primary-tab" data-tab="Feed">📸 Feed</button>
+          <button class="member-primary-tab" id="mptCommunity" role="tab" aria-selected="false" aria-controls="memberTabCommunity" data-action="switch-primary-tab" data-tab="Community">🌊 Community</button>
+          <button class="member-primary-tab" id="mptMap" role="tab" aria-selected="false" aria-controls="memberTabMap" data-action="switch-primary-tab" data-tab="Map">🗺️ Map</button>
+          <button class="member-primary-tab" id="mptAdmin" role="tab" aria-selected="false" aria-controls="memberTabAdmin" data-action="switch-primary-tab" data-tab="Admin" style="display:none;">⚙️ Admin <span id="adminNavBadge" class="admin-nav-badge" style="display:none;"></span></button>
+        </nav>
+        <nav class="member-secondary-nav" id="memberSecondaryNav" role="tablist" aria-label="Community sections" style="display:none;">
+          <button class="member-secondary-tab active" id="mstTrips"        role="tab" aria-selected="true"  aria-controls="commPanelTrips"       data-action="switch-community-tab" data-tab="Trips">🎣 Trips</button>
+          <button class="member-secondary-tab"         id="mstGuides"      role="tab" aria-selected="false" aria-controls="commPanelGuides"      data-action="switch-community-tab" data-tab="Guides">🧑‍✈️ Guides</button>
+          <button class="member-secondary-tab"         id="mstGear"        role="tab" aria-selected="false" aria-controls="commPanelGear"        data-action="switch-community-tab" data-tab="Gear">🛒 Gear &amp; Classifieds</button>
+          <button class="member-secondary-tab"         id="mstForum"       role="tab" aria-selected="false" aria-controls="commPanelForum"       data-action="switch-community-tab" data-tab="Forum">💬 Forum</button>
+          <button class="member-secondary-tab"         id="mstLeaderboard" role="tab" aria-selected="false" aria-controls="commPanelLeaderboard" data-action="switch-community-tab" data-tab="Leaderboard">🏆 Leaderboard</button>
+          <button class="member-secondary-tab"         id="mstRecipes"     role="tab" aria-selected="false" aria-controls="commPanelRecipes"     data-action="switch-community-tab" data-tab="Recipes">🍳 Recipes</button>
+        </nav>
+        <div class="member-user-info">
+          <button class="pe-open-btn" id="btnOpenProfileEditor" data-action="open-profile-editor" aria-label="Edit your profile" title="Edit profile" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:0.5rem;padding:0.2rem 0.4rem;border-radius:1rem;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='none'">
+            <img id="memberAvatar" src="" alt="" class="member-avatar" style="display:none;" onerror="window.handleAvatarError && window.handleAvatarError(this, 'memberAvatarInitials')">
+            <div id="memberAvatarInitials" class="member-avatar-initials" style="display:none;"></div>
+            <span id="memberName" style="font-family:'Lora',serif;font-size:0.9rem;color:rgba(212,232,245,0.85);"></span>
+            <span style="font-size:0.65rem;color:var(--gold);font-family:'Lora',serif;">&#9999;</span>
+          </button>
+          <button class="btn btn-outline btn-sm" id="btnMemberSignOut">Sign Out</button>
+        </div>
+      </div>
+
+      <!-- MAP TAB -->
+      <div id="memberTabMap" class="member-tab-content" role="tabpanel" aria-labelledby="mptMap" style="display:none;">
+        <div class="map-filter-bar">
+          <div class="map-filter-row">
+            <div class="season-tabs" id="seasonTabs">
+              <button class="season-tab active" data-season="all">All</button>
+              <button class="season-tab" data-season="spring">Spring</button>
+              <button class="season-tab" data-season="summer">Summer</button>
+              <button class="season-tab" data-season="fall">Fall</button>
+              <button class="season-tab" data-season="winter">Winter</button>
+            </div>
+            <select class="map-year-select" id="mapYearSelect">
+              <option value="">Any Year</option>
+            </select>
+            <a href="#" id="openFisherMapLink" target="_blank" rel="noopener" class="fishermap-link">View Depth Chart on FisherMap ↗</a>
+          </div>
+          <div class="map-filter-row">
+            <div class="map-date-filter">
+              <label>From</label>
+              <input type="date" id="mapFromDate">
+              <label>To</label>
+              <input type="date" id="mapToDate">
+            </div>
+          </div>
+        </div>
+        <div id="memberMap"></div>
+        <button class="btn btn-primary" id="btnDropPin">+ Drop a Pin &amp; Post a Catch</button>
+        <div class="pin-post-form" id="pinPostForm" style="display:none;">
+          <h4>📍 Post Your Catch</h4>
+          <div class="form-group">
+            <label>Photo <span style="color:var(--orange);">*</span></label>
+            <input type="file" id="pinPhoto" accept="image/*" class="form-input">
+          </div>
+          <div class="form-group">
+            <label>Species caught</label>
+            <input type="text" id="pinSpecies" placeholder="e.g. Redfish, Speckled Trout" class="form-input">
+          </div>
+          <div class="form-group">
+            <label>Caption</label>
+            <input type="text" id="pinCaption" placeholder="Tell us about this catch…" class="form-input">
+          </div>
+          <div class="form-group">
+            <label>Location name <span style="font-weight:400;font-style:italic;">(optional)</span></label>
+            <input type="text" id="pinLocationName" placeholder="e.g. Empire Canal" class="form-input">
+          </div>
+          <div class="form-group">
+            <label>When did you catch it?</label>
+            <input type="date" id="pinCatchDate" class="form-input">
+          </div>
+          <p class="pin-coords-display" id="pinLatLngDisplay">Click the map above to place your pin.</p>
+          <div class="pin-form-actions">
+            <button class="btn btn-primary" id="btnSubmitPin">Post Pin</button>
+            <button class="btn btn-outline" id="btnCancelPin">Cancel</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- FEED TAB -->
+      <div id="memberTabFeed" class="member-tab-content" role="tabpanel" aria-labelledby="mptFeed">
+        <div class="feed-layout">
+          <div id="feedList" class="feed-list">
+            <p class="feed-empty">Loading catches…</p>
+          </div>
+          <div id="feedSidebar" class="feed-sidebar">
+            <!-- Weather widget -->
+            <div class="sidebar-widget" id="weatherWidget">
+              <div class="widget-title">🌤️ Plaquemines Parish</div>
+              <div class="weather-display" id="weatherDisplay">
+                <div style="font-size:0.8rem;color:var(--text-mid);font-style:italic;">Loading weather…</div>
+              </div>
+            </div>
+            <!-- Leaderboard widget -->
+            <div class="sidebar-widget">
+              <div class="widget-title">🏆 Top Anglers</div>
+              <div id="leaderboardList">
+                <div style="font-size:0.8rem;color:var(--text-mid);font-style:italic;">Loading…</div>
+              </div>
+            </div>
+            <!-- What's New widget -->
+            <div class="sidebar-widget">
+              <div class="widget-title">🌊 What's New</div>
+              <div id="communityActivityList">
+                <div style="font-size:0.8rem;color:var(--text-mid);font-style:italic;">Loading…</div>
+              </div>
+            </div>
+            <!-- Quick post widget -->
+            <div class="sidebar-widget">
+              <div class="widget-title">🎣 Quick Post</div>
+              <div class="quick-post-form">
+                <textarea id="quickPostCaption" placeholder="What'd you catch today?"></textarea>
+                <div class="quick-post-row">
+                  <input type="text" class="form-input" id="quickPostSpecies" placeholder="Species">
+                  <input type="text" class="form-input" id="quickPostLocation" placeholder="Location">
+                </div>
+                <div class="quick-post-row" style="margin-top:0.5rem;">
+                  <label class="btn btn-outline btn-sm" style="cursor:pointer;font-size:0.75rem;">
+                    📷 Photo
+                    <input type="file" id="quickPostPhoto" accept="image/*" style="display:none;">
+                  </label>
+                  <span id="quickPostFileName" style="font-size:0.7rem;color:var(--text-mid);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
+                  <button class="btn btn-primary btn-sm" id="btnQuickPost">Post</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADMIN TAB -->
+      <div id="memberTabAdmin" class="member-tab-content" role="tabpanel" aria-labelledby="mptAdmin" style="display:none;">
+        <h3 style="font-family:'Playfair Display',serif;color:var(--green-deep);margin-bottom:1rem;">Pending Accounts</h3>
+        <div id="adminPendingList" class="admin-list"><p class="admin-empty">Loading…</p></div>
+        <!-- Gallery Submissions (admin only) -->
+        <div class="gallery-approval-section" id="galleryApprovalSection" style="margin-top:2rem;">
+          <div class="gallery-approval-header" data-action="toggle-gallery-approval">
+            <span class="gallery-approval-label">
+              📷 Gallery Submissions
+              <span class="gallery-pending-count" id="galleryPendingCount" style="display:none;">0</span>
+            </span>
+            <span id="galleryApprovalToggle" style="font-size:0.75rem;color:var(--text-mid);font-family:'Lora',serif;">▾</span>
+          </div>
+          <div class="gallery-pending-list" id="galleryPendingList">
+            <div id="galleryPendingLoading" style="padding:1rem;text-align:center;font-size:0.8rem;color:var(--text-mid);font-family:'Lora',serif;">Loading…</div>
+          </div>
+        </div>
+        <!-- End Gallery Submissions -->
+
+        <!-- Gallery Event Tabs (admin only) -->
+        <div class="gallery-approval-section" id="galleryEventsSection" style="margin-top:1.5rem;">
+          <div class="gallery-approval-header" data-action="toggle-gallery-events">
+            <span class="gallery-approval-label">
+              🗂️ Gallery Event Tabs
+              <span class="gallery-pending-count" id="galleryEventsCount" style="display:none;">0</span>
+            </span>
+            <span id="galleryEventsToggle" style="font-size:0.75rem;color:var(--text-mid);">▾</span>
+          </div>
+          <div class="gallery-events-list hidden" id="galleryEventsList">
+            <div id="galleryEventsLoading" style="padding:1rem;text-align:center;font-size:0.8rem;color:var(--text-mid);">Loading…</div>
+          </div>
+          <!-- Inline create/edit form -->
+          <div id="galleryEventForm" class="gallery-event-form hidden" style="margin-top:0.75rem;">
+            <div class="form-group" style="margin-bottom:0.5rem;">
+              <input type="text" id="geFormName" class="form-input" placeholder="Event name (e.g. Spring Rodeo 2026)" style="font-size:0.85rem;">
+            </div>
+            <div style="display:flex;gap:0.5rem;margin-bottom:0.5rem;">
+              <input type="date" id="geFormDate" class="form-input" style="font-size:0.85rem;flex:1;">
+              <input type="number" id="geFormSort" class="form-input" placeholder="Sort #" value="10" style="font-size:0.85rem;width:70px;">
+            </div>
+            <div class="form-group" style="margin-bottom:0.5rem;">
+              <input type="text" id="geFormDesc" class="form-input" placeholder="Short description (optional)" style="font-size:0.85rem;">
+            </div>
+            <div style="display:flex;gap:0.5rem;">
+              <button class="btn btn-primary btn-sm" data-action="save-gallery-event">Save</button>
+              <button class="btn btn-outline btn-sm" data-action="cancel-gallery-event">Cancel</button>
+            </div>
+            <p id="geFormStatus" style="font-size:0.8rem;color:var(--text-mid);margin-top:0.3rem;min-height:1em;"></p>
+          </div>
+        </div>
+        <!-- End Gallery Event Tabs -->
+
+        <!-- Pending Trips -->
+        <div class="gallery-approval-section" id="tripsApprovalSection" style="margin-top:1.5rem;">
+          <div class="gallery-approval-header" data-action="toggle-next-sibling">
+            <span class="gallery-approval-label">🎣 Pending Trips <span id="tripsPendingCount" class="gallery-pending-count" style="display:none;"></span></span>
+            <span style="font-size:0.75rem;color:var(--text-mid);">▾</span>
+          </div>
+          <div id="tripsPendingList" class="gallery-pending-list"></div>
+        </div>
+
+        <!-- Pending Guides -->
+        <div class="gallery-approval-section" id="guidesApprovalSection" style="margin-top:1rem;">
+          <div class="gallery-approval-header" data-action="toggle-next-sibling">
+            <span class="gallery-approval-label">🧑‍✈️ Pending Guides <span id="guidesPendingCount" class="gallery-pending-count" style="display:none;"></span></span>
+            <span style="font-size:0.75rem;color:var(--text-mid);">▾</span>
+          </div>
+          <div id="guidesPendingList" class="gallery-pending-list"></div>
+        </div>
+
+        <!-- Pending Classifieds -->
+        <div class="gallery-approval-section" id="classifiedsApprovalSection" style="margin-top:1rem;">
+          <div class="gallery-approval-header" data-action="toggle-next-sibling">
+            <span class="gallery-approval-label">🛒 Pending Classifieds <span id="classifiedsPendingCount" class="gallery-pending-count" style="display:none;"></span></span>
+            <span style="font-size:0.75rem;color:var(--text-mid);">▾</span>
+          </div>
+          <div id="classifiedsPendingList" class="gallery-pending-list"></div>
+        </div>
+
+        <!-- Batch Archive (admin only) -->
+        <div class="gallery-approval-section" id="batchArchiveSection" style="margin-top:1.5rem;">
+          <div class="gallery-approval-header" data-action="toggle-next-sibling">
+            <span class="gallery-approval-label">🗄️ Batch Archive Old Posts</span>
+            <span style="font-size:0.75rem;color:var(--text-mid);">▾</span>
+          </div>
+          <div class="gallery-pending-list hidden" id="batchArchivePanel">
+            <div style="padding:1rem;">
+              <p style="font-size:0.85rem;color:var(--text-mid);margin-bottom:0.75rem;">Archive posts older than a set period across all content types. Archived posts are hidden from feeds but can be restored.</p>
+              <div style="display:flex;gap:0.75rem;align-items:center;flex-wrap:wrap;">
+                <select id="batchArchiveDays" class="form-input" style="width:auto;font-size:0.85rem;">
+                  <option value="30">30 days</option>
+                  <option value="60" selected>60 days</option>
+                  <option value="90">90 days</option>
+                  <option value="180">180 days</option>
+                </select>
+                <button class="btn btn-outline btn-sm" style="border-color:var(--orange);color:var(--orange);" data-action="admin-batch-archive">Preview Count</button>
+                <button class="btn btn-outline btn-sm" style="display:none;border-color:var(--orange);background:var(--orange);color:#fff;" id="batchArchiveConfirmBtn" data-action="admin-batch-archive-confirm">Archive Now</button>
+              </div>
+              <div id="batchArchivePreview" style="margin-top:0.75rem;font-size:0.85rem;color:var(--text-mid);min-height:1.5em;"></div>
+            </div>
+          </div>
+        </div>
+        <!-- End Batch Archive -->
+
+        <h3 style="font-family:'Playfair Display',serif;color:var(--green-deep);margin:2rem 0 1rem;">Flagged Posts</h3>
+        <div id="adminFlaggedList" class="admin-list"><p class="admin-empty">Loading…</p></div>
+      </div>
+      <!-- COMMUNITY HUB PANEL -->
+      <div id="memberTabCommunity" class="member-tab-content" role="tabpanel" aria-labelledby="mptCommunity" style="display:none;">
+        <div id="commPanelTrips"        class="comm-panel"></div>
+        <div id="commPanelGuides"       class="comm-panel" style="display:none;"></div>
+        <div id="commPanelGear"         class="comm-panel" style="display:none;"></div>
+        <div id="commPanelForum"        class="comm-panel" style="display:none;"></div>
+        <div id="commPanelLeaderboard"  class="comm-panel" style="display:none;"></div>
+        <div id="commPanelRecipes"      class="comm-panel" style="display:none;"></div>
+      </div>
+
+      <!-- COMMUNITY POST MODAL (shared across all 6 sections) -->
+      <div id="commPostModal" style="display:none;position:fixed;inset:0;background:rgba(13,43,62,0.62);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(2px);">
+        <div style="background:var(--white);border-radius:1rem;width:min(480px,92vw);max-height:88vh;overflow-y:auto;box-shadow:0 12px 48px rgba(13,43,62,0.32);">
+          <div id="commPostModalHeader" style="background:var(--green-deep);padding:1rem 1.25rem;border-radius:1rem 1rem 0 0;display:flex;align-items:center;justify-content:space-between;">
+            <span id="commPostModalTitle" style="font-family:'Playfair Display',serif;color:var(--gold);font-size:1rem;"></span>
+            <button data-action="close-comm-modal" style="background:none;border:none;color:rgba(200,220,240,0.7);font-size:1.2rem;cursor:pointer;">×</button>
+          </div>
+          <div id="commPostModalBody" style="padding:1.25rem;"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+

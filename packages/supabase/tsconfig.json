@@ -1,0 +1,9 @@
+{
+  "extends": "../../apps/web/tsconfig.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "../../dist/supabase"
+  },
+  "include": ["./**/*.ts"],
+  "exclude": ["node_modules"]
+}

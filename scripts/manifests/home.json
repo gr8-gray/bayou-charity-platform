@@ -1,0 +1,111 @@
+{
+  "section": "home",
+  "type": "server",
+  "route": "/",
+  "content": {
+    "heading": "B ayou F amily F ishing",
+    "subheading": "Everything we offer",
+    "paragraphs": [
+      "Coastal living is hard work, but the rewards are plenty. Our mission is to share our way of life with those who serve our nation and our communities. We're military families—we've been there, stretched thin, missing birthdays, missing dinner; and we see you. We are here for our military heroes, our cops and fire fighters, our first responders, educators, and caregivers. You're the ones who show up because others can't. We are all in this together—now let's get out on the water!",
+      "— Kyle Rockefeller, Founder",
+      "Get Started",
+      "Become a Member BFF members can access boats, attend events, get discounts on charters, and support our community.",
+      "Volunteer Join the crew. There's a lot of work, but we love doing it together. Help us host events, teach a boating or fishing lesson, or join an offshore construction project.",
+      "Boating Experiences Do you love boats? Learn what it takes to keep these boats available for our members and help us grow the BFF fleet!",
+      "Innisfree Innisfree will be the spiritual home at Bayou Charity. Help us build it, and it's yours forever. Ask how you can become a plank owner.",
+      "Donate Support us or one of our partner local businesses with a direct contribution.",
+      "Bayou Family Fishing isn't about catching the biggest fish. It's about making sure nobody wastes their one good day off.",
+      "South Louisiana's waters are huge — tides, weather, spots, all changing every hour. If you're working long shifts, raising kids, or just trying to keep life together, there's no time to study charts or chase rumors. That's where we come in.",
+      "We're pooling everything we've got — our tips, our spots, our stories — into one easy place. A member portal where you log in, see where folks are headed, share what you're seeing, maybe even hop on someone else's boat. Part of it? Safe boating: file a quick plan — where you're going, when you'll be back — so we're all looking out for each other.",
+      "We're not pros. We're just people who love the water, who want to give families — especially those who serve — a real shot at joy. Less stress, more time together, more fish and safer days out there.",
+      "New Chapter",
+      "INNISFREE is our newly acquired piece of Louisiana marshland — and we need your hands to help build it into a community hub for fishing, camping, and cultural preservation.",
+      "Tiles © Esri"
+    ],
+    "images": [],
+    "videos": [],
+    "links": [
+      {
+        "href": "/fishing-rodeo.html",
+        "text": "Sign Up &amp; Learn More →"
+      }
+    ],
+    "iframes": [],
+    "cards": [
+      {
+        "title": "We just bought land",
+        "description": "New Chapter"
+      }
+    ],
+    "lists": [],
+    "buttons": [
+      {
+        "text": "Become a Member",
+        "type": "button"
+      },
+      {
+        "text": "Get Involved",
+        "type": "button"
+      },
+      {
+        "text": "Donate",
+        "type": "button"
+      },
+      {
+        "text": "Become a Member BFF members can access boats, attend events, get discounts on charters, and support our community.",
+        "type": "button"
+      },
+      {
+        "text": "Volunteer Join the crew. There's a lot of work, but we love doing it together. Help us host events, teach a boating or fishing lesson, or join an offshore construction project.",
+        "type": "button"
+      },
+      {
+        "text": "Boating Experiences Do you love boats? Learn what it takes to keep these boats available for our members and help us grow the BFF fleet!",
+        "type": "button"
+      },
+      {
+        "text": "Innisfree Innisfree will be the spiritual home at Bayou Charity. Help us build it, and it's yours forever. Ask how you can become a plank owner.",
+        "type": "button"
+      },
+      {
+        "text": "Donate Support us or one of our partner local businesses with a direct contribution.",
+        "type": "button"
+      },
+      {
+        "text": "Become a Member →",
+        "type": "button"
+      },
+      {
+        "text": "See the Community →",
+        "type": "button"
+      },
+      {
+        "text": "See INNISFREE →",
+        "type": "button"
+      }
+    ]
+  },
+  "metadata": {
+    "lineRange": [
+      3543,
+      3633
+    ],
+    "imageCount": 0,
+    "videoCount": 0,
+    "hasSupabase": false,
+    "isInteractive": false,
+    "zeffyUrls": [],
+    "leafletMarkers": [
+      {
+        "lat": 29.5955,
+        "lng": -89.9067,
+        "label": "Home Base"
+      },
+      {
+        "lat": 29.5534,
+        "lng": -89.9539,
+        "label": "INNISFREE"
+      }
+    ]
+  }
+}

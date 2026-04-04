@@ -1,0 +1,351 @@
+{
+  "section": "gallery",
+  "type": "client",
+  "route": "/gallery",
+  "content": {
+    "heading": "Life on the Bayou",
+    "paragraphs": [
+      "Thank you for making memories with Bayou Charity. Select tabs below and upload pictures and videos. Click any photo to view full size.",
+      "Loading albums…",
+      "Loading fish photos…"
+    ],
+    "images": [
+      {
+        "src": "Photos/Gallery1.jpg",
+        "alt": "Club member tending a smoky charcoal grill at a BFF cookout event",
+        "width": 1000,
+        "height": 667,
+        "context": "gallery"
+      },
+      {
+        "src": "Photos/Gallery2.jpg",
+        "alt": "Close-up of chicken and vegetables being grilled with tongs at a club gathering",
+        "width": 1000,
+        "height": 667,
+        "context": "gallery"
+      },
+      {
+        "src": "Photos/Gallery3.jpg",
+        "alt": "Kids gathered at a picnic table with snacks at a Bayou Family Fishing club event",
+        "width": 1000,
+        "height": 667,
+        "context": "gallery"
+      },
+      {
+        "src": "Photos/Gallery4.jpg",
+        "alt": "Club member in BFF shirt standing near stacked crab traps at the bayou dock",
+        "width": 750,
+        "height": 1125,
+        "context": "gallery"
+      },
+      {
+        "src": "Photos/Gallery5.jpg",
+        "alt": "Club leader addressing a group of families outdoors near bayou homes",
+        "width": 1000,
+        "height": 667,
+        "context": "gallery"
+      },
+      {
+        "src": "Photos/Gallery6.jpg",
+        "alt": "Adult crouching down to show a young girl something small at the waterfront",
+        "width": 1000,
+        "height": 667,
+        "context": "gallery"
+      },
+      {
+        "src": "Photos/Gallery7.jpg",
+        "alt": "Young girl learning to tie a fishing knot with help from an adult volunteer",
+        "width": 1000,
+        "height": 667,
+        "context": "gallery"
+      },
+      {
+        "src": "Photos/Gallery8.jpg",
+        "alt": "Club leader addressing a large group of families under Spanish moss trees at the bayou",
+        "width": 1000,
+        "height": 667,
+        "context": "gallery"
+      },
+      {
+        "src": "Photos/Gallery9.jpg",
+        "alt": "Three men posing at the dock, one holding a Humminbird fish finder",
+        "width": 1000,
+        "height": 667,
+        "context": "gallery"
+      },
+      {
+        "src": "Photos/Gallery10.jpg",
+        "alt": "Group of girls and women posing together on a raised porch at the club property",
+        "width": 1000,
+        "height": 666,
+        "context": "gallery"
+      },
+      {
+        "src": "Photos/Gallery11.jpg",
+        "alt": "Three club members reviewing something on a phone together near the water",
+        "width": 1000,
+        "height": 667,
+        "context": "gallery"
+      },
+      {
+        "src": "Photos/Gallery12.jpg",
+        "alt": "Families boarding a white center console boat at the bayou dock",
+        "width": 1000,
+        "height": 667,
+        "context": "gallery"
+      },
+      {
+        "src": "Photos/Gallery13.jpg",
+        "alt": "Close-up of a child",
+        "width": 1000,
+        "height": 667,
+        "context": "gallery"
+      },
+      {
+        "src": "Photos/Gallery14.jpg",
+        "alt": "Whiteboard reading Basic Training Safety with Fishing Knots at Kids Fishing Club",
+        "width": 1000,
+        "height": 667,
+        "context": "gallery"
+      },
+      {
+        "src": "Photos/Gallery15.jpg",
+        "alt": "Instructor",
+        "width": 1000,
+        "height": 667,
+        "context": "gallery"
+      },
+      {
+        "src": "Photos/Gallery16.jpg",
+        "alt": "Instructor teaching two girls fishing knots at the Kids Fishing Club whiteboard session",
+        "width": 1000,
+        "height": 667,
+        "context": "gallery"
+      },
+      {
+        "src": "Photos/Gallery17.jpg",
+        "alt": "Multiple participants practicing fishing knots with green line at a workbench",
+        "width": 1000,
+        "height": 667,
+        "context": "gallery"
+      },
+      {
+        "src": "Photos/Gallery18.jpg",
+        "alt": "Adults and children working together on fishing knot skills at the club workshop",
+        "width": 1000,
+        "height": 667,
+        "context": "gallery"
+      },
+      {
+        "src": "Photos/Gallery19.jpg",
+        "alt": "Families and volunteers practicing fishing knots together at an outdoor workshop table",
+        "width": 1000,
+        "height": 667,
+        "context": "gallery"
+      },
+      {
+        "src": "Photos/Gallery20.jpg",
+        "alt": "Child in HUK Performance Fishing shirt learning to tie a knot with a crimping tool",
+        "width": 1000,
+        "height": 667,
+        "context": "gallery"
+      },
+      {
+        "src": "Photos/Gallery21.jpg",
+        "alt": "Teen practicing a fishing knot with green line and guidance from an adult volunteer",
+        "width": 1000,
+        "height": 667,
+        "context": "gallery"
+      },
+      {
+        "src": "Photos/Gallery22.jpg",
+        "alt": "Two young BFF members proudly holding up a fish they caught together, landing net in hand",
+        "width": 1920,
+        "height": 1920,
+        "context": "gallery"
+      },
+      {
+        "src": "Photos/Gallery23.jpg",
+        "alt": "Young BFF member in life jacket reacting with excitement after a surprise catch on the bayou",
+        "width": 739,
+        "height": 1600,
+        "context": "gallery"
+      },
+      {
+        "src": "Photos/Gallery24.jpg",
+        "alt": "Two BFF members showing off their large redfish catches out on the water",
+        "width": 1920,
+        "height": 1440,
+        "context": "gallery"
+      },
+      {
+        "src": "Photos/Gallery25.jpg",
+        "alt": "Kids and a BFF volunteer posing on the dock after a successful fishing outing",
+        "width": 1200,
+        "height": 1600,
+        "context": "gallery"
+      },
+      {
+        "src": "Photos/Gallery26.jpg",
+        "alt": "BFF member crouching on the shoreline, proudly showing off a large drum fish",
+        "width": 1200,
+        "height": 1600,
+        "context": "gallery"
+      },
+      {
+        "src": "Photos/Gallery27.jpg",
+        "alt": "Three young BFF members grinning together out on the water for a club fishing day",
+        "width": 481,
+        "height": 640,
+        "context": "gallery"
+      },
+      {
+        "src": "Photos/Gallery28.jpg",
+        "alt": "BFF member bundled up on the boat during a cool-weather day out on the bayou",
+        "width": 887,
+        "height": 1920,
+        "context": "gallery"
+      },
+      {
+        "src": "Photos/Gallery29.jpg",
+        "alt": "Two BFF members on the boat holding up a trophy-sized redfish catch",
+        "width": 1920,
+        "height": 887,
+        "context": "gallery"
+      },
+      {
+        "src": "Photos/Gallery30.jpg",
+        "alt": "BFF member at the dock crouching next to a large black drum fish after a successful trip",
+        "width": 887,
+        "height": 1920,
+        "context": "gallery"
+      },
+      {
+        "src": "Photos/Gallery31.jpg",
+        "alt": "A heaping tray of fresh Louisiana crawfish laid out for a BFF cookout gathering",
+        "width": 1920,
+        "height": 887,
+        "context": "gallery"
+      },
+      {
+        "src": "Photos/Gallery32.jpg",
+        "alt": "BFF member hauling a crab trap from the boat during a crabbing trip on the bayou",
+        "width": 1920,
+        "height": 887,
+        "context": "gallery"
+      },
+      {
+        "src": "Photos/Gallery33.jpg",
+        "alt": "Two young BFF members proudly showing off a trophy redfish they caught together",
+        "width": 1920,
+        "height": 887,
+        "context": "gallery"
+      },
+      {
+        "src": "Photos/Gallery34.jpg",
+        "alt": "BFF members out on the bayou together, lines in the water on a clear day",
+        "width": 1920,
+        "height": 887,
+        "context": "gallery"
+      },
+      {
+        "src": "Photos/Gallery35.jpg",
+        "alt": "The day",
+        "width": 1920,
+        "height": 887,
+        "context": "gallery"
+      },
+      {
+        "src": "Photos/Gallery36.jpg",
+        "alt": "Two BFF members catching up at the marina after a day out on the water",
+        "width": 1920,
+        "height": 1440,
+        "context": "gallery"
+      },
+      {
+        "src": "Photos/Gallery37.jpg",
+        "alt": "Young BFF member holding up a beautiful speckled trout caught on the Louisiana bayou",
+        "width": 1280,
+        "height": 720,
+        "context": "gallery"
+      },
+      {
+        "src": "Photos/Skyline%20golden%202.jpg",
+        "alt": "Golden hour over the Louisiana bayou skyline",
+        "width": 1920,
+        "height": 887,
+        "context": "gallery"
+      },
+      {
+        "src": "Photos/Skyline%20golden%20hue.jpg",
+        "alt": "Warm golden hue over the Louisiana marsh at dusk",
+        "width": 1920,
+        "height": 887,
+        "context": "gallery"
+      }
+    ],
+    "videos": [
+      {
+        "src": "Photos/club%20member%20casting%20video%20(gallery).mp4",
+        "sources": [
+          "Photos/club%20member%20casting%20video%20(gallery).mp4"
+        ],
+        "autoplay": true,
+        "muted": true,
+        "loop": true
+      },
+      {
+        "src": "Photos/fishing%20knots%20class%20video%20(gallery).mp4",
+        "sources": [
+          "Photos/fishing%20knots%20class%20video%20(gallery).mp4"
+        ],
+        "autoplay": true,
+        "muted": true,
+        "loop": true
+      },
+      {
+        "src": "Photos/BFF%20club%20page%20header%20video.mp4",
+        "sources": [
+          "Photos/BFF%20club%20page%20header%20video.mp4"
+        ],
+        "autoplay": true,
+        "muted": true,
+        "loop": true
+      }
+    ],
+    "links": [],
+    "iframes": [],
+    "cards": [],
+    "lists": [],
+    "buttons": [
+      {
+        "text": "↑ Upload Photo/Video",
+        "type": "button"
+      },
+      {
+        "text": "&#x26F6; Fullscreen",
+        "type": "button"
+      },
+      {
+        "text": "&#x26F6; Fullscreen",
+        "type": "button"
+      },
+      {
+        "text": "&#x26F6; Fullscreen",
+        "type": "button"
+      }
+    ]
+  },
+  "metadata": {
+    "lineRange": [
+      3636,
+      3734
+    ],
+    "imageCount": 39,
+    "videoCount": 3,
+    "hasSupabase": true,
+    "isInteractive": true,
+    "zeffyUrls": [],
+    "leafletMarkers": []
+  }
+}

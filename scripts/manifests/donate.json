@@ -1,0 +1,163 @@
+{
+  "section": "donate",
+  "type": "client",
+  "route": "/donate",
+  "content": {
+    "heading": "Support the Mission",
+    "subheading": "Make a Donation",
+    "paragraphs": [
+      "Your donation directly funds our fishing programs for military and other community service families. Your generosity also helps us build the charity's offshore hub, Innisfree, where members have access to the full Louisiana experience.",
+      "100% of every dollar goes directly to our programs — Zeffy charges us zero platform fees.",
+      "Bayou Family Fishing is a registered 501(c)(3). All donations are tax-deductible.",
+      "Or send directly — zero fees:",
+      "We channel a portion of all donations to support local Louisiana businesses that share our values. You can also support one of our partners directly:",
+      "TikTok: @reelofishal",
+      "Capt. Derrious Austin &nbsp;·&nbsp; 850-319-8909",
+      "Capt. Sam Ronquille &nbsp;·&nbsp; 504-906-5812",
+      "Book on Airbnb &nbsp;·&nbsp; Book on VRBO",
+      "Kyle Rockefeller &nbsp;·&nbsp; 504-541-1838",
+      "If you've got a boat sitting in the yard, leftover tackle, or construction stuff collecting dust — bring it our way. Bayou Charity takes it all. Every donation goes toward keeping the fleet running and the INNISFREE camp moving. You'll get a tax write-off letter from us; we get what we need to stay on the water.",
+      "📬 Reach Kyle to set something up:",
+      "kyle.rockefeller@bayoucharity.org &nbsp;·&nbsp; 504-507-0560",
+      "These trusted guides support BFF's mission and offer exceptional Louisiana fishing experiences.",
+      "Capt. Derrious Austin",
+      "TikTok: @reelofishal",
+      "850-319-8909",
+      "Capt. Kevin Hezeau",
+      "downsouthfishingchartersnola.com",
+      "985-768-1656",
+      "Capt. Mitchel Haydel",
+      "geauxfishneworleans.com",
+      "504-345-0865",
+      "Capt. Kenny Bergman",
+      "marshassassinsbowfishing.com"
+    ],
+    "images": [],
+    "videos": [],
+    "links": [
+      {
+        "href": "https://tiktok.com/@reelofishal",
+        "text": "@reelofishal"
+      },
+      {
+        "href": "tel:8503198909",
+        "text": "850-319-8909"
+      },
+      {
+        "href": "tel:5049065812",
+        "text": "504-906-5812"
+      },
+      {
+        "href": "https://www.airbnb.com/rooms/1207497072384874993?unique_share_id=d4ca4ef1-3aad-420e-91e4-b819b5f49ec8&amp;viralityEntryPoint=1&amp;s=76",
+        "text": "Book on Airbnb"
+      },
+      {
+        "href": "https://www.vrbo.com/5132148?dateless=true",
+        "text": "Book on VRBO"
+      },
+      {
+        "href": "tel:5045411838",
+        "text": "504-541-1838"
+      },
+      {
+        "href": "mailto:kyle.rockefeller@bayoucharity.org",
+        "text": "kyle.rockefeller@bayoucharity.org"
+      },
+      {
+        "href": "tel:5045070560",
+        "text": "504-507-0560"
+      },
+      {
+        "href": "https://tiktok.com/@reelofishal",
+        "text": "@reelofishal"
+      },
+      {
+        "href": "tel:8503198909",
+        "text": "850-319-8909"
+      },
+      {
+        "href": "https://www.downsouthfishingchartersnola.com/",
+        "text": "downsouthfishingchartersnola.com"
+      },
+      {
+        "href": "tel:9857681656",
+        "text": "985-768-1656"
+      },
+      {
+        "href": "https://www.geauxfishneworleans.com/",
+        "text": "geauxfishneworleans.com"
+      },
+      {
+        "href": "tel:5043450865",
+        "text": "504-345-0865"
+      },
+      {
+        "href": "https://www.marshassassinsbowfishing.com/",
+        "text": "marshassassinsbowfishing.com"
+      }
+    ],
+    "iframes": [
+      {
+        "src": "https://www.zeffy.com/embed/thermometer/bayou-family-fishing",
+        "title": "Fundraising progress powered by Zeffy",
+        "type": "zeffy"
+      },
+      {
+        "src": "https://www.zeffy.com/embed/donation-form/bayou-family-fishing",
+        "title": "Donation form powered by Zeffy",
+        "type": "zeffy"
+      }
+    ],
+    "cards": [
+      {
+        "title": "Reel O-Fishal Charters",
+        "description": "Capt. Derrious Austin",
+        "link": {
+          "href": "https://tiktok.com/@reelofishal",
+          "text": ""
+        }
+      },
+      {
+        "title": "Down South Fishing Charters",
+        "description": "Capt. Kevin Hezeau",
+        "link": {
+          "href": "https://www.downsouthfishingchartersnola.com/",
+          "text": ""
+        }
+      },
+      {
+        "title": "Bayou Paradise Fish Charters",
+        "description": "Capt. Mitchel Haydel",
+        "link": {
+          "href": "https://www.geauxfishneworleans.com/",
+          "text": ""
+        }
+      },
+      {
+        "title": "Marsh Assassins BowFishing",
+        "description": "Capt. Kenny Bergman",
+        "link": {
+          "href": "https://www.marshassassinsbowfishing.com/",
+          "text": ""
+        }
+      }
+    ],
+    "lists": [],
+    "buttons": []
+  },
+  "metadata": {
+    "lineRange": [
+      4100,
+      4236
+    ],
+    "imageCount": 0,
+    "videoCount": 0,
+    "hasSupabase": false,
+    "isInteractive": true,
+    "zeffyUrls": [
+      "https://www.zeffy.com/embed/thermometer/bayou-family-fishing",
+      "https://www.zeffy.com/embed/donation-form/bayou-family-fishing"
+    ],
+    "leafletMarkers": []
+  }
+}

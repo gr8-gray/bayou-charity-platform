@@ -1,0 +1,63 @@
+# Web Deploy — Next.js → Cloudflare Pages
+#
+# MANUAL TRIGGER ONLY — auto-deploy disabled until Phase 1 refactor is complete.
+# To deploy: GitHub repo → Actions → Web Deploy (CF Pages) → Run workflow
+# Re-enable auto-deploy when Phase 1 is complete by restoring the push trigger.
+#
+# SETUP REQUIRED (one-time):
+#   1. Create CF Pages project for v2 (separate from v1 bffwebsite.pages.dev)
+#   2. Add secrets: Settings → Secrets → Actions
+#      CLOUDFLARE_API_TOKEN  — CF API token with Pages:Edit permission
+#      CLOUDFLARE_ACCOUNT_ID — your CF account ID
+#
+# CF Pages project name: bayou-charity-web (set below — update if different)
+
+name: Web Deploy (CF Pages)
+
+on:
+  workflow_dispatch: # manual trigger only — re-add push trigger after Phase 1
+
+# REMOVED until Phase 1 complete:
+#  push:
+#    branches: [main]
+#    paths:
+#      - 'apps/web/**'
+#      - 'packages/**'
+#      - '.github/workflows/web-deploy.yml'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Type-check → Build → Deploy
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type-check (web)
+        run: npm run type-check --workspace=apps/web
+
+      - name: Build Next.js
+        run: npm run build --workspace=apps/web
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: bayou-charity-web
+          directory: apps/web/.next
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          wranglerVersion: '3'

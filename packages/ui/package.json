@@ -1,0 +1,6 @@
+{
+  "name": "@bayou/ui",
+  "version": "0.1.0",
+  "main": "./tokens.ts",
+  "types": "./tokens.ts"
+}

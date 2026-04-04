@@ -1,0 +1,130 @@
+{
+  "section": "about",
+  "type": "server",
+  "route": "/about",
+  "content": {
+    "heading": "About Us",
+    "subheading": "Kyle Rockefeller",
+    "paragraphs": [
+      "President & Secretary",
+      "Our Founder",
+      "I love being around boats and airplanes! I spent a little time in uniform with the Louisiana Air National Guard, but it was over the many years as a contractor at Belle Chasse Naval Air Station where I feel like I really served.",
+      "I finally became a good mechanic and did some work I was really proud of. However, the most important work was making friends and building relationships.",
+      "Captains, businesses, and organizations — reach out and explore partnership and fishing opportunities.",
+      "Covering Louisiana nonprofits or outdoor culture? We'd love to share the Bayou Family Fishing story.",
+      "The People Behind It",
+      "Resident philosopher and groundskeeper — Apprentice and Chief Counsel to Jack-of-all-Trades son Kyle — Head tool shed organizer — Co-Founder of Innisfree.",
+      "Vice President",
+      "A full-time commercial real estate professional with a deep-rooted passion for the outdoors and the unique culture of South Louisiana. Having grown up fishing and hunting the salt marshes of Plaquemines Parish, Max brings a local's perspective and appreciation for the region to his work and life.",
+      "Born and raised in the Republic Island of Palau, a small country in the Pacific Ocean just west of Guam. Active in the US Army for 15 years as a Fatality Management Specialist. Loves to spend time with family fishing, hiking and exploring outdoors. Very competitive in backyard sports — baseball, table tennis, and Tag!"
+    ],
+    "images": [
+      {
+        "src": "Photos/Kyle%20Rockefeller%2C%20President%20and%20Secretary.jpg",
+        "alt": "Kyle Rockefeller",
+        "width": 848,
+        "height": 832,
+        "context": "about"
+      },
+      {
+        "src": "Photos/who we are.jpg",
+        "alt": "Who We Are — Bayou Family Fishing community",
+        "width": 2500,
+        "height": 1677,
+        "context": "about"
+      },
+      {
+        "src": "Photos/Doug%20Rockefeller%2C%20Big%20Papa.jpg",
+        "alt": "Doug Rockefeller",
+        "width": 1118,
+        "height": 1677,
+        "context": "card"
+      },
+      {
+        "src": "Photos/Max%20Juge%2C%20Vice%20President.jpg",
+        "alt": "Max Juge",
+        "width": 1920,
+        "height": 2560,
+        "context": "card"
+      },
+      {
+        "src": "Photos/Ashley%20Toshimitsu%20Oiterong%2C%20Treasurer.jpg",
+        "alt": "Ashley Toshimitsu Oiterong",
+        "width": 2500,
+        "height": 1667,
+        "context": "card"
+      }
+    ],
+    "videos": [],
+    "links": [
+      {
+        "href": "mailto:kyle.rockefeller@bayoucharity.org",
+        "text": "kyle.rockefeller@bayoucharity.org"
+      },
+      {
+        "href": "tel:5045070560",
+        "text": "504-507-0560"
+      }
+    ],
+    "iframes": [],
+    "cards": [
+      {
+        "title": "📬 Get in Touch",
+        "description": "",
+        "link": {
+          "href": "mailto:kyle.rockefeller@bayoucharity.org",
+          "text": ""
+        }
+      },
+      {
+        "title": "Partner With Us",
+        "description": "Captains, businesses, and organizations — reach out and explore partnership and fishing opportunities."
+      },
+      {
+        "title": "Press & Media",
+        "description": "Covering Louisiana nonprofits or outdoor culture? We'd love to share the Bayou Family Fishing story."
+      },
+      {
+        "title": "Doug Rockefeller",
+        "description": "Big Papa",
+        "image": {
+          "src": "Photos/Doug%20Rockefeller%2C%20Big%20Papa.jpg",
+          "alt": "",
+          "context": "card"
+        }
+      },
+      {
+        "title": "Max Juge",
+        "description": "Vice President",
+        "image": {
+          "src": "Photos/Max%20Juge%2C%20Vice%20President.jpg",
+          "alt": "",
+          "context": "card"
+        }
+      },
+      {
+        "title": "Ashley Toshimitsu Oiterong",
+        "description": "Treasurer",
+        "image": {
+          "src": "Photos/Ashley%20Toshimitsu%20Oiterong%2C%20Treasurer.jpg",
+          "alt": "",
+          "context": "card"
+        }
+      }
+    ],
+    "lists": [],
+    "buttons": []
+  },
+  "metadata": {
+    "lineRange": [
+      4239,
+      4326
+    ],
+    "imageCount": 5,
+    "videoCount": 0,
+    "hasSupabase": false,
+    "isInteractive": false,
+    "zeffyUrls": [],
+    "leafletMarkers": []
+  }
+}

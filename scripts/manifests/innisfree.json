@@ -1,0 +1,95 @@
+{
+  "section": "innisfree",
+  "type": "server",
+  "route": "/innisfree",
+  "content": {
+    "heading": "Welcome to INNISFREE",
+    "subheading": "Building Up, Together",
+    "paragraphs": [
+      "Innisfree is our piece of Louisiana, named by Big Papa after a poem by W.B Yeats ( link ). The journey is just the beginning. Become a plank owner by joining us early as we repair existing structures and break ground on our future multifamily campsite. This will be the home of Bayou Charity, a hub for fishing, camping, and cultural preservation.",
+      "It begins with a boat ride and sightseeing trip, but then you stand on the back pier whose steps are washed away and look out on the open, free marshland toward the ponds beyond, you'll feel it stuck between two worlds on the edge of something special."
+    ],
+    "images": [],
+    "videos": [],
+    "links": [
+      {
+        "href": "https://www.poetryfoundation.org/poems/43281/the-lake-isle-of-innisfree",
+        "text": "link"
+      }
+    ],
+    "iframes": [],
+    "cards": [],
+    "lists": [
+      {
+        "type": "ul",
+        "items": [
+          "Repair and extend usable dock space, and clear debris in the water.",
+          "Install fish cleaning station.",
+          "Innisfree is ready to host day trips for dock fishing and inspiration."
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Replace floor and erect walls on the hut.",
+          "Wire for generator power and future solar power.",
+          "Install air conditioning.",
+          "Innisfree is now an overnight experience."
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Erect stairs to the marshland.",
+          "Build elevated temporary catwalks on the footprint of our future camp community and to the redfish pond beyond.",
+          "Begin bulkhead construction at the waterfront."
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Begin construction of permanent elevated walkways to multiple open decks, which will be foundations for future camps.",
+          "Complete bulkhead construction.",
+          "Begin dredging to backfill the bulkhead."
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Complete all elevated walkways and foundations for camps and central deck, and the observation tower.",
+          "Build camps and wire for generators.",
+          "Host plank owner grand opening of the camps at Innisfree."
+        ]
+      }
+    ],
+    "buttons": [
+      {
+        "text": "Join a Build Day →",
+        "type": "button"
+      }
+    ]
+  },
+  "metadata": {
+    "lineRange": [
+      4005,
+      4097
+    ],
+    "imageCount": 0,
+    "videoCount": 0,
+    "hasSupabase": false,
+    "isInteractive": false,
+    "zeffyUrls": [],
+    "leafletMarkers": [
+      {
+        "lat": 29.5955,
+        "lng": -89.9067,
+        "label": "Home Base"
+      },
+      {
+        "lat": 29.5534,
+        "lng": -89.9539,
+        "label": "INNISFREE"
+      }
+    ]
+  }
+}

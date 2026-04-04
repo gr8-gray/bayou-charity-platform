@@ -1,0 +1,84 @@
+# Mobile Build — Expo EAS Build
+#
+# MANUAL TRIGGER ONLY — auto-build disabled until Phase 2 mobile work begins.
+# To build: GitHub repo → Actions → Mobile Build (EAS) → Run workflow
+# Re-enable auto-build when Phase 2 starts by restoring the push trigger.
+#
+# SETUP REQUIRED (one-time):
+#   1. Run `eas build:configure` locally in apps/mobile to generate eas.json
+#   2. Add secret: Settings → Secrets → Actions
+#      EXPO_TOKEN — from expo.dev → Account Settings → Access Tokens
+#
+# Build profiles are defined in apps/mobile/eas.json.
+# Default profile: 'preview' on push to main (internal distribution)
+# Use 'production' profile manually for App Store / Play Store builds.
+
+name: Mobile Build (EAS)
+
+on:
+  workflow_dispatch: # manual trigger only — re-add push trigger when Phase 2 starts
+
+# REMOVED until Phase 2 starts:
+#  push:
+#    branches: [main]
+#    paths:
+#      - 'apps/mobile/**'
+#      - 'packages/**'
+#      - '.github/workflows/mobile-build.yml'
+    inputs:
+      profile:
+        description: 'EAS build profile'
+        required: true
+        default: 'preview'
+        type: choice
+        options:
+          - preview
+          - production
+      platform:
+        description: 'Platform to build'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - ios
+          - android
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: EAS Build (${{ inputs.platform || 'all' }})
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Setup Expo + EAS CLI
+        uses: expo/expo-github-action@v8
+        with:
+          expo-version: latest
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type-check (mobile)
+        run: npm run type-check --workspace=apps/mobile
+
+      - name: EAS Build
+        working-directory: apps/mobile
+        run: |
+          eas build \
+            --platform ${{ inputs.platform || 'all' }} \
+            --profile ${{ inputs.profile || 'preview' }} \
+            --non-interactive \
+            --no-wait
+        # --no-wait: submits build to EAS queue and exits.
+        # Monitor build status at expo.dev or with: eas build:list
