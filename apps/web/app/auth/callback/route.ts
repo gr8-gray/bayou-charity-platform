@@ -32,7 +32,6 @@ export async function GET(request: NextRequest) {
     if (!error) {
       return response;
     }
-    console.error('Auth callback error:', error.message, error.status);
   }
 
   return NextResponse.redirect(`${origin}/sign-in?error=auth`);
