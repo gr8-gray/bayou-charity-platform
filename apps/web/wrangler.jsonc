@@ -17,9 +17,6 @@
   "images": {
     "binding": "IMAGES"
   },
-  "limits": {
-    "cpu_ms": 100
-  },
   "vars": {
     "NEXT_PUBLIC_SUPABASE_URL": "https://osiramhnynhwmlfyuqcp.supabase.co",
     "NEXT_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9zaXJhbWhueW5od21sZnl1cWNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxNzk1MTksImV4cCI6MjA4ODc1NTUxOX0.1jMxPIt5t60D8Qvl0lltRLnOgH2vFas0q4Ix2ojpsfM"
