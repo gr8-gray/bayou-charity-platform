@@ -193,18 +193,46 @@ export function PinsMap({ userId, role }: PinsMapProps) {
         });
 
         const canDelete = role === 'admin' || pin.user_id === userId;
-        const photoHtml = pin.photo_url
-          ? `<img src="${pin.photo_url}" style="width:100%;max-height:120px;object-fit:cover;border-radius:8px;margin-bottom:6px" />`
-          : '';
-        const deleteBtn = canDelete
-          ? `<br/><button onclick="window.__deletePin('${pin.id}')" style="margin-top:6px;padding:3px 10px;background:#e8923a;color:white;border:none;border-radius:12px;font-family:serif;font-size:11px;cursor:pointer">Delete</button>`
-          : '';
+
+        const popupEl = document.createElement('div');
+
+        if (pin.photo_url) {
+          try {
+            const url = new URL(pin.photo_url);
+            if (url.protocol === 'https:') {
+              const img = document.createElement('img');
+              img.src = pin.photo_url;
+              img.style.cssText = 'width:100%;max-height:120px;object-fit:cover;border-radius:8px;margin-bottom:6px';
+              popupEl.appendChild(img);
+            }
+          } catch { /* invalid URL — skip image */ }
+        }
+
+        const caption = document.createElement('strong');
+        caption.textContent = pin.caption ?? '';
+        caption.style.fontFamily = 'serif';
+        popupEl.appendChild(caption);
+
+        if (pin.location_name) {
+          popupEl.appendChild(document.createElement('br'));
+          const location = document.createElement('span');
+          location.textContent = pin.location_name;
+          location.style.cssText = 'font-family:serif;font-size:12px';
+          popupEl.appendChild(location);
+        }
+
+        if (canDelete) {
+          popupEl.appendChild(document.createElement('br'));
+          const deleteBtn = document.createElement('button');
+          deleteBtn.textContent = 'Delete';
+          deleteBtn.style.cssText = 'margin-top:6px;padding:3px 10px;background:#e8923a;color:white;border:none;border-radius:12px;font-family:serif;font-size:11px;cursor:pointer';
+          deleteBtn.onclick = () => window.__deletePin?.(pin.id);
+          popupEl.appendChild(deleteBtn);
+        }
 
         L.marker([pin.lat, pin.lng], { icon })
           .addTo(mapInstance)
-          .bindPopup(
-            `${photoHtml}<strong style="font-family:serif">${pin.caption ?? ''}</strong>${pin.location_name ? `<br/><span style="font-family:serif;font-size:12px">${pin.location_name}</span>` : ''}${deleteBtn}`
-          );
+          .bindPopup(popupEl);
       });
     });
   }, [mapInstance, pins, role, userId]);
@@ -325,7 +353,7 @@ export function PinsMap({ userId, role }: PinsMapProps) {
       setSearching(true);
       try {
         const res = await fetch(
-          `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=1&email=ericgray928@live.com`
+          `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=1&email=info@bayoucharity.org`
         );
         const data = await res.json();
         if (data[0]) {
@@ -491,7 +519,15 @@ export function PinsMap({ userId, role }: PinsMapProps) {
               <input
                 type="file"
                 accept="image/jpeg,image/png,image/webp,image/gif"
-                onChange={(e) => setPinPhoto(e.target.files?.[0] ?? null)}
+                onChange={(e) => {
+                  const file = e.target.files?.[0] ?? null;
+                  if (file && file.size > 5 * 1024 * 1024) {
+                    alert('Photo must be 5MB or smaller.');
+                    e.target.value = '';
+                    return;
+                  }
+                  setPinPhoto(file);
+                }}
                 className="block w-full text-sm text-text-dark file:mr-2 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-amber/20 file:text-amber hover:file:bg-amber/30"
               />
             </div>

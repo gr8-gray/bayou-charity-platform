@@ -6,7 +6,8 @@ import type { Database } from '@bayou/supabase/types';
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get('code');
-  const next = searchParams.get('next') ?? '/members/feed';
+  const rawNext = searchParams.get('next');
+  const next = rawNext && rawNext.startsWith('/') && !rawNext.startsWith('//') ? rawNext : '/members/feed';
 
   if (code) {
     const response = NextResponse.redirect(`${origin}${next}`);
