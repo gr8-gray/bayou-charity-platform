@@ -1,21 +1,21 @@
 'use client';
 
-// Lightbox — Client Component
-// Full-screen image viewer with keyboard navigation and Framer Motion transitions
+// Lightbox — full-screen image viewer with keyboard navigation
 
 import { useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { GALLERY_IMAGES } from './GalleryGrid';
+import type { GalleryImage } from './GalleryGrid';
 
 interface LightboxProps {
+  images: GalleryImage[];
   currentIndex: number | null;
   onClose: () => void;
   onPrev: () => void;
   onNext: () => void;
 }
 
-export default function Lightbox({ currentIndex, onClose, onPrev, onNext }: LightboxProps) {
+export default function Lightbox({ images, currentIndex, onClose, onPrev, onNext }: LightboxProps) {
   const isOpen = currentIndex !== null;
 
   const handleKeyDown = useCallback(
@@ -33,19 +33,12 @@ export default function Lightbox({ currentIndex, onClose, onPrev, onNext }: Ligh
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handleKeyDown]);
 
-  // Lock body scroll when open
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => {
-      document.body.style.overflow = '';
-    };
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
   }, [isOpen]);
 
-  const image = currentIndex !== null ? GALLERY_IMAGES[currentIndex] : null;
+  const image = currentIndex !== null ? images[currentIndex] : null;
 
   return (
     <AnimatePresence>
@@ -61,9 +54,8 @@ export default function Lightbox({ currentIndex, onClose, onPrev, onNext }: Ligh
           onClick={onClose}
           role="dialog"
           aria-modal="true"
-          aria-label={`Photo ${(currentIndex ?? 0) + 1} of ${GALLERY_IMAGES.length}: ${image.alt}`}
+          aria-label={`Photo ${(currentIndex ?? 0) + 1} of ${images.length}: ${image.alt}`}
         >
-          {/* Image */}
           <motion.div
             key={currentIndex}
             initial={{ opacity: 0, scale: 0.96 }}
@@ -81,92 +73,46 @@ export default function Lightbox({ currentIndex, onClose, onPrev, onNext }: Ligh
               className="max-h-[85vh] w-auto object-contain rounded-lg shadow-2xl"
               priority
             />
-            {/* Caption */}
+            {/* Show DB caption if present, otherwise alt text */}
             <p className="mt-2 text-center text-cream/80 font-serif text-sm dark:text-cream/70">
-              {image.alt}
+              {image.caption ?? image.alt}
             </p>
           </motion.div>
 
-          {/* Close button */}
-          <button
-            onClick={onClose}
-            aria-label="Close lightbox"
+          {/* Close */}
+          <button onClick={onClose} aria-label="Close lightbox"
             className="absolute top-4 right-4 text-cream/70 hover:text-cream
-                       dark:text-cream/60 dark:hover:text-cream
                        transition-colors duration-150 focus:outline-none
-                       focus-visible:ring-2 focus-visible:ring-amber rounded"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="32"
-              height="32"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
+                       focus-visible:ring-2 focus-visible:ring-amber rounded">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
             </svg>
           </button>
 
-          {/* Prev button */}
-          <button
-            onClick={(e) => { e.stopPropagation(); onPrev(); }}
-            aria-label="Previous photo"
-            className="absolute left-4 top-1/2 -translate-y-1/2
-                       text-cream/70 hover:text-cream dark:text-cream/60 dark:hover:text-cream
-                       transition-colors duration-150 focus:outline-none
-                       focus-visible:ring-2 focus-visible:ring-amber rounded"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="40"
-              height="40"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
+          {/* Prev */}
+          <button onClick={(e) => { e.stopPropagation(); onPrev(); }} aria-label="Previous photo"
+            className="absolute left-4 top-1/2 -translate-y-1/2 text-cream/70 hover:text-cream
+                       transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber rounded">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <polyline points="15 18 9 12 15 6" />
             </svg>
           </button>
 
-          {/* Next button */}
-          <button
-            onClick={(e) => { e.stopPropagation(); onNext(); }}
-            aria-label="Next photo"
-            className="absolute right-4 top-1/2 -translate-y-1/2
-                       text-cream/70 hover:text-cream dark:text-cream/60 dark:hover:text-cream
-                       transition-colors duration-150 focus:outline-none
-                       focus-visible:ring-2 focus-visible:ring-amber rounded"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="40"
-              height="40"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
+          {/* Next */}
+          <button onClick={(e) => { e.stopPropagation(); onNext(); }} aria-label="Next photo"
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-cream/70 hover:text-cream
+                       transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber rounded">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <polyline points="9 18 15 12 9 6" />
             </svg>
           </button>
 
           {/* Counter */}
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2
-                          text-cream/60 dark:text-cream/50 font-serif text-sm">
-            {(currentIndex ?? 0) + 1} / {GALLERY_IMAGES.length}
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-cream/60 font-serif text-sm">
+            {(currentIndex ?? 0) + 1} / {images.length}
           </div>
         </motion.div>
       )}
