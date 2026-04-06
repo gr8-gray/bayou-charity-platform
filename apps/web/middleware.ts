@@ -4,15 +4,14 @@ import { createMiddlewareClient } from '@bayou/supabase/middleware';
 
 export async function middleware(request: NextRequest) {
   const response = NextResponse.next();
-
   const supabase = createMiddlewareClient(request, response);
 
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
+  // getUser() validates with Supabase auth server (secure)
+  // getSession() only reads from cookie (spoofable — do not use for auth checks)
+  const { data: { user }, error } = await supabase.auth.getUser();
 
   // Unauthenticated → redirect to sign-in
-  if (!session) {
+  if (error || !user) {
     return NextResponse.redirect(new URL('/sign-in', request.url));
   }
 
@@ -21,7 +20,7 @@ export async function middleware(request: NextRequest) {
     const { data: profile } = await supabase
       .from('profiles')
       .select('role')
-      .eq('id', session.user.id)
+      .eq('id', user.id)
       .single();
 
     if (profile?.role !== 'admin') {
