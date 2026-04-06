@@ -34,6 +34,7 @@ export default function CommunityTab() {
   const [activeTab, setActiveTab] = useState<SubTab>('trips');
   const [userId, setUserId] = useState<string | null>(null);
   const [role, setRole] = useState<Role>('member');
+  const [error, setError] = useState(false);
 
   const supabase = useMemo(() => createClient(), []);
 
@@ -41,11 +42,12 @@ export default function CommunityTab() {
     let cancelled = false;
 
     const load = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session || cancelled) return;
+      const { data: { session }, error: sessionErr } = await supabase.auth.getSession();
+      if (cancelled) return;
+      if (sessionErr || !session) { setError(true); return; }
 
       const uid = session.user.id;
-      if (!cancelled) setUserId(uid);
+      setUserId(uid);
 
       const { data } = await supabase
         .from('profiles')
@@ -76,6 +78,17 @@ export default function CommunityTab() {
       case 'recipes':     return <RecipesPanel {...props} />;
     }
   };
+
+  if (error) {
+    return (
+      <div className="text-center py-12">
+        <p className="font-serif text-text-mid dark:text-cream/60">
+          Unable to load your session.{' '}
+          <a href="/sign-in" className="text-amber hover:text-amber/80 underline">Sign in again</a>
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-6">

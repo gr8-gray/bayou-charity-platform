@@ -200,12 +200,16 @@ export function AdminPanel({ adminId }: AdminPanelProps) {
   }
 
   async function handleApprove(userId: string) {
-    await supabase.from('profiles').update({ role: 'member' }).eq('id', userId);
+    const { error } = await supabase.from('profiles').update({ role: 'member', status: 'approved' }).eq('id', userId);
+    if (error) { showToast(`Approve failed: ${error.message}`); return; }
+    showToast('Member approved');
     await loadPending();
   }
 
   async function handleMakeAdmin(userId: string) {
-    await supabase.from('profiles').update({ role: 'admin' }).eq('id', userId);
+    const { error } = await supabase.from('profiles').update({ role: 'admin', status: 'approved' }).eq('id', userId);
+    if (error) { showToast(`Make admin failed: ${error.message}`); return; }
+    showToast('Admin role granted');
     await loadPending();
   }
 
@@ -319,14 +323,25 @@ export function AdminPanel({ adminId }: AdminPanelProps) {
                     <span className={`px-2 py-0.5 rounded-full text-xs font-serif capitalize ${roleBadge[user.role] ?? ''}`}>
                       {user.role}
                     </span>
+                    {user.status === 'approved' ? (
+                      <span className="px-2 py-0.5 rounded-full text-xs font-serif bg-green-water/20 text-green-water dark:text-cream/70">
+                        Approved
+                      </span>
+                    ) : (
+                      <span className="px-2 py-0.5 rounded-full text-xs font-serif bg-amber/20 text-amber">
+                        Pending
+                      </span>
+                    )}
                     {user.id !== adminId && user.role !== 'admin' && (
                       <>
-                        <button
-                          onClick={() => handleApprove(user.id)}
-                          className="px-3 py-1 bg-green-water/20 hover:bg-green-water/40 text-green-water dark:text-cream font-serif text-xs rounded-full transition-colors"
-                        >
-                          Approve
-                        </button>
+                        {user.status !== 'approved' && (
+                          <button
+                            onClick={() => handleApprove(user.id)}
+                            className="px-3 py-1 bg-green-water/20 hover:bg-green-water/40 text-green-water dark:text-cream font-serif text-xs rounded-full transition-colors"
+                          >
+                            Approve
+                          </button>
+                        )}
                         <button
                           onClick={() => handleMakeAdmin(user.id)}
                           className="px-3 py-1 bg-amber/10 hover:bg-amber/20 text-amber font-serif text-xs rounded-full transition-colors"
