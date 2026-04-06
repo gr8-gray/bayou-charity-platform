@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Link from 'next/link';
 import { createClient } from '@bayou/supabase';
 import type { Database } from '@bayou/supabase/types';
 
@@ -64,6 +65,9 @@ export function AdminPanel({ adminId }: AdminPanelProps) {
   const [pendingClassifieds, setPendingClassifieds] = useState<PendingClassified[]>([]);
   const [classifiedsLoading, setClassifiedsLoading] = useState(true);
   const [toast, setToast] = useState<string | null>(null);
+  const [membersOpen, setMembersOpen] = useState(false);
+  const [memberSearch, setMemberSearch] = useState('');
+  const membersInitialized = useRef(false);
 
   // Gallery Events state
   type GalleryEvent = Database['public']['Tables']['gallery_events']['Row'];
@@ -72,22 +76,6 @@ export function AdminPanel({ adminId }: AdminPanelProps) {
   const [editingEvent, setEditingEvent] = useState<GalleryEvent | null>(null);
   const [eventForm, setEventForm] = useState({ name: '', event_date: '', sort_order: 10, description: '' });
 
-  // Gallery Photos state
-  type GallerySubmissionAdmin = {
-    id: string;
-    storage_path: string;
-    caption: string | null;
-    status: string;
-    submitted_at: string;
-    event_id: string | null;
-    gallery_events: { name: string } | null;
-  };
-
-  const [galleryPhotos, setGalleryPhotos] = useState<GallerySubmissionAdmin[]>([]);
-  const [galleryPhotosLoading, setGalleryPhotosLoading] = useState(true);
-  const [galleryPhotosPage, setGalleryPhotosPage] = useState(0);
-  const GALLERY_PAGE_SIZE = 20;
-  const SUPABASE_STORAGE_URL = 'https://osiramhnynhwmlfyuqcp.supabase.co/storage/v1/object/public/gallery-public';
 
   const supabase = useMemo(() => createClient(), []);
 
@@ -192,17 +180,6 @@ export function AdminPanel({ adminId }: AdminPanelProps) {
     await loadGalleryEvents();
   }
 
-  const loadGalleryPhotos = useCallback(async (page = 0) => {
-    setGalleryPhotosLoading(true);
-    const from = page * GALLERY_PAGE_SIZE;
-    const { data } = await supabase
-      .from('gallery_submissions')
-      .select('id, storage_path, caption, status, submitted_at, event_id, gallery_events(name)')
-      .order('submitted_at', { ascending: false })
-      .range(from, from + GALLERY_PAGE_SIZE - 1);
-    setGalleryPhotos((data as GallerySubmissionAdmin[]) ?? []);
-    setGalleryPhotosLoading(false);
-  }, [supabase]);
 
   function startEditEvent(event: GalleryEvent) {
     setEditingEvent(event);
@@ -221,8 +198,14 @@ export function AdminPanel({ adminId }: AdminPanelProps) {
     void loadPendingGuides();
     void loadPendingClassifieds();
     void loadGalleryEvents();
-    void loadGalleryPhotos();
-  }, [loadPending, loadFlagged, loadPendingTrips, loadPendingGuides, loadPendingClassifieds, loadGalleryEvents, loadGalleryPhotos]);
+  }, [loadPending, loadFlagged, loadPendingTrips, loadPendingGuides, loadPendingClassifieds, loadGalleryEvents]);
+
+  useEffect(() => {
+    if (!loading && !membersInitialized.current) {
+      membersInitialized.current = true;
+      setMembersOpen(pending.some(u => u.status !== 'approved'));
+    }
+  }, [loading, pending]);
 
   async function handleUnflag(pinId: string) {
     await supabase.from('pins').update({ flagged: false }).eq('id', pinId);
@@ -264,25 +247,6 @@ export function AdminPanel({ adminId }: AdminPanelProps) {
   function showToast(msg: string) {
     setToast(msg);
     setTimeout(() => setToast(null), 2500);
-  }
-
-  async function handleApprovePhoto(id: string) {
-    await supabase.from('gallery_submissions').update({ status: 'approved' }).eq('id', id);
-    showToast('Photo approved');
-    void loadGalleryPhotos(galleryPhotosPage);
-  }
-
-  async function handleRejectPhoto(id: string) {
-    if (!confirm('Remove this photo from the gallery?')) return;
-    await supabase.from('gallery_submissions').update({ status: 'rejected' }).eq('id', id);
-    showToast('Photo removed');
-    void loadGalleryPhotos(galleryPhotosPage);
-  }
-
-  async function handleReassignPhoto(id: string, newEventId: string | null) {
-    await supabase.from('gallery_submissions').update({ event_id: newEventId }).eq('id', id);
-    showToast('Photo reassigned');
-    void loadGalleryPhotos(galleryPhotosPage);
   }
 
   async function handleApproveTrip(id: string) {
@@ -343,89 +307,105 @@ export function AdminPanel({ adminId }: AdminPanelProps) {
   return (
     <div className="max-w-2xl mx-auto space-y-8">
       {/* Members queue */}
-      <motion.section
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="bg-white dark:bg-green-water rounded-2xl p-5 border border-gold/10 shadow-sm"
-      >
-        <h2 className="font-display text-xl text-green-deep dark:text-cream mb-4 flex items-center gap-2">
-          Member Accounts
-          {pending.filter(u => u.status !== 'approved').length > 0 && (
-            <span className="px-2 py-0.5 bg-amber/20 text-amber text-sm rounded-full font-serif">
-              {pending.filter(u => u.status !== 'approved').length} pending
-            </span>
-          )}
-        </h2>
-        {loading ? (
-          <p className="font-serif text-sm text-text-mid dark:text-cream/60">Loading…</p>
-        ) : pending.length === 0 ? (
-          <p className="font-serif text-sm text-text-mid dark:text-cream/60">No members yet.</p>
-        ) : (
-          <AnimatePresence>
-            <ul className="divide-y divide-gold/10">
-              {pending.map((user, i) => (
-                <motion.li
-                  key={user.id}
-                  initial={{ opacity: 0, x: -8 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.03 }}
-                  className="py-3 flex flex-col md:flex-row md:items-center gap-2 md:gap-4"
-                >
-                  <div className="flex-1 min-w-0">
-                    <p className="font-serif font-semibold text-text-dark dark:text-cream text-sm truncate">
-                      {user.display_name ?? 'Unknown'}
-                    </p>
-                    <p className="font-serif text-xs text-text-mid dark:text-cream/50 truncate">{user.email}</p>
-                    <p className="font-serif text-xs text-text-mid dark:text-cream/40">
-                      Joined {new Date(user.joined_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className={`px-2 py-0.5 rounded-full text-xs font-serif capitalize ${roleBadge[user.role] ?? ''}`}>
-                      {user.role}
-                    </span>
-                    {user.status === 'approved' ? (
-                      <span className="px-2 py-0.5 rounded-full text-xs font-serif bg-green-water/20 text-green-water dark:text-cream/70">
-                        Approved
-                      </span>
-                    ) : (
-                      <span className="px-2 py-0.5 rounded-full text-xs font-serif bg-amber/20 text-amber">
-                        Pending
-                      </span>
-                    )}
-                    {user.id !== adminId && user.role !== 'admin' && (
-                      <>
-                        {user.status !== 'approved' && (
-                          <button
-                            onClick={() => handleApprove(user.id)}
-                            className="px-3 py-1 bg-green-water/20 hover:bg-green-water/40 text-green-water dark:text-cream font-serif text-xs rounded-full transition-colors"
-                          >
-                            Approve
-                          </button>
+      <section className="bg-white dark:bg-green-water rounded-2xl p-5 border border-gold/10 shadow-sm">
+        <button
+          onClick={() => setMembersOpen(o => !o)}
+          className="w-full flex items-center justify-between"
+          aria-expanded={membersOpen}
+        >
+          <h2 className="font-display text-xl text-green-deep dark:text-cream flex items-center gap-2">
+            Member Accounts
+            {pending.filter(u => u.status !== 'approved').length > 0 && (
+              <span className="px-2 py-0.5 bg-amber/20 text-amber-800 dark:text-amber text-sm rounded-full font-serif">
+                {pending.filter(u => u.status !== 'approved').length} pending
+              </span>
+            )}
+          </h2>
+          <span className="text-text-mid dark:text-cream/60 text-lg select-none">{membersOpen ? '▾' : '▸'}</span>
+        </button>
+        {membersOpen && (
+          <div className="mt-4">
+            <input
+              type="text"
+              placeholder="Search by name or email…"
+              value={memberSearch}
+              onChange={(e) => setMemberSearch(e.target.value)}
+              aria-label="Search members by name or email"
+              className="w-full bg-cream dark:bg-green-deep/60 rounded-xl px-4 py-2 font-serif text-text-dark dark:text-cream text-sm focus:outline-none focus:ring-2 focus:ring-amber/40 mb-3"
+            />
+            {loading ? (
+              <p className="font-serif text-sm text-text-mid dark:text-cream/60">Loading…</p>
+            ) : pending.length === 0 ? (
+              <p className="font-serif text-sm text-text-mid dark:text-cream/60">No members yet.</p>
+            ) : (
+              <AnimatePresence>
+                <ul className="divide-y divide-gold/10">
+                  {pending
+                    .filter(u =>
+                      !memberSearch ||
+                      (u.display_name ?? '').toLowerCase().includes(memberSearch.toLowerCase()) ||
+                      (u.email ?? '').toLowerCase().includes(memberSearch.toLowerCase())
+                    )
+                    .map((user, i) => (
+                    <motion.li
+                      key={user.id}
+                      initial={{ opacity: 0, x: -8 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: i * 0.03 }}
+                      className="py-3 flex flex-col md:flex-row md:items-center gap-2 md:gap-4"
+                    >
+                      <div className="flex-1 min-w-0">
+                        <p className="font-serif font-semibold text-text-dark dark:text-cream text-sm truncate">
+                          {user.display_name ?? 'Unknown'}
+                        </p>
+                        <p className="font-serif text-xs text-text-mid dark:text-cream/50 truncate">{user.email}</p>
+                        <p className="font-serif text-xs text-text-mid dark:text-cream/40">
+                          Joined {new Date(user.joined_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className={`px-2 py-0.5 rounded-full text-xs font-serif capitalize ${roleBadge[user.role] ?? ''}`}>
+                          {user.role}
+                        </span>
+                        {user.status === 'approved' ? (
+                          <span className="px-2 py-0.5 rounded-full text-xs font-serif bg-green-water/20 text-green-water dark:text-cream/70">
+                            Approved
+                          </span>
+                        ) : (
+                          <span className="px-2 py-0.5 rounded-full text-xs font-serif bg-amber/20 text-amber-800 dark:text-amber">
+                            Pending
+                          </span>
                         )}
-                        <button
-                          onClick={() => handleMakeAdmin(user.id)}
-                          className="px-3 py-1 bg-amber/10 hover:bg-amber/20 text-amber font-serif text-xs rounded-full transition-colors"
-                        >
-                          Make Admin
-                        </button>
-                      </>
-                    )}
-                  </div>
-                </motion.li>
-              ))}
-            </ul>
-          </AnimatePresence>
+                        {user.id !== adminId && user.role !== 'admin' && (
+                          <>
+                            {user.status !== 'approved' && (
+                              <button
+                                onClick={() => handleApprove(user.id)}
+                                className="px-3 py-1 bg-green-water/20 hover:bg-green-water/40 text-green-water dark:text-cream font-serif text-xs rounded-full transition-colors"
+                              >
+                                Approve
+                              </button>
+                            )}
+                            <button
+                              onClick={() => handleMakeAdmin(user.id)}
+                              className="px-3 py-1 bg-amber/10 hover:bg-amber/20 text-amber-800 dark:text-amber font-serif text-xs rounded-full transition-colors"
+                            >
+                              Make Admin
+                            </button>
+                          </>
+                        )}
+                      </div>
+                    </motion.li>
+                  ))}
+                </ul>
+              </AnimatePresence>
+            )}
+          </div>
         )}
-      </motion.section>
+      </section>
 
       {/* Flagged pins moderation */}
-      <motion.section
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 }}
-        className="bg-white dark:bg-green-water rounded-2xl p-5 border border-gold/10 shadow-sm"
-      >
+      <section className="bg-white dark:bg-green-water rounded-2xl p-5 border border-gold/10 shadow-sm">
         <h2 className="font-display text-xl text-green-deep dark:text-cream mb-4">Flagged Posts</h2>
         {flaggedLoading ? (
           <p className="font-serif text-sm text-text-mid dark:text-cream/60">Loading…</p>
@@ -473,15 +453,10 @@ export function AdminPanel({ adminId }: AdminPanelProps) {
             </ul>
           </AnimatePresence>
         )}
-      </motion.section>
+      </section>
 
       {/* Pending Trips */}
-      <motion.section
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-        className="bg-white dark:bg-green-water rounded-2xl p-5 border border-gold/10 shadow-sm"
-      >
+      <section className="bg-white dark:bg-green-water rounded-2xl p-5 border border-gold/10 shadow-sm">
         <h2 className="font-display text-xl text-green-deep dark:text-cream mb-4">
           Pending Trips {pendingTrips.length > 0 && (
             <span className="ml-2 px-2 py-0.5 bg-amber/20 text-amber text-sm rounded-full font-serif">{pendingTrips.length}</span>
@@ -516,15 +491,10 @@ export function AdminPanel({ adminId }: AdminPanelProps) {
             ))}
           </ul>
         )}
-      </motion.section>
+      </section>
 
       {/* Pending Guides */}
-      <motion.section
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.25 }}
-        className="bg-white dark:bg-green-water rounded-2xl p-5 border border-gold/10 shadow-sm"
-      >
+      <section className="bg-white dark:bg-green-water rounded-2xl p-5 border border-gold/10 shadow-sm">
         <h2 className="font-display text-xl text-green-deep dark:text-cream mb-4">
           Pending Guides {pendingGuides.length > 0 && (
             <span className="ml-2 px-2 py-0.5 bg-amber/20 text-amber text-sm rounded-full font-serif">{pendingGuides.length}</span>
@@ -559,15 +529,10 @@ export function AdminPanel({ adminId }: AdminPanelProps) {
             ))}
           </ul>
         )}
-      </motion.section>
+      </section>
 
       {/* Pending Classifieds */}
-      <motion.section
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3 }}
-        className="bg-white dark:bg-green-water rounded-2xl p-5 border border-gold/10 shadow-sm"
-      >
+      <section className="bg-white dark:bg-green-water rounded-2xl p-5 border border-gold/10 shadow-sm">
         <h2 className="font-display text-xl text-green-deep dark:text-cream mb-4">
           Pending Classifieds {pendingClassifieds.length > 0 && (
             <span className="ml-2 px-2 py-0.5 bg-amber/20 text-amber text-sm rounded-full font-serif">{pendingClassifieds.length}</span>
@@ -602,15 +567,10 @@ export function AdminPanel({ adminId }: AdminPanelProps) {
             ))}
           </ul>
         )}
-      </motion.section>
+      </section>
 
       {/* Batch archive tool */}
-      <motion.section
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.15 }}
-        className="bg-white dark:bg-green-water rounded-2xl p-5 border border-gold/10 shadow-sm"
-      >
+      <section className="bg-white dark:bg-green-water rounded-2xl p-5 border border-gold/10 shadow-sm">
         <h2 className="font-display text-xl text-green-deep dark:text-cream mb-2">Batch Archive</h2>
         <p className="font-serif text-sm text-text-mid dark:text-cream/60 mb-4">
           Archive posts older than a set period across all content types. Archived posts are hidden from feeds but can be restored.
@@ -624,6 +584,7 @@ export function AdminPanel({ adminId }: AdminPanelProps) {
               max={3650}
               value={archiveDays}
               onChange={(e) => { setArchiveDays(Number(e.target.value)); setPreviewCount(null); }}
+              aria-label="Archive posts older than N days"
               className="w-20 bg-cream dark:bg-green-deep/60 rounded-xl px-3 py-2 font-serif text-text-dark dark:text-cream text-sm focus:outline-none focus:ring-2 focus:ring-amber/40 text-center"
             />
             <span className="font-serif text-sm text-text-dark dark:text-cream">days</span>
@@ -652,14 +613,9 @@ export function AdminPanel({ adminId }: AdminPanelProps) {
             {previewCount === 0 ? 'No posts to archive in that range.' : `${previewCount} post${previewCount !== 1 ? 's' : ''} will be archived.`}
           </p>
         )}
-      </motion.section>
+      </section>
       {/* Gallery Events CRUD */}
-      <motion.section
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.35 }}
-        className="bg-white dark:bg-green-water rounded-2xl p-5 border border-gold/10 shadow-sm"
-      >
+      <section className="bg-white dark:bg-green-water rounded-2xl p-5 border border-gold/10 shadow-sm">
         <div className="flex items-center justify-between mb-4">
           <h2 className="font-display text-xl text-green-deep dark:text-cream">Gallery Events</h2>
           {!editingEvent && (
@@ -689,6 +645,7 @@ export function AdminPanel({ adminId }: AdminPanelProps) {
               type="date"
               value={eventForm.event_date}
               onChange={(e) => setEventForm((f) => ({ ...f, event_date: e.target.value }))}
+              aria-label="Event date"
               className="flex-1 bg-cream dark:bg-green-deep/60 rounded-xl px-4 py-2 font-serif text-text-dark dark:text-cream text-sm focus:outline-none focus:ring-2 focus:ring-amber/40"
             />
             <input
@@ -762,97 +719,20 @@ export function AdminPanel({ adminId }: AdminPanelProps) {
             ))}
           </ul>
         )}
-      </motion.section>
+      </section>
 
-      {/* Gallery Photos */}
-      <motion.section
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
-        className="bg-white dark:bg-green-water rounded-2xl p-5 border border-gold/10 shadow-sm"
-      >
-        <h2 className="font-display text-xl text-green-deep dark:text-cream mb-4">Gallery Photos</h2>
-        {galleryPhotosLoading ? (
-          <p className="font-serif text-sm text-text-mid dark:text-cream/60">Loading…</p>
-        ) : galleryPhotos.length === 0 ? (
-          <p className="font-serif text-sm text-text-mid dark:text-cream/60">No photos yet.</p>
-        ) : (
-          <>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mb-4">
-              {galleryPhotos.map((photo) => (
-                <div key={photo.id} className="rounded-xl overflow-hidden border border-gold/10 bg-cream dark:bg-green-deep/40">
-                  {/* Thumbnail */}
-                  <div className="aspect-square relative overflow-hidden">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={`${SUPABASE_STORAGE_URL}/${photo.storage_path}`}
-                      alt={photo.caption ?? 'Gallery photo'}
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                    />
-                    {photo.status === 'pending' && (
-                      <span className="absolute top-1 left-1 px-1.5 py-0.5 bg-amber/90 text-white text-[10px] font-serif rounded">
-                        Pending
-                      </span>
-                    )}
-                  </div>
-                  {/* Meta + actions */}
-                  <div className="p-2 space-y-1">
-                    <p className="font-serif text-[11px] text-text-mid dark:text-cream/60 truncate">
-                      {photo.gallery_events?.name ?? 'Unassigned'}
-                    </p>
-                    {/* Reassign dropdown */}
-                    <select
-                      value={photo.event_id ?? ''}
-                      onChange={(e) => { void handleReassignPhoto(photo.id, e.target.value || null); }}
-                      className="w-full bg-cream dark:bg-green-deep/60 rounded-lg px-2 py-1 font-serif text-[11px] text-text-dark dark:text-cream focus:outline-none focus:ring-1 focus:ring-amber/40"
-                    >
-                      <option value="">Unassigned</option>
-                      {galleryEvents.map((ev) => (
-                        <option key={ev.id} value={ev.id}>{ev.name}</option>
-                      ))}
-                    </select>
-                    {/* Approve/reject for pending */}
-                    {photo.status === 'pending' && (
-                      <div className="flex gap-1">
-                        <button
-                          onClick={() => { void handleApprovePhoto(photo.id); }}
-                          className="flex-1 px-2 py-1 bg-green-water/20 hover:bg-green-water/40 text-green-water dark:text-cream font-serif text-[11px] rounded-lg transition-colors"
-                        >Approve</button>
-                        <button
-                          onClick={() => { void handleRejectPhoto(photo.id); }}
-                          className="flex-1 px-2 py-1 bg-red-400/10 hover:bg-red-400/20 text-red-400 font-serif text-[11px] rounded-lg transition-colors"
-                        >Remove</button>
-                      </div>
-                    )}
-                    {photo.status === 'approved' && (
-                      <button
-                        onClick={() => { void handleRejectPhoto(photo.id); }}
-                        className="w-full px-2 py-1 bg-red-400/10 hover:bg-red-400/20 text-red-400 font-serif text-[11px] rounded-lg transition-colors"
-                      >Remove</button>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-            {/* Pagination */}
-            <div className="flex gap-2 justify-center">
-              {galleryPhotosPage > 0 && (
-                <button
-                  onClick={() => { setGalleryPhotosPage(p => p - 1); void loadGalleryPhotos(galleryPhotosPage - 1); }}
-                  className="px-4 py-2 bg-cream dark:bg-green-deep border border-gold/30 text-text-mid dark:text-cream/70 font-serif text-sm rounded-full hover:border-amber hover:text-amber transition-colors"
-                >← Prev</button>
-              )}
-              {galleryPhotos.length === GALLERY_PAGE_SIZE && (
-                <button
-                  onClick={() => { setGalleryPhotosPage(p => p + 1); void loadGalleryPhotos(galleryPhotosPage + 1); }}
-                  className="px-4 py-2 bg-cream dark:bg-green-deep border border-gold/30 text-text-mid dark:text-cream/70 font-serif text-sm rounded-full hover:border-amber hover:text-amber transition-colors"
-                >Next →</button>
-              )}
-            </div>
-          </>
-        )}
-      </motion.section>
+      {/* Gallery Photos — managed on dedicated page */}
+      <section className="bg-white dark:bg-green-water rounded-2xl p-5 border border-gold/10 shadow-sm">
+        <div className="flex items-center justify-between">
+          <h2 className="font-display text-xl text-green-deep dark:text-cream">Gallery Photos</h2>
+          <Link
+            href="/members/admin/gallery"
+            className="px-4 py-2 bg-amber hover:bg-amber/90 text-white font-serif text-sm rounded-full transition-all hover:scale-[1.02]"
+          >
+            Manage Photos →
+          </Link>
+        </div>
+      </section>
 
       {/* Toast */}
       {toast && (

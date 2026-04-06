@@ -46,7 +46,8 @@ export default function GalleryGrid({ images, onImageClick }: GalleryGridProps) 
               height={img.height}
               className="w-full h-auto object-cover transition-transform duration-300
                          group-hover:scale-105"
-              loading="lazy"
+              priority={i === 0}
+              loading={i === 0 ? undefined : 'lazy'}
               sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
             />
           </div>

@@ -60,11 +60,11 @@ export default function Volunteer() {
       {/* Upcoming events banner */}
       <section className="py-8 px-4">
         <div className="glass-card p-8 max-w-3xl mx-auto text-center">
-          <p className="font-handwritten text-amber text-xl mb-1">Upcoming Events</p>
+          <p className="font-handwritten text-amber-700 dark:text-amber text-xl mb-1">Upcoming Events</p>
           <p className="font-display text-2xl text-green-deep dark:text-gold">
             🎣 Fishing Rodeo — April 25th, 2026
           </p>
-          <p className="font-serif text-text-mid dark:text-cream/70 mt-2">
+          <p className="font-serif text-text-dark dark:text-cream/90 mt-2">
             Sign up to participate and volunteer at our featured event — the Bayou Family Fishing Spring Rodeo on April 25, 2026.
           </p>
         </div>

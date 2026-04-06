@@ -22,25 +22,37 @@ export function MembersNav() {
 
   useEffect(() => {
     const supabase = createClient();
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (!session) return;
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (!user) return;
       supabase
         .from('profiles')
         .select('role')
-        .eq('id', session.user.id)
-        .single()
+        .eq('id', user.id)
+        .maybeSingle()
         .then(({ data }) => {
-          if (data?.role) setRole(data.role as 'member' | 'guide' | 'admin');
+          if (!data) {
+            supabase.auth.signOut().then(() => {
+              window.location.href = '/sign-in';
+            });
+            return;
+          }
+          if (data.role) setRole(data.role as 'member' | 'guide' | 'admin');
         });
     });
   }, []);
+
+  async function handleSignOut() {
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    window.location.href = '/';
+  }
 
   const tabs = role === 'admin' ? [...baseTabs, adminTab] : baseTabs;
 
   return (
     <nav className="sticky top-20 z-30 bg-cream/90 dark:bg-green-deep/90 backdrop-blur-md border-b border-gold/20 dark:border-gold/10">
-      <div className="container mx-auto px-4">
-        <ul className="flex gap-1 overflow-x-auto scrollbar-hide py-2">
+      <div className="container mx-auto px-4 flex items-center gap-2">
+        <ul className="flex gap-1 overflow-x-auto scrollbar-hide py-2 flex-1">
           {tabs.map((tab) => {
             const isActive = pathname === tab.href || pathname.startsWith(tab.href + '/');
             return (
@@ -68,6 +80,12 @@ export function MembersNav() {
             );
           })}
         </ul>
+        <button
+          onClick={() => { void handleSignOut(); }}
+          className="shrink-0 px-3 py-1.5 font-serif text-sm text-amber hover:text-amber/80 transition-colors whitespace-nowrap"
+        >
+          Sign out
+        </button>
       </div>
     </nav>
   );

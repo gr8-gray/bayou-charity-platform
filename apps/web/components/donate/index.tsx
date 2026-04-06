@@ -14,7 +14,7 @@ function PaymentChips() {
 
   return (
     <div className="mt-6">
-      <p className="font-serif text-sm text-text-mid dark:text-cream/70 mb-3">
+      <p className="font-serif text-sm text-text-dark dark:text-cream/90 mb-3">
         Or send directly — zero fees:
       </p>
       <div className="flex flex-wrap gap-2">
@@ -23,7 +23,7 @@ function PaymentChips() {
             <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-cream dark:bg-green-water border border-green-water/20 dark:border-cream/10 font-serif text-sm text-text-dark dark:text-cream hover:border-amber dark:hover:border-amber transition-colors">
               <span>{emoji}</span>
               <span className="font-semibold">{label}</span>
-              <span className="text-amber">{handle}</span>
+              <span className="text-amber-700 dark:text-amber">{handle}</span>
             </span>
           );
           return href ? (
@@ -51,7 +51,7 @@ function ImpactTiers() {
 
   return (
     <div className="glass-card p-6 space-y-3">
-      <h3 className="font-display text-xl text-green-deep dark:text-gold">Your Impact</h3>
+      <h2 className="font-display text-xl text-green-deep dark:text-gold">Your Impact</h2>
       {tiers.map(({ amount, description }) => (
         <div key={amount} className="flex gap-4 items-start">
           <span className="font-display text-amber text-lg font-bold w-14 shrink-0">{amount}</span>

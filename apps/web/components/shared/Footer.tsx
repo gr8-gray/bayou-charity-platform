@@ -203,7 +203,29 @@ export default function Footer() {
               Donate Now
             </Link>
 
-            <div className="mt-4">
+            <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1">
+              <a
+                href="https://cash.app/$bayoucharity"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs transition-colors duration-200"
+                style={{ fontFamily: "'Lora', serif", color: 'rgba(238,246,251,0.6)' }}
+                onMouseEnter={e => (e.currentTarget.style.color = 'rgba(238,246,251,0.85)')}
+                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(238,246,251,0.6)')}
+              >
+                CashApp · $bayoucharity
+              </a>
+              <a
+                href="https://venmo.com/bayoucharity"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs transition-colors duration-200"
+                style={{ fontFamily: "'Lora', serif", color: 'rgba(238,246,251,0.6)' }}
+                onMouseEnter={e => (e.currentTarget.style.color = 'rgba(238,246,251,0.85)')}
+                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(238,246,251,0.6)')}
+              >
+                Venmo · @bayoucharity
+              </a>
               <a
                 href="https://paypal.com/paypalme/bayoucharity"
                 target="_blank"
@@ -213,7 +235,16 @@ export default function Footer() {
                 onMouseEnter={e => (e.currentTarget.style.color = 'rgba(238,246,251,0.85)')}
                 onMouseLeave={e => (e.currentTarget.style.color = 'rgba(238,246,251,0.6)')}
               >
-                Also on PayPal · @bayoucharity
+                PayPal · @bayoucharity
+              </a>
+              <a
+                href="mailto:kyle.rockefeller@icloud.com"
+                className="text-xs transition-colors duration-200"
+                style={{ fontFamily: "'Lora', serif", color: 'rgba(238,246,251,0.6)' }}
+                onMouseEnter={e => (e.currentTarget.style.color = 'rgba(238,246,251,0.85)')}
+                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(238,246,251,0.6)')}
+              >
+                Apple Cash · kyle.rockefeller@icloud.com
               </a>
             </div>
           </div>

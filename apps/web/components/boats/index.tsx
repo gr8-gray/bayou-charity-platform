@@ -214,7 +214,7 @@ export default function Boats() {
               href="https://www.boatus.org/free-boater-education-course/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-amber hover:underline"
+              className="text-amber-700 dark:text-amber hover:underline"
             >
               BoatUS.org
             </a>{' '}
@@ -223,7 +223,7 @@ export default function Boats() {
               href="https://www.boat-ed.com/louisiana/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-amber hover:underline"
+              className="text-amber-700 dark:text-amber hover:underline"
             >
               Boat-ED.com
             </a>
@@ -232,7 +232,7 @@ export default function Boats() {
               href="https://www.wlf.louisiana.gov/page/boater-education"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-amber hover:underline"
+              className="text-amber-700 dark:text-amber hover:underline"
             >
               LDWF boater education page
             </a>{' '}

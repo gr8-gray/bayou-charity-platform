@@ -90,7 +90,7 @@ export default function About() {
                 <h2 className="font-display text-2xl text-green-deep dark:text-gold">
                   Kyle Rockefeller
                 </h2>
-                <p className="text-text-mid dark:text-cream/70 font-serif text-sm mt-1">
+                <p className="text-text-dark dark:text-cream/90 font-serif text-sm mt-1">
                   President &amp; Secretary
                 </p>
               </div>
@@ -112,7 +112,7 @@ export default function About() {
               <div className="flex flex-col sm:flex-row gap-3 pt-2">
                 <Link
                   href="mailto:kyle.rockefeller@bayoucharity.org"
-                  className="inline-flex items-center gap-2 bg-amber/10 dark:bg-amber/20 text-amber font-sans text-sm px-4 py-2 rounded-full hover:bg-amber/20 dark:hover:bg-amber/30 transition-colors"
+                  className="inline-flex items-center gap-2 bg-amber/10 dark:bg-amber/20 text-amber-800 dark:text-amber font-sans text-sm px-4 py-2 rounded-full hover:bg-amber/20 dark:hover:bg-amber/30 transition-colors"
                 >
                   ✉ kyle.rockefeller@bayoucharity.org
                 </Link>
