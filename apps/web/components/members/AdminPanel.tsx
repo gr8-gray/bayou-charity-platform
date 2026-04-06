@@ -76,17 +76,22 @@ export function AdminPanel({ adminId }: AdminPanelProps) {
 
   const loadPending = useCallback(async () => {
     setLoading(true);
-    // Load profiles with role = 'member' and recent signup (pending approval flow)
-    // The admin sees all members; "pending" = approved=false logic depends on your RLS
-    // Here we show all members newest first so admin can approve/manage
-    const { data } = await supabase
-      .from('profiles')
-      .select('*')
-      .order('joined_at', { ascending: false })
-      .limit(50);
-    if (data) setPending(data);
+    const [{ data: pendingData }, { data: approvedData }] = await Promise.all([
+      supabase
+        .from('profiles')
+        .select('*')
+        .neq('status', 'approved')
+        .order('joined_at', { ascending: false }),
+      supabase
+        .from('profiles')
+        .select('*')
+        .eq('status', 'approved')
+        .order('joined_at', { ascending: false })
+        .limit(50),
+    ]);
+    setPending([...(pendingData ?? []), ...(approvedData ?? [])]);
     setLoading(false);
-  }, []);
+  }, [supabase]);
 
   const loadFlagged = useCallback(async () => {
     setFlaggedLoading(true);
@@ -294,7 +299,14 @@ export function AdminPanel({ adminId }: AdminPanelProps) {
         animate={{ opacity: 1, y: 0 }}
         className="bg-white dark:bg-green-water rounded-2xl p-5 border border-gold/10 shadow-sm"
       >
-        <h2 className="font-display text-xl text-green-deep dark:text-cream mb-4">Member Accounts</h2>
+        <h2 className="font-display text-xl text-green-deep dark:text-cream mb-4 flex items-center gap-2">
+          Member Accounts
+          {pending.filter(u => u.status !== 'approved').length > 0 && (
+            <span className="px-2 py-0.5 bg-amber/20 text-amber text-sm rounded-full font-serif">
+              {pending.filter(u => u.status !== 'approved').length} pending
+            </span>
+          )}
+        </h2>
         {loading ? (
           <p className="font-serif text-sm text-text-mid dark:text-cream/60">Loading…</p>
         ) : pending.length === 0 ? (
