@@ -72,6 +72,23 @@ export function AdminPanel({ adminId }: AdminPanelProps) {
   const [editingEvent, setEditingEvent] = useState<GalleryEvent | null>(null);
   const [eventForm, setEventForm] = useState({ name: '', event_date: '', sort_order: 10, description: '' });
 
+  // Gallery Photos state
+  type GallerySubmissionAdmin = {
+    id: string;
+    storage_path: string;
+    caption: string | null;
+    status: string;
+    submitted_at: string;
+    event_id: string | null;
+    gallery_events: { name: string } | null;
+  };
+
+  const [galleryPhotos, setGalleryPhotos] = useState<GallerySubmissionAdmin[]>([]);
+  const [galleryPhotosLoading, setGalleryPhotosLoading] = useState(true);
+  const [galleryPhotosPage, setGalleryPhotosPage] = useState(0);
+  const GALLERY_PAGE_SIZE = 20;
+  const SUPABASE_STORAGE_URL = 'https://osiramhnynhwmlfyuqcp.supabase.co/storage/v1/object/public/gallery-public';
+
   const supabase = useMemo(() => createClient(), []);
 
   const loadPending = useCallback(async () => {
@@ -175,6 +192,18 @@ export function AdminPanel({ adminId }: AdminPanelProps) {
     await loadGalleryEvents();
   }
 
+  const loadGalleryPhotos = useCallback(async (page = 0) => {
+    setGalleryPhotosLoading(true);
+    const from = page * GALLERY_PAGE_SIZE;
+    const { data } = await supabase
+      .from('gallery_submissions')
+      .select('id, storage_path, caption, status, submitted_at, event_id, gallery_events(name)')
+      .order('submitted_at', { ascending: false })
+      .range(from, from + GALLERY_PAGE_SIZE - 1);
+    setGalleryPhotos((data as GallerySubmissionAdmin[]) ?? []);
+    setGalleryPhotosLoading(false);
+  }, [supabase]);
+
   function startEditEvent(event: GalleryEvent) {
     setEditingEvent(event);
     setEventForm({
@@ -192,7 +221,8 @@ export function AdminPanel({ adminId }: AdminPanelProps) {
     void loadPendingGuides();
     void loadPendingClassifieds();
     void loadGalleryEvents();
-  }, [loadPending, loadFlagged, loadPendingTrips, loadPendingGuides, loadPendingClassifieds, loadGalleryEvents]);
+    void loadGalleryPhotos();
+  }, [loadPending, loadFlagged, loadPendingTrips, loadPendingGuides, loadPendingClassifieds, loadGalleryEvents, loadGalleryPhotos]);
 
   async function handleUnflag(pinId: string) {
     await supabase.from('pins').update({ flagged: false }).eq('id', pinId);
@@ -234,6 +264,25 @@ export function AdminPanel({ adminId }: AdminPanelProps) {
   function showToast(msg: string) {
     setToast(msg);
     setTimeout(() => setToast(null), 2500);
+  }
+
+  async function handleApprovePhoto(id: string) {
+    await supabase.from('gallery_submissions').update({ status: 'approved' }).eq('id', id);
+    showToast('Photo approved');
+    void loadGalleryPhotos(galleryPhotosPage);
+  }
+
+  async function handleRejectPhoto(id: string) {
+    if (!confirm('Remove this photo from the gallery?')) return;
+    await supabase.from('gallery_submissions').update({ status: 'rejected' }).eq('id', id);
+    showToast('Photo removed');
+    void loadGalleryPhotos(galleryPhotosPage);
+  }
+
+  async function handleReassignPhoto(id: string, newEventId: string | null) {
+    await supabase.from('gallery_submissions').update({ event_id: newEventId }).eq('id', id);
+    showToast('Photo reassigned');
+    void loadGalleryPhotos(galleryPhotosPage);
   }
 
   async function handleApproveTrip(id: string) {
@@ -712,6 +761,96 @@ export function AdminPanel({ adminId }: AdminPanelProps) {
               </li>
             ))}
           </ul>
+        )}
+      </motion.section>
+
+      {/* Gallery Photos */}
+      <motion.section
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4 }}
+        className="bg-white dark:bg-green-water rounded-2xl p-5 border border-gold/10 shadow-sm"
+      >
+        <h2 className="font-display text-xl text-green-deep dark:text-cream mb-4">Gallery Photos</h2>
+        {galleryPhotosLoading ? (
+          <p className="font-serif text-sm text-text-mid dark:text-cream/60">Loading…</p>
+        ) : galleryPhotos.length === 0 ? (
+          <p className="font-serif text-sm text-text-mid dark:text-cream/60">No photos yet.</p>
+        ) : (
+          <>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mb-4">
+              {galleryPhotos.map((photo) => (
+                <div key={photo.id} className="rounded-xl overflow-hidden border border-gold/10 bg-cream dark:bg-green-deep/40">
+                  {/* Thumbnail */}
+                  <div className="aspect-square relative overflow-hidden">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={`${SUPABASE_STORAGE_URL}/${photo.storage_path}`}
+                      alt={photo.caption ?? 'Gallery photo'}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                    {photo.status === 'pending' && (
+                      <span className="absolute top-1 left-1 px-1.5 py-0.5 bg-amber/90 text-white text-[10px] font-serif rounded">
+                        Pending
+                      </span>
+                    )}
+                  </div>
+                  {/* Meta + actions */}
+                  <div className="p-2 space-y-1">
+                    <p className="font-serif text-[11px] text-text-mid dark:text-cream/60 truncate">
+                      {photo.gallery_events?.name ?? 'Unassigned'}
+                    </p>
+                    {/* Reassign dropdown */}
+                    <select
+                      value={photo.event_id ?? ''}
+                      onChange={(e) => { void handleReassignPhoto(photo.id, e.target.value || null); }}
+                      className="w-full bg-cream dark:bg-green-deep/60 rounded-lg px-2 py-1 font-serif text-[11px] text-text-dark dark:text-cream focus:outline-none focus:ring-1 focus:ring-amber/40"
+                    >
+                      <option value="">Unassigned</option>
+                      {galleryEvents.map((ev) => (
+                        <option key={ev.id} value={ev.id}>{ev.name}</option>
+                      ))}
+                    </select>
+                    {/* Approve/reject for pending */}
+                    {photo.status === 'pending' && (
+                      <div className="flex gap-1">
+                        <button
+                          onClick={() => { void handleApprovePhoto(photo.id); }}
+                          className="flex-1 px-2 py-1 bg-green-water/20 hover:bg-green-water/40 text-green-water dark:text-cream font-serif text-[11px] rounded-lg transition-colors"
+                        >Approve</button>
+                        <button
+                          onClick={() => { void handleRejectPhoto(photo.id); }}
+                          className="flex-1 px-2 py-1 bg-red-400/10 hover:bg-red-400/20 text-red-400 font-serif text-[11px] rounded-lg transition-colors"
+                        >Remove</button>
+                      </div>
+                    )}
+                    {photo.status === 'approved' && (
+                      <button
+                        onClick={() => { void handleRejectPhoto(photo.id); }}
+                        className="w-full px-2 py-1 bg-red-400/10 hover:bg-red-400/20 text-red-400 font-serif text-[11px] rounded-lg transition-colors"
+                      >Remove</button>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+            {/* Pagination */}
+            <div className="flex gap-2 justify-center">
+              {galleryPhotosPage > 0 && (
+                <button
+                  onClick={() => { setGalleryPhotosPage(p => p - 1); void loadGalleryPhotos(galleryPhotosPage - 1); }}
+                  className="px-4 py-2 bg-cream dark:bg-green-deep border border-gold/30 text-text-mid dark:text-cream/70 font-serif text-sm rounded-full hover:border-amber hover:text-amber transition-colors"
+                >← Prev</button>
+              )}
+              {galleryPhotos.length === GALLERY_PAGE_SIZE && (
+                <button
+                  onClick={() => { setGalleryPhotosPage(p => p + 1); void loadGalleryPhotos(galleryPhotosPage + 1); }}
+                  className="px-4 py-2 bg-cream dark:bg-green-deep border border-gold/30 text-text-mid dark:text-cream/70 font-serif text-sm rounded-full hover:border-amber hover:text-amber transition-colors"
+                >Next →</button>
+              )}
+            </div>
+          </>
         )}
       </motion.section>
 
