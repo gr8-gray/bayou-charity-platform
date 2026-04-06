@@ -28,7 +28,7 @@ const opportunities: OpportunityCard[] = [
   },
   {
     title: 'Innisfree',
-    description: "We're building a camp four miles out in the marsh, starting from nothing. Ask about becoming a plank owner.",
+    description: "We're building a camp four miles out in the marsh, starting from nothing. Ask about becoming a Plank Owner.",
     icon: '🏕️',
   },
   {

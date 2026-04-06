@@ -270,7 +270,7 @@ const SERVICES = [
     title: 'INNISFREE',
     icon: '🌿',
     description:
-      'Our piece of Louisiana marshland. Help us build it — become a plank owner and own a piece of it forever.',
+      'Our piece of Louisiana marshland. Help us build it — become a Plank Owner and earn lifetime access.',
     href: '/innisfree',
     cta: 'See INNISFREE →',
   },
