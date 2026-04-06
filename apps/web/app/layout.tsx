@@ -38,6 +38,28 @@ export const metadata: Metadata = {
     apple: '/icons/apple-touch-icon.png',
     icon: [{ url: '/icons/favicon-32x32.png', sizes: '32x32', type: 'image/png' }],
   },
+  openGraph: {
+    title: 'Bayou Family Fishing',
+    description: 'Louisiana fishing charity taking veterans and underserved youth fishing in the bayous of Plaquemines Parish.',
+    url: 'https://bayoucharity.org',
+    siteName: 'Bayou Charity',
+    images: [
+      {
+        url: 'https://bayoucharity.org/Photos/skyline-og.jpg',
+        width: 1920,
+        height: 887,
+        alt: 'Golden hour over the Louisiana bayou — Bayou Family Fishing',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Bayou Family Fishing',
+    description: 'Louisiana fishing charity taking veterans and underserved youth fishing in the bayous of Plaquemines Parish.',
+    images: ['https://bayoucharity.org/Photos/skyline-og.jpg'],
+  },
 };
 
 export default function RootLayout({
