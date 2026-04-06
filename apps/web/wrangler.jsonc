@@ -3,6 +3,7 @@
   "main": ".open-next/worker.js",
   "name": "bayou-charity-web",
   "compatibility_date": "2026-04-04",
+  "keep_names": false,
   "compatibility_flags": ["nodejs_compat"],
   "assets": {
     "directory": ".open-next/assets",
