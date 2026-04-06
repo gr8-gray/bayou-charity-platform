@@ -70,6 +70,7 @@ function SupportMomAndPops() {
       emoji: '🎣',
       title: 'Operation Healing Waters / Reel O-Fishal Charters',
       lines: [
+        { text: 'operationhealingwaters.org', href: 'https://operationhealingwaters.org' },
         { text: 'TikTok: @reelofishal', href: 'https://tiktok.com/@reelofishal' },
         { text: 'Capt. Derrious Austin · 850-319-8909', href: 'tel:8503198909' },
         { text: 'Donate via Zeffy (OHW)', href: 'https://www.zeffy.com/en-US/donation-form/operated-healing-waters' },
