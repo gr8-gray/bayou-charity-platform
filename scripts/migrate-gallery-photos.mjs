@@ -26,7 +26,12 @@ const ADMIN_USER_ID = process.env.ADMIN_USER_ID; // Kyle: 1dcf9599-a7cf-43ab-856
 if (!SERVICE_ROLE_KEY) throw new Error('Missing SUPABASE_SERVICE_ROLE_KEY');
 if (!ADMIN_USER_ID) throw new Error('Missing ADMIN_USER_ID');
 
-const supabase = createClient(SUPABASE_URL, SERVICE_ROLE_KEY);
+const supabase = createClient(SUPABASE_URL, SERVICE_ROLE_KEY, {
+  auth: {
+    autoRefreshToken: false,
+    persistSession: false,
+  },
+});
 
 const PHOTOS_DIR = path.resolve(__dirname, '../apps/web/public/Photos');
 const BUCKET = 'gallery-public';

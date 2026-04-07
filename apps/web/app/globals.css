@@ -62,6 +62,51 @@
   100%      { opacity: 0; }
 }
 
+/* ─── Home page entry animations (replaces framer-motion on home route) ─────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes fadeUpLetter {
+  from { opacity: 0; letter-spacing: 0.3em; }
+  to   { opacity: 1; letter-spacing: 0.4em; }
+}
+
+.anim-fade-up {
+  opacity: 0;
+  animation: fadeUp 0.9s ease-out forwards;
+}
+.anim-fade-in {
+  opacity: 0;
+  animation: fadeIn 0.8s ease-out forwards;
+}
+.anim-letter {
+  opacity: 0;
+  animation: fadeUpLetter 1s ease-out forwards;
+}
+/* scroll-triggered: class toggled by IntersectionObserver */
+.scroll-fade-up {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+.scroll-fade-up.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .anim-fade-up, .anim-fade-in, .anim-letter, .scroll-fade-up {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 /* Leaflet permanent tooltip labels — INNISFREE map */
 .leaflet-label {
   background: transparent !important;

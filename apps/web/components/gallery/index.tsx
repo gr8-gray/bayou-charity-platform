@@ -1,9 +1,26 @@
 'use client'
 
 import { useState, useEffect, useMemo } from 'react'
+import dynamic from 'next/dynamic'
 import { createClient } from '@bayou/supabase'
-import GalleryClient from './GalleryClient'
 import type { Database } from '@bayou/supabase/types'
+
+// Defer framer-motion + all gallery interaction code — only loads after Gallery page hydrates
+const GalleryClient = dynamic(() => import('./GalleryClient'), {
+  ssr: false,
+  loading: () => (
+    <div className="max-w-6xl mx-auto px-4 py-12">
+      <div className="animate-pulse space-y-6">
+        <div className="h-10 bg-green-water/20 rounded-xl w-48" />
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <div key={i} className="aspect-square bg-green-water/10 rounded-xl" />
+          ))}
+        </div>
+      </div>
+    </div>
+  ),
+})
 
 type GalleryEvent = Database['public']['Tables']['gallery_events']['Row']
 type GallerySubmission = Database['public']['Tables']['gallery_submissions']['Row']
