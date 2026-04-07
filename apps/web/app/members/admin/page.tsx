@@ -2,8 +2,19 @@
 
 // /members/admin — Admin role enforced by middleware + client check
 import { useState, useEffect, useMemo } from 'react';
+import dynamic from 'next/dynamic';
 import { createClient } from '@bayou/supabase';
-import { AdminPanel } from '@/components/members/AdminPanel';
+
+// AdminPanel uses framer-motion — isolate to /members/admin chunk only
+const AdminPanel = dynamic(
+  () => import('@/components/members/AdminPanel').then((m) => ({ default: m.AdminPanel })),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="min-h-screen animate-pulse bg-green-deep/10" />
+    ),
+  }
+);
 
 export default function AdminPage() {
   const [adminId, setAdminId] = useState<string | null>(null);

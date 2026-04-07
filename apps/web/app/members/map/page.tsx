@@ -2,8 +2,19 @@
 
 // /members/map — Auth enforced by middleware
 import { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import { createClient } from '@bayou/supabase';
-import { PinsMap } from '@/components/members/PinsMap';
+
+// Leaflet is ~140KB — isolate to /members/map chunk only
+const PinsMap = dynamic(
+  () => import('@/components/members/PinsMap').then((m) => ({ default: m.PinsMap })),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="h-96 animate-pulse rounded-xl bg-green-deep/20" />
+    ),
+  }
+);
 
 export default function MapPage() {
   const [state, setState] = useState<{ userId: string; role: 'member' | 'guide' | 'admin' } | null>(null);

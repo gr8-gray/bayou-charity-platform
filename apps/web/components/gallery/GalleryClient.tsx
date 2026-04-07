@@ -5,15 +5,20 @@
 // Manages event tab state, filters submissions by active tab, handles Fish Pics.
 
 import { useState, useEffect, useRef, useMemo } from 'react';
+import dynamic from 'next/dynamic';
 import { motion, type Variants } from 'framer-motion';
 import type { Database } from '@bayou/supabase/types';
 import GalleryGrid from './GalleryGrid';
 import type { GalleryImage } from './GalleryGrid';
 import GalleryFilter, { type GalleryTab } from './GalleryFilter';
-import Lightbox from './Lightbox';
-import UploadForm from './UploadForm';
 import { createClient } from '@bayou/supabase';
 import type { User } from '@supabase/supabase-js';
+
+// Lightbox only loads when a photo is clicked — defer its framer-motion AnimatePresence
+const Lightbox = dynamic(() => import('./Lightbox'), { ssr: false });
+
+// UploadForm only renders for authenticated members — defer it
+const UploadForm = dynamic(() => import('./UploadForm'), { ssr: false });
 
 type GalleryEvent = Database['public']['Tables']['gallery_events']['Row'];
 type GallerySubmission = Database['public']['Tables']['gallery_submissions']['Row'];
