@@ -216,7 +216,7 @@ export default function SocialFeed({ userId, role }: { userId: string; role: str
           <p className="text-text-mid text-center py-12">No posts yet. Be the first to share a catch!</p>
         )}
         {pins.map(pin => (
-          <article key={pin.id} className="bg-white dark:bg-green-deep/30 rounded-2xl border border-[#ccdde8] dark:border-green-water/25 shadow-[0_1px_6px_rgba(13,43,62,0.06)] overflow-hidden">
+          <article key={pin.id} className="bg-white dark:bg-green-deep/30 rounded-2xl border border-green-water/20 dark:border-green-water/25 shadow-[0_1px_6px_rgba(13,43,62,0.06)] overflow-hidden">
             {/* Header */}
             <div className="flex items-center gap-3 p-4">
               {pin.profiles?.avatar_url ? (
@@ -319,19 +319,19 @@ export default function SocialFeed({ userId, role }: { userId: string; role: str
         <div className="sticky top-28 space-y-4">
 
           {/* Weather */}
-          <div className="bg-white dark:bg-[#152840] rounded-xl border border-[#ccdde8] dark:border-[#1e3c58] p-4 shadow-[0_1px_6px_rgba(13,43,62,0.06)]">
+          <div className="bg-white dark:bg-green-water/15 rounded-xl border border-green-water/20 dark:border-green-water/30 p-4 shadow-[0_1px_6px_rgba(13,43,62,0.06)]">
             <React.Suspense fallback={<div className="h-20" />}>
               <WeatherWidget />
             </React.Suspense>
           </div>
 
           {/* Top Anglers Leaderboard */}
-          <div className="bg-white dark:bg-[#152840] rounded-xl border border-[#ccdde8] dark:border-[#1e3c58] p-4 shadow-[0_1px_6px_rgba(13,43,62,0.06)]">
-            <h3 className="font-playfair text-[0.85rem] text-gold mb-3 pb-[0.4rem] border-b border-[#ccdde8] dark:border-[#1e3c58] flex items-center gap-[0.4rem]">Top Anglers</h3>
+          <div className="bg-white dark:bg-green-water/15 rounded-xl border border-green-water/20 dark:border-green-water/30 p-4 shadow-[0_1px_6px_rgba(13,43,62,0.06)]">
+            <h3 className="font-playfair text-[0.85rem] text-gold mb-3 pb-[0.4rem] border-b border-green-water/20 dark:border-green-water/30 flex items-center gap-[0.4rem]">Top Anglers</h3>
             {leaderboard.length === 0 ? (
               <p className="text-xs text-text-mid">No catches yet</p>
             ) : (
-              <ol className="divide-y divide-[#eef2f6] dark:divide-green-water/15">
+              <ol className="divide-y divide-green-water/15 dark:divide-green-water/15">
                 {leaderboard.map((entry, i) => (
                   <li key={entry.display_name} className="flex items-center gap-[0.6rem] py-[0.35rem] first:pt-0 last:border-b-0">
                     <span className="font-playfair text-[0.85rem] text-gold w-[18px] text-center">{i === 0 ? '🏆' : `${i + 1}`}</span>
@@ -344,8 +344,8 @@ export default function SocialFeed({ userId, role }: { userId: string; role: str
           </div>
 
           {/* What's New */}
-          <div className="bg-white dark:bg-[#152840] rounded-xl border border-[#ccdde8] dark:border-[#1e3c58] p-4 shadow-[0_1px_6px_rgba(13,43,62,0.06)]">
-            <h3 className="font-playfair text-[0.85rem] text-gold mb-3 pb-[0.4rem] border-b border-[#ccdde8] dark:border-[#1e3c58] flex items-center gap-[0.4rem]">What&apos;s New</h3>
+          <div className="bg-white dark:bg-green-water/15 rounded-xl border border-green-water/20 dark:border-green-water/30 p-4 shadow-[0_1px_6px_rgba(13,43,62,0.06)]">
+            <h3 className="font-playfair text-[0.85rem] text-gold mb-3 pb-[0.4rem] border-b border-green-water/20 dark:border-green-water/30 flex items-center gap-[0.4rem]">What&apos;s New</h3>
             {recentActivity.length === 0 ? (
               <p className="text-xs text-text-mid">No recent activity</p>
             ) : (
@@ -362,14 +362,14 @@ export default function SocialFeed({ userId, role }: { userId: string; role: str
           </div>
 
           {/* Quick Post */}
-          <div className="bg-white dark:bg-[#152840] rounded-xl border border-[#ccdde8] dark:border-[#1e3c58] p-4 shadow-[0_1px_6px_rgba(13,43,62,0.06)] overflow-hidden">
-            <h3 className="font-playfair text-[0.85rem] text-gold mb-3 pb-[0.4rem] border-b border-[#ccdde8] dark:border-[#1e3c58] flex items-center gap-[0.4rem]">Quick Post</h3>
+          <div className="bg-white dark:bg-green-water/15 rounded-xl border border-green-water/20 dark:border-green-water/30 p-4 shadow-[0_1px_6px_rgba(13,43,62,0.06)] overflow-hidden">
+            <h3 className="font-playfair text-[0.85rem] text-gold mb-3 pb-[0.4rem] border-b border-green-water/20 dark:border-green-water/30 flex items-center gap-[0.4rem]">Quick Post</h3>
             <div className="space-y-2">
               <div>
                 <label className="block text-xs font-semibold text-text-mid dark:text-cream/60 mb-1" htmlFor="qp-caption">What&apos;d you catch today?</label>
                 <textarea
                   id="qp-caption"
-                  className="w-full rounded-lg border border-[#ccdde8] dark:border-[#1e3c58] dark:bg-[#0d2b3e] p-2 font-serif text-[0.8rem] text-text-dark dark:text-cream resize-vertical min-h-[60px] mb-2 focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber/30 placeholder:text-text-mid dark:placeholder:text-[rgba(160,200,220,0.45)]"
+                  className="w-full rounded-lg border border-green-water/20 dark:border-green-water/30 dark:bg-green-deep p-2 font-serif text-[0.8rem] text-text-dark dark:text-cream resize-vertical min-h-[60px] mb-2 focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber/30 placeholder:text-text-mid dark:placeholder:text-cream/40"
                   rows={2}
                   value={caption}
                   onChange={e => setCaption(e.target.value)}
@@ -380,21 +380,21 @@ export default function SocialFeed({ userId, role }: { userId: string; role: str
               <div className="flex gap-2 items-center">
                 <input
                   id="qp-species"
-                  className="flex-1 min-w-0 rounded-lg border border-[#ccdde8] dark:border-[#1e3c58] dark:bg-[#0d2b3e] p-2 font-serif text-[0.78rem] text-text-dark dark:text-cream focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber/30 placeholder:text-text-mid dark:placeholder:text-[rgba(160,200,220,0.45)]"
+                  className="flex-1 min-w-0 rounded-lg border border-green-water/20 dark:border-green-water/30 dark:bg-green-deep p-2 font-serif text-[0.78rem] text-text-dark dark:text-cream focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber/30 placeholder:text-text-mid dark:placeholder:text-cream/40"
                   value={species}
                   onChange={e => setSpecies(e.target.value)}
                   placeholder="Species"
                 />
                 <input
                   id="qp-location"
-                  className="flex-1 min-w-0 rounded-lg border border-[#ccdde8] dark:border-[#1e3c58] dark:bg-[#0d2b3e] p-2 font-serif text-[0.78rem] text-text-dark dark:text-cream focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber/30 placeholder:text-text-mid dark:placeholder:text-[rgba(160,200,220,0.45)]"
+                  className="flex-1 min-w-0 rounded-lg border border-green-water/20 dark:border-green-water/30 dark:bg-green-deep p-2 font-serif text-[0.78rem] text-text-dark dark:text-cream focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber/30 placeholder:text-text-mid dark:placeholder:text-cream/40"
                   value={locationName}
                   onChange={e => setLocationName(e.target.value)}
                   placeholder="Location"
                 />
               </div>
               <div className="flex gap-2 items-center" style={{ marginTop: '0.5rem' }}>
-                <label className="inline-flex items-center gap-1 px-2 py-1 rounded border border-[#ccdde8] dark:border-[#1e3c58] text-[0.75rem] font-semibold text-text-mid hover:text-amber cursor-pointer transition-colors">
+                <label className="inline-flex items-center gap-1 px-2 py-1 rounded border border-green-water/20 dark:border-green-water/30 text-[0.75rem] font-semibold text-text-mid hover:text-amber cursor-pointer transition-colors">
                   📷 Photo
                   <input
                     type="file"

@@ -5,9 +5,29 @@ import { CountdownTimer } from './CountdownTimer';
 import { TackleChecklist } from './TackleChecklist';
 
 export const metadata: Metadata = {
-  title: 'Bayou Family Fishing Spring Rodeo — Bayou Charity',
+  title: 'BFF Spring Fishing Rodeo — April 25, 2026',
   description:
     'Join us April 25, 2026 for the BFF Spring Rodeo. Families, fun, food, and fishing — rain or shine.',
+  openGraph: {
+    title: 'BFF Spring Fishing Rodeo — April 25, 2026',
+    description: 'Guides at sunrise, grills going all day, and the whole bayou family on the water. Free to attend — RSVP now.',
+    url: 'https://bayoucharity.org/events/bff-spring-fishing-rodeo-2026',
+    images: [
+      {
+        url: 'https://bayoucharity.org/Photos/Gallery1.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Bayou Family Fishing trip — members on the water in Plaquemines Parish',
+      },
+    ],
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'BFF Spring Fishing Rodeo — April 25, 2026',
+    description: 'Guides at sunrise, grills going all day, and the whole bayou family on the water.',
+    images: ['https://bayoucharity.org/Photos/Gallery1.jpg'],
+  },
 };
 
 export default function BFFSpringRodeoPage() {
