@@ -107,11 +107,9 @@ function SupportMomAndPops() {
             <div>
               <h4 className="font-display text-base text-cream font-semibold mb-1">{title}</h4>
               {lines.map(({ text, href }) => (
-                <p key={text} className="font-serif text-sm text-cream/90">
-                  <a href={href} target={href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer" className="text-amber hover:underline">
-                    {text}
-                  </a>
-                </p>
+                <a key={text} href={href} target={href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer" className="font-serif text-sm text-cream/90 text-amber hover:underline flex items-center min-h-[44px]">
+                  {text}
+                </a>
               ))}
             </div>
           </div>

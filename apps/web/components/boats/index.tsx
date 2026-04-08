@@ -143,6 +143,7 @@ export default function Boats() {
                     fill
                     className="object-cover"
                     sizes="(max-width: 768px) 96px, 144px"
+                    priority={idx === 0}
                   />
                 </div>
                 {/* Title + description */}

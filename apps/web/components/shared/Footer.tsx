@@ -116,7 +116,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200"
+                  className="w-11 h-11 rounded-full flex items-center justify-center transition-all duration-200"
                   style={{
                     border:     '1px solid rgba(201,168,76,0.2)',
                     color:      'rgba(238,246,251,0.55)',
