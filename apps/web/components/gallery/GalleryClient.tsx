@@ -174,7 +174,8 @@ export default function GalleryClient({ events, submissions }: GalleryClientProp
             <h1 className="font-display text-4xl md:text-5xl text-green-deep dark:text-cream mb-3">
               Life on the Bayou
             </h1>
-            <p className="font-serif text-text-mid dark:text-cream/70 max-w-2xl mx-auto md:mx-0">
+            {/* text-text-dark for AA contrast on glass-card over variable skyline bg */}
+            <p className="font-serif text-text-dark dark:text-cream/70 max-w-2xl mx-auto md:mx-0">
               Thank you for making memories with Bayou Charity. Select tabs below and upload
               pictures and videos. Click any photo to view full size.
             </p>
@@ -199,7 +200,7 @@ export default function GalleryClient({ events, submissions }: GalleryClientProp
                   'focus:outline-none focus-visible:ring-2 focus-visible:ring-amber',
                   activeEventId === 'all'
                     ? 'bg-gold text-green-deep font-semibold'
-                    : 'text-text-mid dark:text-cream/70 hover:text-amber dark:hover:text-amber',
+                    : 'text-text-dark dark:text-cream/70 hover:text-amber dark:hover:text-amber',
                 ].join(' ')}
               >
                 {activeEventId === 'all' && (
@@ -227,7 +228,7 @@ export default function GalleryClient({ events, submissions }: GalleryClientProp
                       'focus:outline-none focus-visible:ring-2 focus-visible:ring-amber',
                       isActive
                         ? 'bg-gold text-green-deep font-semibold'
-                        : 'text-text-mid dark:text-cream/70 hover:text-amber dark:hover:text-amber',
+                        : 'text-text-dark dark:text-cream/70 hover:text-amber dark:hover:text-amber',
                     ].join(' ')}
                   >
                     {isActive && (
@@ -253,7 +254,7 @@ export default function GalleryClient({ events, submissions }: GalleryClientProp
                   'focus:outline-none focus-visible:ring-2 focus-visible:ring-amber',
                   activeEventId === FISH_PICS_TAB
                     ? 'bg-gold text-green-deep font-semibold'
-                    : 'text-text-mid dark:text-cream/70 hover:text-amber dark:hover:text-amber',
+                    : 'text-text-dark dark:text-cream/70 hover:text-amber dark:hover:text-amber',
                 ].join(' ')}
               >
                 {activeEventId === FISH_PICS_TAB && (

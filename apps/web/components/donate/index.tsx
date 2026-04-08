@@ -54,8 +54,10 @@ function ImpactTiers() {
       <h2 className="font-display text-xl text-green-deep dark:text-gold">Your Impact</h2>
       {tiers.map(({ amount, description }) => (
         <div key={amount} className="flex gap-4 items-start">
-          <span className="font-display text-amber text-lg font-bold w-14 shrink-0">{amount}</span>
-          <span className="font-serif text-sm text-text-mid dark:text-cream/80 leading-relaxed">{description}</span>
+          {/* text-amber-700 for AA contrast on light glass-card bg; dark mode restores amber */}
+          <span className="font-display text-amber-700 dark:text-amber text-lg font-bold w-14 shrink-0">{amount}</span>
+          {/* text-text-dark for AA contrast on glass-card; dark mode cream/80 */}
+          <span className="font-serif text-sm text-text-dark dark:text-cream/80 leading-relaxed">{description}</span>
         </div>
       ))}
     </div>
