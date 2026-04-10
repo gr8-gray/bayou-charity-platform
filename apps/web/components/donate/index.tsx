@@ -51,12 +51,13 @@ function ImpactTiers() {
 
   return (
     <div className="glass-card p-6">
-      <h2 className="font-display text-xl text-green-deep dark:text-gold mb-3">Your Impact</h2>
+      <h2 className="font-display text-2xl text-green-deep dark:text-gold mb-1">Your Impact</h2>
+      <p className="font-serif text-xs text-text-mid dark:text-cream/60 mb-4 uppercase tracking-widest">Where your donation goes</p>
       <div className="divide-y divide-green-water/15 dark:divide-cream/10">
         {tiers.map(({ amount, description }) => (
-          <div key={amount} className="flex gap-4 items-start py-3">
+          <div key={amount} className="flex gap-5 items-center py-4">
             {/* text-amber-700 for AA contrast on light glass-card bg; dark mode restores amber */}
-            <span className="font-display text-amber-700 dark:text-amber text-lg font-bold w-14 shrink-0">{amount}</span>
+            <span className="font-display text-amber-700 dark:text-amber text-2xl font-bold w-16 shrink-0">{amount}</span>
             {/* text-text-dark for AA contrast on glass-card; dark mode cream/80 */}
             <span className="font-serif text-sm text-text-dark dark:text-cream/80 leading-relaxed">{description}</span>
           </div>
@@ -106,12 +107,12 @@ function SupportMomAndPops() {
       </p>
       <div className="space-y-4">
         {partners.map(({ emoji, title, lines }) => (
-          <div key={title} className="glass-card--dark flex gap-3 items-start p-4">
-            <span className="text-2xl shrink-0">{emoji}</span>
-            <div>
-              <h4 className="font-display text-base text-cream font-semibold mb-1">{title}</h4>
+          <div key={title} className="bg-cream dark:bg-green-deep/60 border border-green-water/20 dark:border-gold/20 rounded-xl flex gap-4 items-center p-4">
+            <span className="text-3xl shrink-0">{emoji}</span>
+            <div className="min-w-0">
+              <h4 className="font-display text-base text-green-deep dark:text-gold font-semibold mb-1 leading-snug">{title}</h4>
               {lines.map(({ text, href }) => (
-                <a key={text} href={href} target={href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer" className="font-serif text-sm text-cream/90 text-amber hover:underline flex items-center min-h-[44px]">
+                <a key={text} href={href} target={href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer" className="font-serif text-sm text-amber hover:underline flex items-center min-h-[36px]">
                   {text}
                 </a>
               ))}
