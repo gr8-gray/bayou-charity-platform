@@ -104,7 +104,7 @@ function SupportMomAndPops() {
       </p>
       <div className="space-y-4">
         {partners.map(({ emoji, title, lines }) => (
-          <div key={title} className="glass-card flex gap-3 items-start p-4">
+          <div key={title} className="glass-card--dark flex gap-3 items-start p-4">
             <span className="text-2xl shrink-0">{emoji}</span>
             <div>
               <h4 className="font-display text-base text-cream font-semibold mb-1">{title}</h4>
@@ -212,7 +212,7 @@ function LicensedGuides() {
         {guides.map(({ title, captain, lines }) => (
           <div
             key={title}
-            className="glass-card p-4 hover:border-amber transition-colors"
+            className="glass-card--dark p-4 hover:border-amber transition-colors"
           >
             <h4 className="font-display text-base text-cream font-semibold mb-0.5">{title}</h4>
             <p className="font-serif text-xs text-cream/80 mb-2">{captain}</p>
