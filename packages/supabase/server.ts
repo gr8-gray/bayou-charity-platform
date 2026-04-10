@@ -2,7 +2,8 @@ import { createServerClient } from '@supabase/ssr'
 import type { Database } from './types'
 
 interface CookieStore {
-  get(name: string): { value: string } | undefined
+  getAll(): { name: string; value: string }[]
+  set(name: string, value: string, options?: Record<string, unknown>): void
 }
 
 export function createServerSupabaseClient(cookieStore: CookieStore) {
@@ -11,9 +12,16 @@ export function createServerSupabaseClient(cookieStore: CookieStore) {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
-        get(name: string) { return cookieStore.get(name)?.value },
-        set() {},
-        remove() {},
+        getAll() {
+          return cookieStore.getAll()
+        },
+        setAll(cookiesToSet) {
+          try {
+            cookiesToSet.forEach(({ name, value, options }) =>
+              cookieStore.set(name, value, options as Record<string, unknown>)
+            )
+          } catch {}
+        },
       },
     }
   )
