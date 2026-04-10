@@ -50,16 +50,18 @@ function ImpactTiers() {
   ];
 
   return (
-    <div className="glass-card p-6 space-y-3">
-      <h2 className="font-display text-xl text-green-deep dark:text-gold">Your Impact</h2>
-      {tiers.map(({ amount, description }) => (
-        <div key={amount} className="flex gap-4 items-start">
-          {/* text-amber-700 for AA contrast on light glass-card bg; dark mode restores amber */}
-          <span className="font-display text-amber-700 dark:text-amber text-lg font-bold w-14 shrink-0">{amount}</span>
-          {/* text-text-dark for AA contrast on glass-card; dark mode cream/80 */}
-          <span className="font-serif text-sm text-text-dark dark:text-cream/80 leading-relaxed">{description}</span>
-        </div>
-      ))}
+    <div className="glass-card p-6">
+      <h2 className="font-display text-xl text-green-deep dark:text-gold mb-3">Your Impact</h2>
+      <div className="divide-y divide-green-water/15 dark:divide-cream/10">
+        {tiers.map(({ amount, description }) => (
+          <div key={amount} className="flex gap-4 items-start py-3">
+            {/* text-amber-700 for AA contrast on light glass-card bg; dark mode restores amber */}
+            <span className="font-display text-amber-700 dark:text-amber text-lg font-bold w-14 shrink-0">{amount}</span>
+            {/* text-text-dark for AA contrast on glass-card; dark mode cream/80 */}
+            <span className="font-serif text-sm text-text-dark dark:text-cream/80 leading-relaxed">{description}</span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -141,13 +143,13 @@ function InKindSection() {
       </p>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-5">
         {items.map(({ emoji, label }) => (
-          <div key={label} className="flex items-center gap-2 font-serif text-sm text-text-dark dark:text-cream/90">
+          <div key={label} className="flex items-center gap-2 font-serif text-sm text-text-dark dark:text-cream/90 bg-cream dark:bg-green-deep/40 rounded-lg px-3 py-2 border-l-[3px] border-amber">
             <span>{emoji}</span>
             <span>{label}</span>
           </div>
         ))}
       </div>
-      <div className="border-t border-green-water/20 dark:border-cream/10 pt-4">
+      <div className="bg-amber/10 border border-amber/30 rounded-xl p-4">
         <p className="font-serif text-sm text-text-mid dark:text-cream/70 mb-1">
           📬 <strong className="text-text-dark dark:text-cream">Reach Kyle to set something up:</strong>
         </p>
