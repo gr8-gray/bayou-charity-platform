@@ -39,7 +39,7 @@ const teamMembers = [
   },
   {
     name: 'Kaleb Sisson',
-    title: 'Content & Social Media Manager',
+    title: 'Marketing Director',
     bio: "Proud Navy Veteran obsessed with imagination, innovation, and the art of storytelling. For a Louisiana family man, turning moments into memories is one of life's many blessings, and having the ability to share them is what paints the ultimate picture.",
     src: '/Photos/Kaleb%20Sisson%20Pic.jpg',
     alt: 'Kaleb Sisson',
