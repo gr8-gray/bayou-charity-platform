@@ -367,7 +367,7 @@ export function AdminPanel({ adminId }: AdminPanelProps) {
               <p className="font-serif text-sm text-text-mid dark:text-cream/60">No members yet.</p>
             ) : (
               <AnimatePresence>
-                <ul className="divide-y divide-gold/10">
+                <ul className="divide-y divide-gold/10 max-h-[480px] overflow-y-auto pr-1">
                   {pending
                     .filter(u =>
                       !memberSearch ||
