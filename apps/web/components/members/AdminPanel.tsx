@@ -67,6 +67,7 @@ export function AdminPanel({ adminId }: AdminPanelProps) {
   const [toast, setToast] = useState<string | null>(null);
   const [membersOpen, setMembersOpen] = useState(false);
   const [memberSearch, setMemberSearch] = useState('');
+  const [emailCopied, setEmailCopied] = useState<string | null>(null);
   const membersInitialized = useRef(false);
 
   // Gallery Events state
@@ -249,6 +250,24 @@ export function AdminPanel({ adminId }: AdminPanelProps) {
     setTimeout(() => setToast(null), 2500);
   }
 
+  function copyEmail(email: string) {
+    navigator.clipboard.writeText(email).then(() => {
+      setEmailCopied(email);
+      setTimeout(() => setEmailCopied(null), 2000);
+    });
+  }
+
+  function exportEmails() {
+    const emails = pending
+      .filter(u => u.status === 'approved' && u.email)
+      .map(u => u.email as string)
+      .join(', ');
+    if (!emails) { showToast('No approved members with emails'); return; }
+    navigator.clipboard.writeText(emails).then(() => {
+      showToast(`${emails.split(', ').length} email${emails.split(', ').length !== 1 ? 's' : ''} copied`);
+    });
+  }
+
   async function handleApproveTrip(id: string) {
     await supabase.from('trips').update({ status: 'approved' }).eq('id', id);
     showToast('Trip approved');
@@ -325,14 +344,23 @@ export function AdminPanel({ adminId }: AdminPanelProps) {
         </button>
         {membersOpen && (
           <div className="mt-4">
-            <input
-              type="text"
-              placeholder="Search by name or email…"
-              value={memberSearch}
-              onChange={(e) => setMemberSearch(e.target.value)}
-              aria-label="Search members by name or email"
-              className="w-full bg-cream dark:bg-green-deep/60 rounded-xl px-4 py-2 font-serif text-text-dark dark:text-cream text-sm focus:outline-none focus:ring-2 focus:ring-amber/40 mb-3"
-            />
+            <div className="flex gap-2 mb-3">
+              <input
+                type="text"
+                placeholder="Search by name or email…"
+                value={memberSearch}
+                onChange={(e) => setMemberSearch(e.target.value)}
+                aria-label="Search members by name or email"
+                className="flex-1 bg-cream dark:bg-green-deep/60 rounded-xl px-4 py-2 font-serif text-text-dark dark:text-cream text-sm focus:outline-none focus:ring-2 focus:ring-amber/40"
+              />
+              <button
+                onClick={exportEmails}
+                className="px-3 py-2 bg-amber/10 hover:bg-amber/20 text-amber font-serif text-xs rounded-xl transition-colors whitespace-nowrap"
+                title="Copy all approved member emails to clipboard"
+              >
+                Export Emails
+              </button>
+            </div>
             {loading ? (
               <p className="font-serif text-sm text-text-mid dark:text-cream/60">Loading…</p>
             ) : pending.length === 0 ? (
@@ -355,12 +383,37 @@ export function AdminPanel({ adminId }: AdminPanelProps) {
                       className="py-3 flex flex-col md:flex-row md:items-center gap-2 md:gap-4"
                     >
                       <div className="flex-1 min-w-0">
-                        <p className="font-serif font-semibold text-text-dark dark:text-cream text-sm truncate">
-                          {user.display_name ?? 'Unknown'}
-                        </p>
-                        <p className="font-serif text-xs text-text-mid dark:text-cream/50 truncate">{user.email}</p>
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <p className="font-serif font-semibold text-text-dark dark:text-cream text-sm truncate">
+                            {user.display_name ?? 'Unknown'}
+                          </p>
+                          {user.provider && (
+                            <span className="px-2 py-0.5 rounded-full text-xs font-serif bg-green-deep/10 dark:bg-cream/10 text-text-mid dark:text-cream/50 capitalize">
+                              via {user.provider}
+                            </span>
+                          )}
+                        </div>
+                        {user.email && (
+                          <div className="flex items-center gap-2 mt-0.5">
+                            <a
+                              href={`mailto:${user.email}`}
+                              className="font-serif text-xs text-amber hover:underline truncate"
+                            >
+                              {user.email}
+                            </a>
+                            <button
+                              onClick={() => copyEmail(user.email!)}
+                              className="shrink-0 font-serif text-xs text-text-mid dark:text-cream/40 hover:text-amber transition-colors"
+                              title="Copy email"
+                            >
+                              {emailCopied === user.email ? '✓ Copied' : 'Copy'}
+                            </button>
+                          </div>
+                        )}
                         <p className="font-serif text-xs text-text-mid dark:text-cream/40">
                           Joined {new Date(user.joined_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                          {user.home_waters ? ` · ${user.home_waters}` : ''}
+                          {user.species ? ` · Fishes for: ${user.species}` : ''}
                         </p>
                       </div>
                       <div className="flex items-center gap-2 flex-wrap">

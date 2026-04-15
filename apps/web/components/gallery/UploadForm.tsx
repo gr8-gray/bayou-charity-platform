@@ -6,7 +6,7 @@
 import { useState, useRef, type ChangeEvent, type FormEvent } from 'react';
 import { createClient } from '@bayou/supabase';
 
-const MAX_SIZE_BYTES = 5 * 1024 * 1024; // 5 MB
+const MAX_SIZE_BYTES = 10 * 1024 * 1024; // 10 MB
 
 interface UploadFormProps {
   userId: string;
@@ -26,7 +26,7 @@ export default function UploadForm({ userId }: UploadFormProps) {
     const selected = e.target.files?.[0] ?? null;
     if (!selected) return;
     if (selected.size > MAX_SIZE_BYTES) {
-      setError('File is too large. Maximum size is 5 MB.');
+      setError('File is too large. Maximum size is 10 MB.');
       setFile(null);
       return;
     }
@@ -88,7 +88,7 @@ export default function UploadForm({ userId }: UploadFormProps) {
         Upload a Photo
       </h3>
       <p className="font-serif text-sm text-text-mid dark:text-cream/70">
-        Share your memories with the BFF community. Max 5 MB. Photos go to
+        Share your memories with the BFF community. Max 10 MB. Photos go to
         an admin review queue before publishing.
       </p>
 
