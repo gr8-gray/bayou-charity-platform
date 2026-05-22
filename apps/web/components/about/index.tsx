@@ -37,15 +37,6 @@ const teamMembers = [
     width: 2500,
     height: 1667,
   },
-  {
-    name: 'Kaleb Sisson',
-    title: 'Marketing Director',
-    bio: "Proud Navy Veteran obsessed with imagination, innovation, and the art of storytelling. For a Louisiana family man, turning moments into memories is one of life's many blessings, and having the ability to share them is what paints the ultimate picture.",
-    src: '/Photos/Kaleb%20Sisson%20Pic.jpg',
-    alt: 'Kaleb Sisson',
-    width: 1080,
-    height: 1440,
-  },
 ] as const;
 
 // ─── Component ───────────────────────────────────────────────────────────────
@@ -150,7 +141,7 @@ export default function About() {
             The Bayou Charity Team
           </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-4xl mx-auto">
             {teamMembers.map((member) => (
               <div
                 key={member.name}

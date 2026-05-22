@@ -57,18 +57,7 @@ export default function Volunteer() {
         </div>
       </section>
 
-      {/* Upcoming events banner */}
-      <section className="py-8 px-4">
-        <div className="glass-card p-8 max-w-3xl mx-auto text-center">
-          <p className="font-handwritten text-amber-700 dark:text-amber text-xl mb-1">Upcoming Events</p>
-          <p className="font-display text-2xl text-green-deep dark:text-gold">
-            🎣 Fishing Rodeo — April 25th, 2026
-          </p>
-          <p className="font-serif text-text-dark dark:text-cream/90 mt-2">
-            Sign up to participate and volunteer at our featured event — the Bayou Family Fishing Spring Rodeo on April 25, 2026.
-          </p>
-        </div>
-      </section>
+      {/* Upcoming events banner — hidden */}
 
       {/* Opportunity cards */}
       <section className="py-16 px-4">
@@ -93,20 +82,7 @@ export default function Volunteer() {
         </div>
       </section>
 
-      {/* Featured Event */}
-      <section className="py-4 px-4">
-        <div className="bg-green-deep/90 backdrop-blur-md border border-amber/50 rounded-xl px-6 py-5 max-w-3xl mx-auto mb-0">
-          <p className="font-accent text-amber text-sm mb-1">🎣 Featured Event</p>
-          <h3 className="font-display text-xl text-white mb-1">BFF Spring Fishing Rodeo 2026</h3>
-          <p className="font-serif text-cream text-sm mb-3">April 25, 2026 · Plaquemines Parish</p>
-          <Link
-            href="/events/bff-spring-fishing-rodeo-2026"
-            className="text-amber font-semibold text-sm hover:underline"
-          >
-            Sign Up &amp; Learn More →
-          </Link>
-        </div>
-      </section>
+      {/* Featured Event — hidden */}
 
       {/* Zeffy signup embed */}
       <section className="py-16 px-4">

@@ -112,37 +112,7 @@ function Hero() {
           </Link>
         </div>
 
-        {/* Featured Event banner */}
-        <div
-          className="anim-fade-up mt-8 max-w-sm mx-auto"
-          style={{ animationDelay: '0.9s' }}
-        >
-          <div className="glass-card border border-amber/50 px-6 py-4 text-center">
-            <p
-              className="text-amber text-sm font-semibold mb-1"
-              style={{ fontFamily: "'Caveat', cursive" }}
-            >
-              🎣 Featured Event
-            </p>
-            <p
-              className="font-display text-white text-lg font-bold mb-1"
-              style={{ fontFamily: "'Playfair Display', serif" }}
-            >
-              BFF Spring Fishing Rodeo
-            </p>
-            <p className="font-serif text-white dark:text-cream/90 text-sm mb-3"
-               style={{ textShadow: '0 1px 4px rgba(13,43,62,0.5)' }}>
-              April 25, 2026 · Plaquemines Parish
-            </p>
-            <Link
-              href="/events/bff-spring-fishing-rodeo-2026"
-              className="text-white dark:text-amber font-semibold text-sm hover:underline"
-              style={{ textShadow: '0 1px 4px rgba(13,43,62,0.5)', fontFamily: "'Lora', serif" }}
-            >
-              Sign Up &amp; Learn More →
-            </Link>
-          </div>
-        </div>
+        {/* Featured Event banner — hidden */}
       </div>
 
       {/* Scroll indicator */}
