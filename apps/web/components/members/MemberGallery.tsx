@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { createClient } from '@bayou/supabase';
 import type { Database } from '@bayou/supabase/types';
+import { MAX_UPLOAD_BYTES, MAX_UPLOAD_LABEL } from '@/lib/uploads';
 
 type GallerySubmission = Database['public']['Tables']['gallery_submissions']['Row'] & {
   profiles: { display_name: string | null; avatar_url: string | null } | null;
@@ -15,8 +16,6 @@ interface MemberGalleryProps {
   userId: string;
   role: 'member' | 'guide' | 'admin';
 }
-
-const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 
 export function MemberGallery({ userId, role }: MemberGalleryProps) {
   const [submissions, setSubmissions] = useState<GallerySubmission[]>([]);
@@ -76,8 +75,8 @@ export function MemberGallery({ userId, role }: MemberGalleryProps) {
       setError('Please upload a JPEG, PNG, or WebP image. HEIC/HEIF files are not supported by web browsers.');
       return;
     }
-    if (f.size > MAX_FILE_SIZE) {
-      setError('File must be 5MB or smaller.');
+    if (f.size > MAX_UPLOAD_BYTES) {
+      setError(`File must be ${MAX_UPLOAD_LABEL} or smaller.`);
       return;
     }
     setError(null);

@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { createClient } from '@bayou/supabase';
 import type { Database } from '@bayou/supabase/types';
 import { colors } from '@bayou/ui/tokens';
+import { MAX_UPLOAD_BYTES, MAX_UPLOAD_LABEL } from '@/lib/uploads';
 
 interface LeafletDivElement extends HTMLDivElement {
   _leaflet_id?: number;
@@ -521,8 +522,8 @@ export function PinsMap({ userId, role }: PinsMapProps) {
                 accept="image/jpeg,image/png,image/webp,image/gif"
                 onChange={(e) => {
                   const file = e.target.files?.[0] ?? null;
-                  if (file && file.size > 5 * 1024 * 1024) {
-                    alert('Photo must be 5MB or smaller.');
+                  if (file && file.size > MAX_UPLOAD_BYTES) {
+                    alert(`Photo must be ${MAX_UPLOAD_LABEL} or smaller.`);
                     e.target.value = '';
                     return;
                   }
