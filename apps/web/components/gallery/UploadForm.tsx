@@ -1,12 +1,11 @@
 'use client';
 
 // UploadForm — Client Component
-// Auth-gated photo upload to Supabase gallery-pending bucket (≤5MB)
+// Auth-gated photo upload to Supabase gallery-pending bucket (≤10 MB)
 
 import { useState, useRef, type ChangeEvent, type FormEvent } from 'react';
 import { createClient } from '@bayou/supabase';
-
-const MAX_SIZE_BYTES = 10 * 1024 * 1024; // 10 MB
+import { MAX_UPLOAD_BYTES, MAX_UPLOAD_LABEL } from '@/lib/uploads';
 
 interface UploadFormProps {
   userId: string;
@@ -25,8 +24,8 @@ export default function UploadForm({ userId }: UploadFormProps) {
     setSuccess(false);
     const selected = e.target.files?.[0] ?? null;
     if (!selected) return;
-    if (selected.size > MAX_SIZE_BYTES) {
-      setError('File is too large. Maximum size is 10 MB.');
+    if (selected.size > MAX_UPLOAD_BYTES) {
+      setError(`File is too large. Maximum size is ${MAX_UPLOAD_LABEL}.`);
       setFile(null);
       return;
     }

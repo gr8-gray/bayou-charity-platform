@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { createClient } from '@bayou/supabase';
 import type { Database } from '@bayou/supabase/types';
+import { MAX_UPLOAD_BYTES, MAX_UPLOAD_LABEL } from '@/lib/uploads';
 
 type Profile = Database['public']['Tables']['profiles']['Row'];
 
@@ -12,8 +13,6 @@ interface ProfileEditorProps {
   profile: Profile;
   onSave?: (updated: Profile) => void;
 }
-
-const MAX_AVATAR_SIZE = 5 * 1024 * 1024; // 5MB
 
 export function ProfileEditor({ profile, onSave }: ProfileEditorProps) {
   const [displayName, setDisplayName] = useState(profile.display_name ?? '');
@@ -35,8 +34,8 @@ export function ProfileEditor({ profile, onSave }: ProfileEditorProps) {
       setError('Please upload a JPEG, PNG, or WebP image. HEIC/HEIF files are not supported by web browsers.');
       return;
     }
-    if (file.size > MAX_AVATAR_SIZE) {
-      setError('Avatar must be 5MB or smaller.');
+    if (file.size > MAX_UPLOAD_BYTES) {
+      setError(`Avatar must be ${MAX_UPLOAD_LABEL} or smaller.`);
       return;
     }
     setError(null);
@@ -131,7 +130,7 @@ export function ProfileEditor({ profile, onSave }: ProfileEditorProps) {
           >
             {uploading ? 'Uploading…' : 'Change Avatar'}
           </button>
-          <p className="text-xs text-text-mid dark:text-cream/50 font-serif">JPG, PNG — max 5MB</p>
+          <p className="text-xs text-text-mid dark:text-cream/50 font-serif">JPG, PNG — max {MAX_UPLOAD_LABEL}</p>
         </div>
       </div>
 
