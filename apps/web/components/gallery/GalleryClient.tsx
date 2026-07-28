@@ -57,6 +57,10 @@ export default function GalleryClient({ events, submissions }: GalleryClientProp
   const [user, setUser] = useState<User | null>(null);
   const [fishPins, setFishPins] = useState<GalleryImage[]>([]);
   const [fishLoading, setFishLoading] = useState(false);
+  // Guard on "has the fetch completed" rather than fishPins.length: a length
+  // guard refetches forever when the query legitimately returns zero rows
+  // (observed as a permanent "Loading fish pics" spinner pre-2026-07-28).
+  const [fishLoaded, setFishLoaded] = useState(false);
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   // Auth check
@@ -69,10 +73,17 @@ export default function GalleryClient({ events, submissions }: GalleryClientProp
     return () => { mounted = false; };
   }, []);
 
-  // Lazy-load Fish Pics when that tab is selected
+  // Lazy-load Fish Pics when that tab is selected.
+  //
+  // Pins power the members MAP, where a daily 03:00 cron (auto-archive edge
+  // function) sets archived_at after ~90 days to keep the map seasonal. The
+  // gallery is a highlight reel, so archived pins STAY visible here — do not
+  // re-add an archived_at filter: it silently drained this tab to empty once
+  // every pin aged out (found 2026-07-28). RLS note: anon can only read pins
+  // with photo_url set (public_read_pins_with_photos), which this query matches.
   useEffect(() => {
     if (activeEventId !== FISH_PICS_TAB) return;
-    if (fishPins.length > 0 || fishLoading) return;
+    if (fishLoaded || fishLoading) return;
 
     setFishLoading(true);
     const supabase = createClient();
@@ -80,11 +91,15 @@ export default function GalleryClient({ events, submissions }: GalleryClientProp
       .from('pins')
       .select('id, photo_url, caption, species, location_name')
       .eq('flagged', false)
-      .is('archived_at', null)
       .not('photo_url', 'is', null)
       .order('created_at', { ascending: false })
       .limit(100)
-      .then(({ data }) => {
+      .then(({ data, error }) => {
+        if (error) {
+          // Swallowing this rendered an empty tab indistinguishable from "no
+          // catches yet" — keep the grid empty but leave evidence.
+          console.error('[FishPics] pins query failed:', error.message);
+        }
         const imgs: GalleryImage[] = (data ?? []).map((pin, i) => ({
           src: pin.photo_url!,
           alt: pin.species
@@ -96,9 +111,17 @@ export default function GalleryClient({ events, submissions }: GalleryClientProp
           index: i,
         }));
         setFishPins(imgs);
+        setFishLoaded(true);
+        setFishLoading(false);
+      }, () => {
+        // Postgrest errors RESOLVE and are handled above; this second callback
+        // catches network-level rejections, which would otherwise strand the
+        // loading spinner forever. (Two-arg .then because the query builder is
+        // typed PromiseLike — no .catch on the type.)
+        setFishLoaded(true);
         setFishLoading(false);
       });
-  }, [activeEventId, fishPins.length, fishLoading]);
+  }, [activeEventId, fishLoaded, fishLoading]);
 
   // Derive the displayed images from active tab + active event
   const displayImages = useMemo<GalleryImage[]>(() => {
