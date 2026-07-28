@@ -1,0 +1,40 @@
+# E2E customer-path tests (STOP 19). Runs against LIVE bayoucharity.org:
+#   - after every production deploy (Web Deploy completes → verify prod still works)
+#   - on demand via workflow_dispatch
+# Not on PRs: PRs have no deployed preview to test against, and these tests hit prod.
+name: E2E Customer Paths
+
+on:
+  workflow_run:
+    workflows: ["Web Deploy (CF Workers)"]
+    types: [completed]
+  workflow_dispatch:
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    # Only test after a deploy that actually succeeded.
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install Playwright
+        working-directory: apps/web
+        run: |
+          npm install --no-save @playwright/test
+          npx playwright install --with-deps chromium
+      - name: Run E2E
+        working-directory: apps/web
+        env:
+          E2E_EMAIL: ${{ secrets.E2E_EMAIL }}
+          E2E_PASSWORD: ${{ secrets.E2E_PASSWORD }}
+        run: npx playwright test
+      - name: Upload trace on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-traces
+          path: apps/web/test-results/
+          retention-days: 7
