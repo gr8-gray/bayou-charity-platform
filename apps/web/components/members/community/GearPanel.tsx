@@ -1,5 +1,13 @@
 'use client';
 
+// GearPanel — member-to-member gear classifieds (table `classifieds`, not
+// "gear" — the one naming mismatch in this folder).
+//
+// SIBLING ALERT: GearPanel, TripsPanel, GuidesPanel, ForumPanel and
+// RecipesPanel share one skeleton (fetch + ContentCard list + PostFormModal).
+// A fix in one panel must be checked in the other four — full rationale for
+// why they stay separate files is in ForumPanel.tsx.
+
 import { useMemo, useState, useEffect, useCallback } from 'react';
 import { createClient } from '@bayou/supabase';
 import type { Database } from '@bayou/supabase/types';

@@ -13,6 +13,7 @@ import type { GalleryImage } from './GalleryGrid';
 import GalleryFilter, { type GalleryTab } from './GalleryFilter';
 import { createClient } from '@bayou/supabase';
 import type { User } from '@supabase/supabase-js';
+import { galleryPhotoUrl } from '@/lib/gallery';
 
 // Lightbox only loads when a photo is clicked — defer its framer-motion AnimatePresence
 const Lightbox = dynamic(() => import('./Lightbox'), { ssr: false });
@@ -26,12 +27,11 @@ type GallerySubmission = Database['public']['Tables']['gallery_submissions']['Ro
 // Fish Pics tab uses a special sentinel value (not a real event UUID)
 const FISH_PICS_TAB = 'fish';
 
-const SUPABASE_STORAGE_URL =
-  'https://osiramhnynhwmlfyuqcp.supabase.co/storage/v1/object/public/gallery-public';
-
 function submissionToImage(sub: GallerySubmission, index: number): GalleryImage {
   return {
-    src: `${SUPABASE_STORAGE_URL}/${sub.storage_path}`,
+    // Bucket derived from status via lib/gallery.ts — submissions reaching this
+    // page are approved, so this resolves to the public bucket.
+    src: galleryPhotoUrl(sub.storage_path, sub.status ?? 'approved'),
     alt: sub.caption || 'BFF club photo',
     caption: sub.caption || undefined,
     width: 1200,

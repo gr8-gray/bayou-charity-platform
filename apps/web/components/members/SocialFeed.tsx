@@ -3,6 +3,7 @@
 import React, { useEffect, useMemo, useState, useCallback } from 'react';
 import { createClient } from '@bayou/supabase';
 import Image from 'next/image';
+import { ACCEPTED_IMAGE_ACCEPT, validateUploadFile } from '@/lib/uploads';
 
 const WeatherWidget = React.lazy(() => import('./community/WeatherWidget'));
 
@@ -86,9 +87,11 @@ export default function SocialFeed({ userId, role }: { userId: string; role: str
 
   const handlePost = useCallback(async () => {
     if (!caption.trim()) return;
-    const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
-    if (photoFile && !ALLOWED_TYPES.includes(photoFile.type)) {
-      alert('Please upload a JPEG, PNG, or WebP image. HEIC/HEIF files are not supported by web browsers.');
+    // Shared validator — this path previously checked type but not size, so an
+    // oversized photo only failed after the pin row was already inserted.
+    const photoError = photoFile ? validateUploadFile(photoFile) : null;
+    if (photoError) {
+      alert(photoError);
       return;
     }
     setPosting(true);
@@ -398,7 +401,7 @@ export default function SocialFeed({ userId, role }: { userId: string; role: str
                   📷 Photo
                   <input
                     type="file"
-                    accept="image/jpeg,image/png,image/webp,image/gif"
+                    accept={ACCEPTED_IMAGE_ACCEPT}
                     className="hidden"
                     onChange={e => setPhotoFile(e.target.files?.[0] ?? null)}
                   />

@@ -1,5 +1,12 @@
 'use client';
 
+// RecipesPanel — member fish recipes (`recipes`), fielded by species.
+//
+// SIBLING ALERT: RecipesPanel, TripsPanel, GuidesPanel, GearPanel and
+// ForumPanel share one skeleton (fetch + ContentCard list + PostFormModal).
+// A fix in one panel must be checked in the other four — full rationale for
+// why they stay separate files is in ForumPanel.tsx.
+
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { createClient } from '@bayou/supabase';
 import type { Database } from '@bayou/supabase/types';

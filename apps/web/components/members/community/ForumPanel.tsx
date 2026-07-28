@@ -1,5 +1,17 @@
 'use client';
 
+// ForumPanel — discussion threads (`forum_threads`) with inline replies
+// (`forum_replies`) and category chips.
+//
+// SIBLING ALERT: ForumPanel, TripsPanel, GearPanel, GuidesPanel and
+// RecipesPanel share one skeleton — fetch rows joined to the author's
+// display_name, render a ContentCard list, gate creation behind PostFormModal.
+// They were left as five files ON PURPOSE: each binds a different table with
+// different fields (forum is the only two-level one — threads plus replies),
+// and a shared hook made those differences harder to read than the
+// duplication. The cost of that choice: a bug fixed in one panel must be
+// checked in the other four.
+
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { createClient } from '@bayou/supabase';
 import type { Database } from '@bayou/supabase/types';

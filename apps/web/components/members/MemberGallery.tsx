@@ -5,7 +5,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { createClient } from '@bayou/supabase';
 import type { Database } from '@bayou/supabase/types';
-import { MAX_UPLOAD_BYTES, MAX_UPLOAD_LABEL } from '@/lib/uploads';
+import { ACCEPTED_IMAGE_ACCEPT, validateUploadFile } from '@/lib/uploads';
+import {
+  GALLERY_PENDING_BUCKET,
+  copyPendingToPublic,
+  galleryPhotoUrl,
+} from '@/lib/gallery';
 
 type GallerySubmission = Database['public']['Tables']['gallery_submissions']['Row'] & {
   profiles: { display_name: string | null; avatar_url: string | null } | null;
@@ -70,13 +75,9 @@ export function MemberGallery({ userId, role }: MemberGalleryProps) {
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const f = e.target.files?.[0];
     if (!f) return;
-    const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
-    if (!ALLOWED_TYPES.includes(f.type)) {
-      setError('Please upload a JPEG, PNG, or WebP image. HEIC/HEIF files are not supported by web browsers.');
-      return;
-    }
-    if (f.size > MAX_UPLOAD_BYTES) {
-      setError(`File must be ${MAX_UPLOAD_LABEL} or smaller.`);
+    const validationError = validateUploadFile(f);
+    if (validationError) {
+      setError(validationError);
       return;
     }
     setError(null);
@@ -92,7 +93,7 @@ export function MemberGallery({ userId, role }: MemberGalleryProps) {
     const path = `${userId}/${Date.now()}.${ext}`;
 
     const { error: storageError } = await supabase.storage
-      .from('gallery-pending')
+      .from(GALLERY_PENDING_BUCKET)
       .upload(path, file, { upsert: false });
 
     if (storageError) {
@@ -153,7 +154,7 @@ export function MemberGallery({ userId, role }: MemberGalleryProps) {
         <input
           ref={fileRef}
           type="file"
-          accept="image/jpeg,image/png,image/webp,image/gif"
+          accept={ACCEPTED_IMAGE_ACCEPT}
           onChange={handleFileChange}
           className="w-full text-sm font-serif text-text-mid dark:text-cream/70 file:mr-3 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-amber file:text-white file:font-serif file:text-sm hover:file:bg-amber/90 file:cursor-pointer"
         />
@@ -196,7 +197,7 @@ export function MemberGallery({ userId, role }: MemberGalleryProps) {
                 >
                   <div className="relative aspect-video bg-green-deep/10">
                     <Image
-                      src={supabase.storage.from('gallery-pending').getPublicUrl(sub.storage_path).data.publicUrl}
+                      src={galleryPhotoUrl(sub.storage_path, sub.status ?? 'pending')}
                       alt={sub.caption ?? 'Gallery submission'}
                       fill
                       className="object-cover"
@@ -252,12 +253,24 @@ function AdminGalleryPanel({
     loadPending();
   }, [loadPending]);
 
-  async function updateStatus(id: string, status: 'approved' | 'rejected') {
+  async function updateStatus(sub: GallerySubmission, status: 'approved' | 'rejected') {
+    // Approve must copy pending→public BEFORE flipping status — same contract
+    // as AdminGalleryManager, see lib/gallery.ts. This panel used to flip
+    // status only, which published broken photo URLs (the object stayed in
+    // gallery-pending). Reject needs no storage work here: this list only
+    // shows status='pending' rows, so there is never a public copy to remove.
+    if (status === 'approved') {
+      const copyError = await copyPendingToPublic(supabase, sub.storage_path);
+      if (copyError) {
+        alert(`Approve failed — photo could not be copied to the public gallery: ${copyError}`);
+        return;
+      }
+    }
     await supabase.from('gallery_submissions').update({
       status,
       reviewed_by: adminId,
       reviewed_at: new Date().toISOString(),
-    }).eq('id', id);
+    }).eq('id', sub.id);
     await loadPending();
     onUpdate();
   }
@@ -276,7 +289,7 @@ function AdminGalleryPanel({
       {pending.map((sub) => (
         <div key={sub.id} className="flex gap-3 items-start border-t border-gold/10 pt-3">
           <div className="relative w-20 h-14 flex-shrink-0 rounded-lg overflow-hidden bg-green-deep/10">
-            <Image src={supabase.storage.from('gallery-pending').getPublicUrl(sub.storage_path).data.publicUrl} alt={sub.caption ?? ''} fill className="object-cover" sizes="80px" />
+            <Image src={galleryPhotoUrl(sub.storage_path, sub.status ?? 'pending')} alt={sub.caption ?? ''} fill className="object-cover" sizes="80px" />
           </div>
           <div className="flex-1 min-w-0">
             <p className="font-serif text-xs text-text-mid dark:text-cream/60">
@@ -285,13 +298,13 @@ function AdminGalleryPanel({
             {sub.caption && <p className="font-serif text-sm text-text-dark dark:text-cream truncate">{sub.caption}</p>}
             <div className="flex gap-2 mt-2">
               <button
-                onClick={() => updateStatus(sub.id, 'approved')}
+                onClick={() => updateStatus(sub, 'approved')}
                 className="px-3 py-1 bg-green-water/20 hover:bg-green-water/40 text-green-water dark:text-cream font-serif text-xs rounded-full transition-colors"
               >
                 Approve
               </button>
               <button
-                onClick={() => updateStatus(sub.id, 'rejected')}
+                onClick={() => updateStatus(sub, 'rejected')}
                 className="px-3 py-1 bg-amber/10 hover:bg-amber/20 text-amber font-serif text-xs rounded-full transition-colors"
               >
                 Reject

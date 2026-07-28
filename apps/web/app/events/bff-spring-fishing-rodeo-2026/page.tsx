@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { ZeffyEmbed } from '@/components/shared/ZeffyEmbed';
 import { CountdownTimer } from './CountdownTimer';
 import { TackleChecklist } from './TackleChecklist';
+import { PAYMENT_METHODS } from '@/lib/payments';
 
 export const metadata: Metadata = {
   title: 'BFF Spring Fishing Rodeo — April 25, 2026',
@@ -160,13 +161,12 @@ export default function BFFSpringRodeoPage() {
             <h5 className="text-[0.72rem] font-bold tracking-[0.1em] uppercase text-gold mb-4 text-center">
               💛 Support the Captains — Fuel Fund
             </h5>
+            {/* Handles come from lib/payments.ts (same data as /donate and the
+                footer); only the day-of cash chip is event-specific. */}
             <div className="flex flex-wrap gap-2.5 justify-center">
               {[
-                { icon: '💚', label: 'CashApp', handle: '$bayoucharity' },
-                { icon: '💜', label: 'Venmo', handle: '@bayoucharity' },
-                { icon: '🔵', label: 'PayPal', handle: '@bayoucharity' },
+                ...PAYMENT_METHODS.map(({ emoji, label, handle }) => ({ icon: emoji, label, handle })),
                 { icon: '💵', label: 'Cash', handle: 'Day-of' },
-                { icon: '🍎', label: 'Apple Cash', handle: 'kyle.rockefeller@icloud.com' },
               ].map(({ icon, label, handle }) => (
                 <span
                   key={`${label}-${handle}`}

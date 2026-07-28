@@ -1,5 +1,15 @@
 'use client';
 
+// MembersNav — sticky tab strip for the /members/* area.
+//
+// Owns the list of member surfaces and appends the Admin tab only after
+// confirming profiles.role === 'admin' client-side. That check is COSMETIC —
+// real route protection is middleware.ts; do not treat hiding a tab here as
+// securing anything. Trap: a signed-in session whose profiles row is missing
+// gets force-signed-out and bounced to /sign-in (otherwise a deleted profile
+// would browse a half-broken members area). Active-tab matching is by path
+// prefix so nested routes (/members/admin/gallery) keep their tab lit.
+
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';

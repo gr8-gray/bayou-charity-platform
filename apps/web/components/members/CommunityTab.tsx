@@ -1,5 +1,15 @@
 'use client';
 
+// CommunityTab — shell for /members/community.
+//
+// Owns the sub-tab strip and mounts exactly one panel at a time via React.lazy
+// so a visit to Trips never downloads Forum/Leaderboard/Weather code. Resolves
+// the viewer's userId + role from the session ONCE here and passes both down —
+// panels deliberately never re-query auth, so if a panel needs the role it
+// must come through props. The five content panels (Trips/Guides/Gear/Forum/
+// Recipes) are intentional near-twins; read the SIBLING ALERT header in any
+// panel before changing one.
+
 import React, { useEffect, useMemo, useState } from 'react';
 import { createClient } from '@bayou/supabase';
 
