@@ -1,5 +1,14 @@
 'use client';
 
+// TripsPanel — upcoming member trips (`trips`) with RSVP tracking
+// (`trip_rsvps`); the only sibling that carries a second table for
+// per-member state.
+//
+// SIBLING ALERT: TripsPanel, GuidesPanel, GearPanel, ForumPanel and
+// RecipesPanel share one skeleton (fetch + ContentCard list + PostFormModal).
+// A fix in one panel must be checked in the other four — full rationale for
+// why they stay separate files is in ForumPanel.tsx.
+
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { createClient } from '@bayou/supabase';
 import type { Database } from '@bayou/supabase/types';

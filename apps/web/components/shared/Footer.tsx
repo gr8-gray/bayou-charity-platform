@@ -11,6 +11,7 @@
 
 import Link from 'next/link'
 import { Facebook, Twitter, Instagram } from 'lucide-react'
+import { PAYMENT_METHODS } from '@/lib/payments'
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -203,49 +204,24 @@ export default function Footer() {
               Donate Now
             </Link>
 
+            {/* Same list as the donate page chips — data lives in lib/payments.ts
+                (this footer once linked a different PayPal URL than /donate).
+                Apple Cash has no web link, so it falls back to a mailto. */}
             <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1">
-              <a
-                href="https://cash.app/$bayoucharity"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs transition-colors duration-200"
-                style={{ fontFamily: "'Lora', serif", color: 'rgba(238,246,251,0.6)' }}
-                onMouseEnter={e => (e.currentTarget.style.color = 'rgba(238,246,251,0.85)')}
-                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(238,246,251,0.6)')}
-              >
-                CashApp · $bayoucharity
-              </a>
-              <a
-                href="https://venmo.com/bayoucharity"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs transition-colors duration-200"
-                style={{ fontFamily: "'Lora', serif", color: 'rgba(238,246,251,0.6)' }}
-                onMouseEnter={e => (e.currentTarget.style.color = 'rgba(238,246,251,0.85)')}
-                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(238,246,251,0.6)')}
-              >
-                Venmo · @bayoucharity
-              </a>
-              <a
-                href="https://paypal.com/paypalme/bayoucharity"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs transition-colors duration-200"
-                style={{ fontFamily: "'Lora', serif", color: 'rgba(238,246,251,0.6)' }}
-                onMouseEnter={e => (e.currentTarget.style.color = 'rgba(238,246,251,0.85)')}
-                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(238,246,251,0.6)')}
-              >
-                PayPal · @bayoucharity
-              </a>
-              <a
-                href="mailto:kyle.rockefeller@icloud.com"
-                className="text-xs transition-colors duration-200"
-                style={{ fontFamily: "'Lora', serif", color: 'rgba(238,246,251,0.6)' }}
-                onMouseEnter={e => (e.currentTarget.style.color = 'rgba(238,246,251,0.85)')}
-                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(238,246,251,0.6)')}
-              >
-                Apple Cash · kyle.rockefeller@icloud.com
-              </a>
+              {PAYMENT_METHODS.map(({ label, handle, href }) => (
+                <a
+                  key={label}
+                  href={href ?? `mailto:${handle}`}
+                  target={href ? '_blank' : undefined}
+                  rel={href ? 'noopener noreferrer' : undefined}
+                  className="text-xs transition-colors duration-200"
+                  style={{ fontFamily: "'Lora', serif", color: 'rgba(238,246,251,0.6)' }}
+                  onMouseEnter={e => (e.currentTarget.style.color = 'rgba(238,246,251,0.85)')}
+                  onMouseLeave={e => (e.currentTarget.style.color = 'rgba(238,246,251,0.6)')}
+                >
+                  {label} · {handle}
+                </a>
+              ))}
             </div>
           </div>
         </div>

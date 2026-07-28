@@ -1,6 +1,7 @@
 'use server';
 
 import { createClient } from '@supabase/supabase-js';
+import { GALLERY_PENDING_BUCKET, GALLERY_PUBLIC_BUCKET } from '@/lib/gallery';
 
 // Auth note: /members/admin/* is protected by middleware — only verified admins
 // reach this action. next/headers cookies() is not available in CF Workers Edge
@@ -13,9 +14,10 @@ export async function deleteGalleryPhoto(id: string, storagePath: string) {
     { auth: { autoRefreshToken: false, persistSession: false } }
   );
 
-  // Try both buckets — pending photos in gallery-pending, approved in gallery-public
-  const { error: pubErr } = await adminClient.storage.from('gallery-public').remove([storagePath]);
-  const { error: pendingErr } = await adminClient.storage.from('gallery-pending').remove([storagePath]);
+  // Clean both buckets — approval COPIES pending→public (see lib/gallery.ts),
+  // so an approved photo's object exists in both places.
+  const { error: pubErr } = await adminClient.storage.from(GALLERY_PUBLIC_BUCKET).remove([storagePath]);
+  const { error: pendingErr } = await adminClient.storage.from(GALLERY_PENDING_BUCKET).remove([storagePath]);
   if (pubErr && pendingErr) {
     console.error('[deleteGalleryPhoto] storage delete failed both buckets:', pubErr.message, pendingErr.message);
   }

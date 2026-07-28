@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { createClient } from '@bayou/supabase';
 import type { Database } from '@bayou/supabase/types';
 import { deleteGalleryPhoto } from '@/app/actions/gallery';
+import { copyPendingToPublic, galleryPhotoUrl, removePublicCopy } from '@/lib/gallery';
 
 type GalleryEvent = Database['public']['Tables']['gallery_events']['Row'];
 type GallerySubmission = {
@@ -17,13 +18,6 @@ type GallerySubmission = {
   gallery_events: { name: string } | null;
 };
 
-const STORAGE_BASE = 'https://osiramhnynhwmlfyuqcp.supabase.co/storage/v1/object/public';
-
-function getPhotoUrl(storagePath: string, status: string): string {
-  // Pending/rejected photos live in gallery-pending; approved photos in gallery-public
-  const bucket = status === 'approved' ? 'gallery-public' : 'gallery-pending';
-  return `${STORAGE_BASE}/${bucket}/${storagePath}`;
-}
 const PAGE_SIZE = 24;
 
 type StatusFilter = 'all' | 'pending' | 'approved' | 'rejected';
@@ -78,14 +72,49 @@ export function AdminGalleryManager() {
     setTimeout(() => setToast(null), 2500);
   }
 
-  async function handleApprove(id: string) {
-    await supabase.from('gallery_submissions').update({ status: 'approved' }).eq('id', id);
+  async function handleApprove(photo: GallerySubmission) {
+    // Copy pending→public FIRST, flip status SECOND — see the contract note in
+    // lib/gallery.ts. The URL builder derives the bucket from status, so a row
+    // marked approved whose object never reached gallery-public renders broken
+    // on /gallery. If the copy fails, do NOT flip: a still-pending row is
+    // harmless, a broken public photo is not.
+    const copyError = await copyPendingToPublic(supabase, photo.storage_path);
+    if (copyError) {
+      showToast('Approve failed — photo could not be copied to the public gallery');
+      return;
+    }
+    const { error: dbError } = await supabase
+      .from('gallery_submissions')
+      .update({ status: 'approved' })
+      .eq('id', photo.id);
+    if (dbError) {
+      showToast('Approve failed — status not updated');
+      return;
+    }
     showToast('Photo approved');
     void loadPhotos(activeEvent, statusFilter, page);
   }
 
-  async function handleReject(id: string) {
-    await supabase.from('gallery_submissions').update({ status: 'rejected' }).eq('id', id);
+  async function handleReject(photo: GallerySubmission) {
+    // Reject-after-approve: remove the public copy first so the public gallery
+    // cannot keep serving an orphaned object. The pending original still exists
+    // (approve copies, never moves), so nothing is lost. Same order rule as
+    // approve: fix storage first, only then flip status.
+    if (photo.status === 'approved') {
+      const removeError = await removePublicCopy(supabase, photo.storage_path);
+      if (removeError) {
+        showToast('Reject failed — public copy could not be removed');
+        return;
+      }
+    }
+    const { error: dbError } = await supabase
+      .from('gallery_submissions')
+      .update({ status: 'rejected' })
+      .eq('id', photo.id);
+    if (dbError) {
+      showToast('Reject failed — status not updated');
+      return;
+    }
     showToast('Photo rejected');
     void loadPhotos(activeEvent, statusFilter, page);
   }
@@ -181,7 +210,7 @@ export function AdminGalleryManager() {
               {/* Thumbnail with hover overlay */}
               <div className="aspect-square relative overflow-hidden group">
                 <Image
-                  src={getPhotoUrl(photo.storage_path, photo.status)}
+                  src={galleryPhotoUrl(photo.storage_path, photo.status)}
                   alt={photo.caption ?? 'Gallery photo'}
                   fill
                   sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
@@ -200,7 +229,7 @@ export function AdminGalleryManager() {
                 <div className="absolute inset-0 bg-green-deep/70 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
                   {photo.status !== 'approved' && (
                     <button
-                      onClick={() => { void handleApprove(photo.id); }}
+                      onClick={() => { void handleApprove(photo); }}
                       className="px-2 py-1 bg-green-water text-white font-serif text-[11px] rounded-lg hover:bg-green-water/80 transition-colors"
                     >
                       Approve
@@ -208,7 +237,7 @@ export function AdminGalleryManager() {
                   )}
                   {photo.status !== 'rejected' && (
                     <button
-                      onClick={() => { void handleReject(photo.id); }}
+                      onClick={() => { void handleReject(photo); }}
                       className="px-2 py-1 bg-amber text-white font-serif text-[11px] rounded-lg hover:bg-amber/80 transition-colors"
                     >
                       Reject

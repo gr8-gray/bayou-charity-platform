@@ -40,12 +40,15 @@ setup('authenticate member', async ({ }) => {
 
   // Serialize the session the way @supabase/ssr stores it client-side.
   const value = 'base64-' + Buffer.from(JSON.stringify(session)).toString('base64');
-  const domain = new URL(process.env.E2E_BASE_URL ?? 'https://bayoucharity.org').hostname;
+  const baseUrl = new URL(process.env.E2E_BASE_URL ?? 'https://bayoucharity.org');
   const base = {
-    domain,
+    domain: baseUrl.hostname,
     path: '/',
     httpOnly: false,
-    secure: true,
+    // Must match the scheme under test: a Secure cookie is never sent over
+    // plain http, so a hardcoded `secure: true` makes local runs against
+    // `next start` (http://localhost:3000) look logged-out.
+    secure: baseUrl.protocol === 'https:',
     sameSite: 'Lax' as const,
     expires: Math.floor(Date.now() / 1000) + 3600,
   };

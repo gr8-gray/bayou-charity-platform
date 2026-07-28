@@ -25,7 +25,7 @@ export default defineConfig({
     { name: 'setup', testMatch: /auth\.setup\.ts/ },
     {
       name: 'authenticated',
-      testMatch: /upload\.spec\.ts/,
+      testMatch: /(upload|gallery-roundtrip)\.spec\.ts/,
       dependencies: ['setup'],
       use: { storageState: 'e2e/.auth/member.json' },
     },
