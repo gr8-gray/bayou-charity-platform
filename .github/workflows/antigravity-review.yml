@@ -29,12 +29,16 @@ permissions:
 
 jobs:
   gemini-review:
-    # Run on PR events OR on '/gemini review' comment in a PR
+    # Run on PR events OR on '/gemini review' comment in a PR — but only if the
+    # GEMINI_API_KEY secret is configured (see SETUP above). Without the guard the
+    # job fails red on every PR, which misled two debugging sessions (2026-07-27/28)
+    # before anyone noticed the setup step was never completed.
     if: |
-      github.event_name == 'pull_request' ||
+      secrets.GEMINI_API_KEY != '' &&
+      (github.event_name == 'pull_request' ||
       (github.event_name == 'issue_comment' &&
        github.event.issue.pull_request &&
-       contains(github.event.comment.body, '/gemini review'))
+       contains(github.event.comment.body, '/gemini review')))
 
     runs-on: ubuntu-latest
     name: Gemini Code Review
@@ -48,8 +52,11 @@ jobs:
       - name: Antigravity Review via Gemini CLI
         uses: google-github-actions/run-gemini-cli@v0.1.22
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          gemini-api-key: ${{ secrets.GEMINI_API_KEY }}
+          # Action inputs are snake_case — the kebab-case 'gemini-api-key' was
+          # silently ignored ("Unexpected input(s)"), so no auth ever reached the
+          # action even when it resolved. (github-token isn't a valid input at all;
+          # the action reads GITHUB_TOKEN from the environment.)
+          gemini_api_key: ${{ secrets.GEMINI_API_KEY }}
           # Review prompt — tailored to Bayou Charity platform standards
           prompt: |
             You are Antigravity, the code auditor for the Bayou Charity Platform (v2).
