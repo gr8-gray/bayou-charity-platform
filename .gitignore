@@ -41,3 +41,5 @@ CLAUDE.md
 jarvis-vault-loader.plugin
 .planning/
 .playwright-mcp/
+apps/web/e2e/.auth/
+apps/web/test-results/
