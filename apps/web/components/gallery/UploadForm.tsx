@@ -5,7 +5,8 @@
 
 import { useState, useRef, type ChangeEvent, type FormEvent } from 'react';
 import { createClient } from '@bayou/supabase';
-import { MAX_UPLOAD_BYTES, MAX_UPLOAD_LABEL } from '@/lib/uploads';
+import { ACCEPTED_IMAGE_ACCEPT, validateUploadFile } from '@/lib/uploads';
+import { GALLERY_PENDING_BUCKET } from '@/lib/gallery';
 
 interface UploadFormProps {
   userId: string;
@@ -24,13 +25,12 @@ export default function UploadForm({ userId }: UploadFormProps) {
     setSuccess(false);
     const selected = e.target.files?.[0] ?? null;
     if (!selected) return;
-    if (selected.size > MAX_UPLOAD_BYTES) {
-      setError(`File is too large. Maximum size is ${MAX_UPLOAD_LABEL}.`);
-      setFile(null);
-      return;
-    }
-    if (!selected.type.startsWith('image/')) {
-      setError('Only image files are accepted.');
+    // Shared validator (lib/uploads.ts) — this form previously accepted any
+    // image/* which let HEIC into the review queue; now it enforces the same
+    // list as the members-area upload surfaces.
+    const validationError = validateUploadFile(selected);
+    if (validationError) {
+      setError(validationError);
       setFile(null);
       return;
     }
@@ -50,7 +50,7 @@ export default function UploadForm({ userId }: UploadFormProps) {
       const path = `${userId}/${Date.now()}.${ext}`;
 
       const { error: storageError } = await supabase.storage
-        .from('gallery-pending')
+        .from(GALLERY_PENDING_BUCKET)
         .upload(path, file, { cacheControl: '3600', upsert: false });
 
       if (storageError) throw new Error(storageError.message);
@@ -103,7 +103,7 @@ export default function UploadForm({ userId }: UploadFormProps) {
           ref={inputRef}
           id="gallery-file"
           type="file"
-          accept="image/*"
+          accept={ACCEPTED_IMAGE_ACCEPT}
           onChange={handleFileChange}
           required
           className="block w-full font-serif text-sm text-text-dark dark:text-cream

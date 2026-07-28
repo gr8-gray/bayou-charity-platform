@@ -1,5 +1,13 @@
 'use client';
 
+// GuidesPanel — licensed-guide listings (`guide_postings`); posting is meant
+// for members with the 'guide' role advertising availability and rates.
+//
+// SIBLING ALERT: GuidesPanel, TripsPanel, GearPanel, ForumPanel and
+// RecipesPanel share one skeleton (fetch + ContentCard list + PostFormModal).
+// A fix in one panel must be checked in the other four — full rationale for
+// why they stay separate files is in ForumPanel.tsx.
+
 import { useMemo, useState, useEffect, useCallback } from 'react';
 import { createClient } from '@bayou/supabase';
 import type { Database } from '@bayou/supabase/types';

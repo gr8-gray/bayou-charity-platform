@@ -1,16 +1,14 @@
 'use client';
 
 import { ZeffyEmbed } from '@/components/shared/ZeffyEmbed';
+import { PAYMENT_METHODS } from '@/lib/payments';
 
 // ─── Payment Chips ────────────────────────────────────────────────────────────
 
+// Handles + hrefs come from lib/payments.ts — the footer renders the same list,
+// and the two used to disagree on the PayPal URL. Do not inline handles here.
 function PaymentChips() {
-  const chips = [
-    { emoji: '💚', label: 'CashApp', handle: '$bayoucharity', href: 'https://cash.app/$bayoucharity' },
-    { emoji: '💜', label: 'Venmo', handle: '@bayoucharity', href: 'https://venmo.com/bayoucharity' },
-    { emoji: '🔵', label: 'PayPal', handle: '@bayoucharity', href: 'https://paypal.me/bayoucharity' },
-    { emoji: '🍎', label: 'Apple Cash', handle: 'kyle.rockefeller@icloud.com', href: null },
-  ];
+  const chips = PAYMENT_METHODS;
 
   return (
     <div className="mt-6">

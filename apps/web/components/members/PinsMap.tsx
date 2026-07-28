@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { createClient } from '@bayou/supabase';
 import type { Database } from '@bayou/supabase/types';
 import { colors } from '@bayou/ui/tokens';
-import { MAX_UPLOAD_BYTES, MAX_UPLOAD_LABEL } from '@/lib/uploads';
+import { ACCEPTED_IMAGE_ACCEPT, validateUploadFile } from '@/lib/uploads';
 
 interface LeafletDivElement extends HTMLDivElement {
   _leaflet_id?: number;
@@ -244,9 +244,9 @@ export function PinsMap({ userId, role }: PinsMapProps) {
       alert('Photo required — Please select a photo to post.');
       return;
     }
-    const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
-    if (!ALLOWED_TYPES.includes(pinPhoto.type)) {
-      alert('Please upload a JPEG, PNG, or WebP image. HEIC/HEIF files are not supported by web browsers.');
+    const photoError = validateUploadFile(pinPhoto);
+    if (photoError) {
+      alert(photoError);
       return;
     }
     const today = new Date().toISOString().slice(0, 10);
@@ -519,11 +519,12 @@ export function PinsMap({ userId, role }: PinsMapProps) {
               <label className="block text-xs font-semibold text-text-mid dark:text-cream/60 mb-1">Photo <span className="text-amber">*</span></label>
               <input
                 type="file"
-                accept="image/jpeg,image/png,image/webp,image/gif"
+                accept={ACCEPTED_IMAGE_ACCEPT}
                 onChange={(e) => {
                   const file = e.target.files?.[0] ?? null;
-                  if (file && file.size > MAX_UPLOAD_BYTES) {
-                    alert(`Photo must be ${MAX_UPLOAD_LABEL} or smaller.`);
+                  const fileError = file ? validateUploadFile(file) : null;
+                  if (fileError) {
+                    alert(fileError);
                     e.target.value = '';
                     return;
                   }

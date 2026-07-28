@@ -1,11 +1,22 @@
 'use client';
 
+// ProfileEditor — the member's own profile card on /members/profile.
+//
+// Owns three editable fields (display name, bio, avatar) written straight to
+// `profiles`. The avatar uploads to the public `avatars` bucket at a FIXED
+// path (`{uid}/avatar.{ext}`, upsert) — one avatar per member, so a re-upload
+// with the same extension overwrites in place, while a different extension
+// strands the old file (harmless orphan). Trap: the new avatar URL only lands
+// on the profile row when the member hits Save — upload alone changes nothing
+// in the DB. Upload limits/validation come from lib/uploads.ts; never inline
+// them here.
+
 import { useState, useRef, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { createClient } from '@bayou/supabase';
 import type { Database } from '@bayou/supabase/types';
-import { MAX_UPLOAD_BYTES, MAX_UPLOAD_LABEL } from '@/lib/uploads';
+import { ACCEPTED_IMAGE_ACCEPT, MAX_UPLOAD_LABEL, validateUploadFile } from '@/lib/uploads';
 
 type Profile = Database['public']['Tables']['profiles']['Row'];
 
@@ -29,13 +40,9 @@ export function ProfileEditor({ profile, onSave }: ProfileEditorProps) {
   async function handleAvatarUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
-    const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
-    if (!ALLOWED_TYPES.includes(file.type)) {
-      setError('Please upload a JPEG, PNG, or WebP image. HEIC/HEIF files are not supported by web browsers.');
-      return;
-    }
-    if (file.size > MAX_UPLOAD_BYTES) {
-      setError(`Avatar must be ${MAX_UPLOAD_LABEL} or smaller.`);
+    const validationError = validateUploadFile(file);
+    if (validationError) {
+      setError(validationError);
       return;
     }
     setError(null);
@@ -119,7 +126,7 @@ export function ProfileEditor({ profile, onSave }: ProfileEditorProps) {
           <input
             ref={fileRef}
             type="file"
-            accept="image/jpeg,image/png,image/webp,image/gif"
+            accept={ACCEPTED_IMAGE_ACCEPT}
             onChange={handleAvatarUpload}
             className="hidden"
           />
