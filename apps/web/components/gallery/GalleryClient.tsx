@@ -113,6 +113,13 @@ export default function GalleryClient({ events, submissions }: GalleryClientProp
         setFishPins(imgs);
         setFishLoaded(true);
         setFishLoading(false);
+      }, () => {
+        // Postgrest errors RESOLVE and are handled above; this second callback
+        // catches network-level rejections, which would otherwise strand the
+        // loading spinner forever. (Two-arg .then because the query builder is
+        // typed PromiseLike — no .catch on the type.)
+        setFishLoaded(true);
+        setFishLoading(false);
       });
   }, [activeEventId, fishLoaded, fishLoading]);
 
