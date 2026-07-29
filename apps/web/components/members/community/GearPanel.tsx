@@ -13,6 +13,7 @@ import { createClient } from '@bayou/supabase';
 import type { Database } from '@bayou/supabase/types';
 import { ContentCard } from './ContentCard';
 import { PostFormModal } from './PostFormModal';
+import { backfillArchived } from '@/lib/backfill';
 
 type Classified = Database['public']['Tables']['classifieds']['Row'] & {
   profiles: { display_name: string | null } | null;
@@ -59,13 +60,13 @@ export function GearPanel({ userId, role }: GearPanelProps) {
 
   const load = useCallback(async () => {
     setLoading(true);
+    // No `.is('archived_at', null)` — never-empty rule (lib/backfill.ts).
     const { data } = await supabase
       .from('classifieds')
       .select('*, profiles(display_name)')
       .eq('status', 'approved')
-      .is('archived_at', null)
       .order('created_at', { ascending: false });
-    setItems((data as Classified[]) ?? []);
+    setItems(backfillArchived((data as Classified[]) ?? []));
     setLoading(false);
   }, [supabase]);
 

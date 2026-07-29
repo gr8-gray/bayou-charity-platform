@@ -8,8 +8,8 @@ import { defineConfig } from '@playwright/test';
 // write they can produce is a pending gallery upload the admin can reject.
 //
 // Auth: the sign-in UI is OAuth-only (Google/FB/Apple), which can't be automated.
-// auth.setup.ts instead signs in the dedicated e2e-test@bayoucharity.org account via
-// the Supabase password grant and injects the session cookie — see that file.
+// auth.setup.ts instead signs in the dedicated e2e member account via the
+// Supabase password grant and injects the session cookie — see that file.
 // Credentials come from env (E2E_EMAIL / E2E_PASSWORD, GitHub secrets in CI) and
 // must NEVER be committed or typed into the UI (vault STOP 20).
 export default defineConfig({
@@ -25,7 +25,7 @@ export default defineConfig({
     { name: 'setup', testMatch: /auth\.setup\.ts/ },
     {
       name: 'authenticated',
-      testMatch: /(upload|gallery-roundtrip)\.spec\.ts/,
+      testMatch: /(upload|gallery-roundtrip|never-empty)\.spec\.ts/,
       dependencies: ['setup'],
       use: { storageState: 'e2e/.auth/member.json' },
     },

@@ -17,6 +17,7 @@ import { createClient } from '@bayou/supabase';
 import type { Database } from '@bayou/supabase/types';
 import { ContentCard } from './ContentCard';
 import { PostFormModal } from './PostFormModal';
+import { backfillArchived } from '@/lib/backfill';
 
 type ForumThread = Database['public']['Tables']['forum_threads']['Row'] & {
   profiles: { display_name: string | null } | null;
@@ -82,13 +83,14 @@ export function ForumPanel({ userId, role }: ForumPanelProps) {
 
   const loadThreads = useCallback(async () => {
     setLoading(true);
+    // No `.is('archived_at', null)` — never-empty rule (lib/backfill.ts). With 3+
+    // active threads this returns exactly what the old filter did.
     const { data } = await supabase
       .from('forum_threads')
       .select('*, profiles(display_name)')
       .eq('status', 'approved')
-      .is('archived_at', null)
       .order('created_at', { ascending: false });
-    setThreads((data ?? []) as ForumThread[]);
+    setThreads(backfillArchived((data ?? []) as ForumThread[]));
     setLoading(false);
   }, [supabase]);
 
