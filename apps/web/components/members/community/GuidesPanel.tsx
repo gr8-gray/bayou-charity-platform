@@ -13,6 +13,7 @@ import { createClient } from '@bayou/supabase';
 import type { Database } from '@bayou/supabase/types';
 import { ContentCard } from '../community/ContentCard';
 import { PostFormModal } from '../community/PostFormModal';
+import { backfillArchived } from '@/lib/backfill';
 
 type GuidePosting = Database['public']['Tables']['guide_postings']['Row'] & {
   profiles: { display_name: string | null } | null;
@@ -65,13 +66,13 @@ export function GuidesPanel({ userId, role }: GuidesPanelProps) {
 
   const loadPostings = useCallback(async () => {
     setLoading(true);
+    // No `.is('archived_at', null)` — never-empty rule (lib/backfill.ts).
     const { data } = await supabase
       .from('guide_postings')
       .select('*, profiles(display_name)')
       .eq('status', 'approved')
-      .is('archived_at', null)
       .order('created_at', { ascending: false });
-    setPostings((data as GuidePosting[]) ?? []);
+    setPostings(backfillArchived((data as GuidePosting[]) ?? []));
     setLoading(false);
   }, [supabase]);
 
