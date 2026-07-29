@@ -14,6 +14,7 @@ import { createClient } from '@bayou/supabase';
 import type { Database } from '@bayou/supabase/types';
 import { ContentCard } from './ContentCard';
 import { PostFormModal } from './PostFormModal';
+import { backfillArchived } from '@/lib/backfill';
 
 type Trip = Database['public']['Tables']['trips']['Row'] & {
   profiles: { display_name: string | null } | null;
@@ -55,11 +56,12 @@ export function TripsPanel({ userId, role }: TripsPanelProps) {
   const loadTrips = useCallback(async () => {
     setLoading(true);
 
+    // No `.is('archived_at', null)` — never-empty rule (lib/backfill.ts) tops the
+    // list up with recent archived trips when fewer than 3 upcoming ones exist.
     const { data: tripData, error } = await supabase
       .from('trips')
       .select('*, profiles(display_name)')
       .eq('status', 'approved')
-      .is('archived_at', null)
       .order('trip_date', { ascending: true });
 
     if (error || !tripData) {
@@ -67,7 +69,7 @@ export function TripsPanel({ userId, role }: TripsPanelProps) {
       return;
     }
 
-    const typedTrips = tripData as Trip[];
+    const typedTrips = backfillArchived(tripData as Trip[]);
     setTrips(typedTrips);
 
     if (typedTrips.length > 0) {

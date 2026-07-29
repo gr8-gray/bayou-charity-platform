@@ -4,6 +4,7 @@ import React, { useEffect, useMemo, useState, useCallback } from 'react';
 import { createClient } from '@bayou/supabase';
 import Image from 'next/image';
 import { ACCEPTED_IMAGE_ACCEPT, validateUploadFile } from '@/lib/uploads';
+import { backfillArchived } from '@/lib/backfill';
 
 const WeatherWidget = React.lazy(() => import('./community/WeatherWidget'));
 
@@ -18,6 +19,7 @@ type Pin = {
   species: string | null;
   created_at: string;
   catch_date: string | null;
+  archived_at: string | null;
   profiles: { display_name: string | null; avatar_url: string | null } | null;
 };
 
@@ -46,15 +48,16 @@ export default function SocialFeed({ userId, role }: { userId: string; role: str
 
   const loadFeed = useCallback(async () => {
     setLoading(true);
+    // No `.is('archived_at', null)` here — the never-empty rule (lib/backfill.ts)
+    // needs archived rows so a quiet season still renders a feed.
     const { data: pinsData } = await supabase
       .from('pins')
-      .select('id, user_id, photo_url, lat, lng, location_name, caption, species, created_at, catch_date, profiles(display_name, avatar_url)')
+      .select('id, user_id, photo_url, lat, lng, location_name, caption, species, created_at, catch_date, archived_at, profiles(display_name, avatar_url)')
       .eq('flagged', false)
-      .is('archived_at', null)
       .order('created_at', { ascending: false })
       .limit(50);
 
-    const pinList = (pinsData ?? []) as Pin[];
+    const pinList = backfillArchived((pinsData ?? []) as Pin[]);
     setPins(pinList);
 
     if (pinList.length > 0) {
@@ -149,17 +152,17 @@ export default function SocialFeed({ userId, role }: { userId: string; role: str
       setLeaderboard(Object.values(counts).sort((a, b) => b.count - a.count).slice(0, 5));
     }
 
-    // Recent activity
+    // Recent activity — backfills with archived pins like the main feed (the
+    // leaderboard above stays active-only: it's an aggregate, not a content list).
     const { data: recent } = await supabase
       .from('pins')
-      .select('profiles(display_name), species, created_at')
+      .select('profiles(display_name), species, created_at, archived_at')
       .eq('flagged', false)
-      .is('archived_at', null)
       .order('created_at', { ascending: false })
       .limit(5);
 
     if (recent) {
-      setRecentActivity((recent as { profiles: { display_name: string | null } | null; species: string | null; created_at: string }[]).map(r => ({
+      setRecentActivity(backfillArchived(recent as { profiles: { display_name: string | null } | null; species: string | null; created_at: string; archived_at: string | null }[]).map(r => ({
         display_name: r.profiles?.display_name ?? 'Member',
         species: r.species,
         created_at: r.created_at,
