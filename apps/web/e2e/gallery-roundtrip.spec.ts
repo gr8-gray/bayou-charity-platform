@@ -17,9 +17,9 @@ import { test, expect } from '@playwright/test';
 // that, only the service-role key could delete rows).
 
 const SUPABASE_URL = 'https://osiramhnynhwmlfyuqcp.supabase.co';
-// The anon key is public by design (it ships in every client bundle).
-const SUPABASE_ANON_KEY =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9zaXJhbWhueW5od21sZnl1cWNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxNzk1MTksImV4cCI6MjA4ODc1NTUxOX0.1jMxPIt5t60D8Qvl0lltRLnOgH2vFas0q4Ix2ojpsfM';
+// The publishable key is public by design (it ships in every client bundle).
+// Legacy JWT keys were DISABLED on this project 2026-09-15T16:42Z (see auth.setup.ts).
+const SUPABASE_ANON_KEY = 'sb_publishable_yS9pPiw1F7QuxGcWVAyLXw_oZMI9HCI';
 
 // Same trick as upload.spec.ts: valid JPEG magic bytes + EOI marker, junk in
 // between — enough for storage to accept it and serve image/jpeg back.

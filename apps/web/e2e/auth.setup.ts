@@ -16,9 +16,10 @@ import path from 'node:path';
 // a prior silent break), this file is the only place to update.
 
 const SUPABASE_URL = 'https://osiramhnynhwmlfyuqcp.supabase.co';
-// The anon key is public by design (it ships in every client bundle).
-const SUPABASE_ANON_KEY =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9zaXJhbWhueW5od21sZnl1cWNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxNzk1MTksImV4cCI6MjA4ODc1NTUxOX0.1jMxPIt5t60D8Qvl0lltRLnOgH2vFas0q4Ix2ojpsfM';
+// The publishable key is public by design (it ships in every client bundle).
+// Legacy JWT keys (anon/service_role) were DISABLED on this project 2026-09-15T16:42Z —
+// the old hardcoded anon JWT 401s with "Legacy API keys are disabled" regardless of creds.
+const SUPABASE_ANON_KEY = 'sb_publishable_yS9pPiw1F7QuxGcWVAyLXw_oZMI9HCI';
 const PROJECT_REF = 'osiramhnynhwmlfyuqcp';
 const COOKIE_CHUNK_SIZE = 3180; // matches @supabase/ssr's chunking threshold
 
