@@ -59,6 +59,27 @@ const nextConfig = {
     ],
   },
   transpilePackages: ['@bayou/ui', '@bayou/supabase'],
+  // Legacy static-site paths from before the Next.js rebuild. These 404'd silently
+  // for months: Meta's app config still pointed at /privacy.html, so Meta could not
+  // find a privacy policy and DISABLED the Facebook app — which took Facebook sign-in
+  // down (no successful facebook auth since 2026-07-29) with no notification that
+  // reached anyone. Anything else still linking the old paths (Search Console,
+  // directories, old emails, printed material) hits the same dead end.
+  // 308 permanent so external configs and crawlers update their target.
+  async redirects() {
+    return [
+      { source: '/privacy.html', destination: '/privacy', permanent: true },
+      { source: '/terms.html', destination: '/terms', permanent: true },
+      { source: '/about.html', destination: '/about', permanent: true },
+      { source: '/donate.html', destination: '/donate', permanent: true },
+      { source: '/volunteer.html', destination: '/volunteer', permanent: true },
+      { source: '/gallery.html', destination: '/gallery', permanent: true },
+      { source: '/index.html', destination: '/', permanent: true },
+      // No /contact route exists in the rebuild — send it somewhere useful
+      // rather than to another 404.
+      { source: '/contact.html', destination: '/volunteer', permanent: true },
+    ];
+  },
 };
 
 export default withBundleAnalyzer(withSentryConfig(nextConfig, {
