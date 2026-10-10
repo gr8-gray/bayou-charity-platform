@@ -1,5 +1,7 @@
 # E2E customer-path tests (STOP 19). Runs against LIVE bayoucharity.org:
 #   - after every production deploy (Web Deploy completes → verify prod still works)
+#   - weekly on a schedule (Mondays 13:00 UTC) so a dead token/key surfaces
+#     within a week even when nothing deploys
 #   - on demand via workflow_dispatch
 # Not on PRs: PRs have no deployed preview to test against, and these tests hit prod.
 name: E2E Customer Paths
@@ -9,12 +11,19 @@ on:
     workflows: ["Web Deploy (CF Workers)"]
     types: [completed]
   workflow_dispatch:
+  schedule:
+    # Weekly live smoke — Mondays 13:00 UTC (morning US Central)
+    - cron: '0 13 * * 1'
 
 jobs:
   e2e:
     runs-on: ubuntu-24.04
-    # Only test after a deploy that actually succeeded.
-    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    # Scheduled/manual runs always test prod; deploy-triggered runs only
+    # after a deploy that actually succeeded.
+    if: >-
+      github.event_name == 'schedule' ||
+      github.event_name == 'workflow_dispatch' ||
+      github.event.workflow_run.conclusion == 'success'
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
